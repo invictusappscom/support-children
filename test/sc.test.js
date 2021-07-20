@@ -13,7 +13,7 @@ contract('SupportChildren', ([deployer, user]) => {
     })
 
     describe('testing donation...', () => {
-        let balance
+        let campaigns
 
         describe('success', () => {
             beforeEach(async () => {
@@ -22,6 +22,16 @@ contract('SupportChildren', ([deployer, user]) => {
 
             it('amount should increase', async () => {
                 expect(Number(await supportChildren.getCampaignAmount(0))).to.eq(10 ** 16)
+            })
+            
+            it('total campaigns', async () => {
+                campaigns = await supportChildren.getCampaigns()
+                console.log(campaigns)
+                expect(Number(campaigns.length)).to.eq(2)
+            })
+
+            it('name to be Loki', async () => {
+                expect(String(campaigns[1].name)).to.eq('Loki')
             })
         })
     })
