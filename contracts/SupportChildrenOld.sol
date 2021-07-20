@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
-contract SupportChildren {
+contract SupportChildrenOld {
     
     uint campaignIndex;
     uint count;
@@ -11,14 +11,15 @@ contract SupportChildren {
         string name; 
         string description;
         string creatorEmail; 
-        uint targetAmount;
-        uint currentAmount;
+        uint32 targetAmount;
         address targetAccount;
     }
     
     Campaign[] campaigns;
     
     mapping(uint => string[]) campaignDonationsEmails;
+    mapping(uint => uint) public campaignDonationsAmounts;
+    mapping(uint => uint) public campaignDonationsTargetAmounts;
     
     function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, uint32 _targetAmount, address _targetAccount) public {
          campaigns.push(Campaign({
@@ -27,24 +28,23 @@ contract SupportChildren {
             description: _description,
             creatorEmail: _creatorEmail,
             targetAmount: _targetAmount,
-            currentAmount: 0,
             targetAccount: _targetAccount
         }));
+        campaignDonationsTargetAmounts[count] = _targetAmount;
         
         count++;
     }
     
     // Fiktivno slanje para za test samo
-    function donateTest(uint _campaignId, string memory _donorEmail, uint _amount) public {
+    function donateTest(uint _campaignId, string memory _donorEmail, uint32 _amount) public {
         campaignDonationsEmails[_campaignId].push(_donorEmail);
-        
-        campaigns[_campaignId].targetAmount = campaigns[_campaignId].currentAmount + _amount;
+        campaignDonationsAmounts[_campaignId] = campaignDonationsAmounts[_campaignId] + _amount;
     }
 
     // Stvarno slanje ETH
     function donate(uint _campaignId, string memory _donorEmail) payable public {
         campaignDonationsEmails[_campaignId].push(_donorEmail);
-        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
+        campaignDonationsAmounts[_campaignId] = campaignDonationsAmounts[_campaignId] + msg.value;
     }
     
     function getDonatorEmails(uint _campaignId) view public returns (string[] memory) {
@@ -53,10 +53,6 @@ contract SupportChildren {
     
     function getCampaigns() public view returns (Campaign[] memory) {
         return campaigns;
-    }
-
-    function getCampaignAmount(uint _campaignId) public view returns (uint) {
-        return campaigns[_campaignId].currentAmount;
     }
     
 }

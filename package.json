@@ -1,0 +1,27 @@
+{
+  "name": "support-children",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/invictusappscom/support-children.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/invictusappscom/support-children/issues"
+  },
+  "homepage": "https://github.com/invictusappscom/support-children#readme"
+}
