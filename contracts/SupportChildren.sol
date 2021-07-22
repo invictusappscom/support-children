@@ -26,6 +26,7 @@ contract SupportChildren {
         uint targetAmount;
         uint currentAmount;
         address payable targetAccount;
+        bool active;
     }
     
     Campaign[] campaigns;
@@ -40,7 +41,8 @@ contract SupportChildren {
             creatorEmail: _creatorEmail,
             targetAmount: _targetAmount,
             currentAmount: 0,
-            targetAccount: _targetAccount
+            targetAccount: _targetAccount,
+            active: true
         }));
         
         count++;
@@ -55,6 +57,7 @@ contract SupportChildren {
 
     // Real ETH donation
     function donate(uint _campaignId, string memory _donorEmail) payable public {
+        require(campaigns[_campaignId].active, "campaign is not active");
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
 
@@ -64,6 +67,7 @@ contract SupportChildren {
             emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);
             // Send ETH to the address of the child
             campaigns[_campaignId].targetAccount.transfer(campaigns[_campaignId].currentAmount);
+            campaigns[_campaignId].active = false;
         }
     }
     
