@@ -33,7 +33,7 @@ contract SupportChildren {
     
     mapping(uint => string[]) campaignDonationsEmails;
     
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, uint32 _targetAmount, address payable _beneficiaryAddress) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, uint _targetAmount, address payable _beneficiaryAddress) public {
          campaigns.push(Campaign({
             id: count,
             name: _name,
