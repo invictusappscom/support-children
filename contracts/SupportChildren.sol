@@ -4,13 +4,13 @@ pragma solidity >=0.7.0 <0.9.0;
 contract SupportChildren {
 
     event DonationMade (
-        uint camppaignId,
+        uint campaignId,
         uint donationAmount,
         string notifyEmail
     );
 
     event CampaignFinished (
-        uint camppaignId,
+        uint campaignId,
         uint currentAmount,
         string[] notifyEmails
     );
@@ -25,7 +25,7 @@ contract SupportChildren {
         string creatorEmail; 
         uint targetAmount;
         uint currentAmount;
-        address payable targetAccount;
+        address payable beneficiaryAddress;
         bool active;
     }
     
@@ -33,7 +33,7 @@ contract SupportChildren {
     
     mapping(uint => string[]) campaignDonationsEmails;
     
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, uint32 _targetAmount, address payable _targetAccount) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, uint32 _targetAmount, address payable _beneficiaryAddress) public {
          campaigns.push(Campaign({
             id: count,
             name: _name,
@@ -41,7 +41,7 @@ contract SupportChildren {
             creatorEmail: _creatorEmail,
             targetAmount: _targetAmount,
             currentAmount: 0,
-            targetAccount: _targetAccount,
+            beneficiaryAddress: _beneficiaryAddress,
             active: true
         }));
         
@@ -66,12 +66,12 @@ contract SupportChildren {
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
             emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);
             // Send ETH to the address of the child
-            campaigns[_campaignId].targetAccount.transfer(campaigns[_campaignId].currentAmount);
+            campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);
             campaigns[_campaignId].active = false;
         }
     }
     
-    function getDonatorEmails(uint _campaignId) view public returns (string[] memory) {
+    function getDonorEmails(uint _campaignId) view public returns (string[] memory) {
         return campaignDonationsEmails[_campaignId];
     }
     
