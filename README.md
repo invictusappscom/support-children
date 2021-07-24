@@ -1,4 +1,36 @@
+# Configure
+
+Create .env from .env.example and adjust params
 ```bash
-npm i
-truffle test
+cp .env.example .env
+```
+
+# Deploy contract
+```bash
+# on develop network
+truffle migrate
+
+# On Rinkeby
+truffle migrate --network rinkeby
+```
+
+# Build
+Install dependecies
+```bash
+cd client && npm i && cd ../server && npm i
+```
+Build client application
+```bash
+npm build
+```
+
+# Run
+```bash
+npm start
+```
+
+# Test
+Test all .js and .sol files in ./test directory with `truffle test`
+```bash
+npm test
 ```
