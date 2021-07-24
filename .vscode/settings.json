@@ -1,4 +1,4 @@
 {
-    "standard.enable": false,
+    "standard.enable": true,
     "git.ignoreLimitWarning": true
 }

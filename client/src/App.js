@@ -20,7 +20,7 @@ class App extends Component {
       const deployedNetwork = SupportChildrenContract.networks[networkId];
       const instance = new web3.eth.Contract(
         SupportChildrenContract.abi,
-        '0xa8CC333402d5d5Ce9A389523e6dA6b493F220b23',
+        deployedNetwork && deployedNetwork.address
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
@@ -41,9 +41,9 @@ class App extends Component {
   runExample = async () => {
     const { accounts, contract } = this.state;
 
-    // console.log(await contract.methods.getCampaigns().call())
+    console.log(await contract.methods.getCampaigns().call())
 
-    await contract.methods.donate(3, 'zarej@svrljig.net').send({ from: accounts[0], value: 1000000000000000000 })
+    // await contract.methods.donate(3, 'zarej@svrljig.net').send({ from: accounts[0], value: 1000000000000000000 })
     console.log(accounts)
     // Stores a given value, 5 by default.
     // await contract.methods.set(5).send({ from: accounts[0] });
