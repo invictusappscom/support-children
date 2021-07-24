@@ -2,10 +2,19 @@ import React, { Component } from "react";
 import SupportChildrenContract from "./contracts/SupportChildren.json";
 import getWeb3 from "./getWeb3";
 
+import Campaign from "./Campaign";
+
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = {
+    storageValue: 0,
+    web3: null,
+    accounts: null,
+    contract: null,
+    list: []
+  };
 
   componentDidMount = async () => {
     try {
@@ -41,10 +50,14 @@ class App extends Component {
   runExample = async () => {
     const { accounts, contract } = this.state;
 
-    console.log(await contract.methods.getCampaigns().call())
+    let list = await contract.methods.getCampaigns().call()
+    // console.log(list)
+    this.setState({
+      list: list
+    })
 
     // await contract.methods.donate(3, 'zarej@svrljig.net').send({ from: accounts[0], value: 1000000000000000000 })
-    console.log(accounts)
+    // console.log(accounts)
     // Stores a given value, 5 by default.
     // await contract.methods.set(5).send({ from: accounts[0] });
 
@@ -61,17 +74,13 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <header></header>
+        <div className="list">
+        {this.state.list.map(function (campaign, i) {
+          return <Campaign campaign={campaign} index={i} key={i} />;
+        })}
+        </div>
+        <footer></footer>
       </div>
     );
   }

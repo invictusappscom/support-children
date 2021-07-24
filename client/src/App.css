@@ -20,3 +20,8 @@
 .App-link {
   color: #09d3ac;
 }
+
+BODY {background: url('asset/world-bg.png') no-repeat center top; background-size: cover;}
+
+#root {height: 100vh; background-color: #ffffff; width: 90%; margin: 0 auto;}
+.list {display: flex; flex-wrap: wrap;}
