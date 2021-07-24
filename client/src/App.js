@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import SupportChildrenContract from "./contracts/SupportChildren.json";
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
@@ -17,15 +17,18 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
+      const deployedNetwork = SupportChildrenContract.networks[networkId];
       const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        SupportChildrenContract.abi,
+        '0xa8CC333402d5d5Ce9A389523e6dA6b493F220b23',
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ web3, accounts, contract: instance }, this.runExample);
+
+
+      console.log(instance);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -38,14 +41,18 @@ class App extends Component {
   runExample = async () => {
     const { accounts, contract } = this.state;
 
+    // console.log(await contract.methods.getCampaigns().call())
+
+    await contract.methods.donate(3, 'zarej@svrljig.net').send({ from: accounts[0], value: 1000000000000000000 })
+    console.log(accounts)
     // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    // await contract.methods.set(5).send({ from: accounts[0] });
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+    // // Get the value from the contract to prove it worked.
+    // const response = await contract.methods.get().call();
 
-    // Update state with the result.
-    this.setState({ storageValue: response });
+    // // Update state with the result.
+    // this.setState({ storageValue: response });
   };
 
   render() {
