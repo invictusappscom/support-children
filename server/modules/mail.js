@@ -19,22 +19,22 @@ function send (mailOptions) {
   })
 }
 
-function donationMade (campaignId, donationAmount, email) {
+function donationMade (campaignId, donationAmount, email, filledPercentage) {
   const mailOptions = {
     from: config.user,
     to: email,
     subject: 'Donation is made for campaign that you created',
-    text: `For campaign with id: ${campaignId} donation is made ${donationAmount} wei!`
+    text: `For campaign with id: ${campaignId} donation is made ${donationAmount} wei! Which is ${filledPercentage}%`
   }
   send(mailOptions)
 }
 
-function campaignFinished (campaignId, collectedAmount, emails) {
+function campaignFinished (campaignId, collectedAmount, emails, filledPercentage) {
   const mailOptions = {
     from: config.user,
     bcc: emails,
     subject: 'Donation is made for campaign that you created',
-    text: `Congratulations, campaign that you supported is finished. For campaign with id: ${campaignId} total collected amount is ${collectedAmount} wei!`
+    text: `Congratulations, campaign that you supported is finished. For campaign with id: ${campaignId} total collected amount is ${collectedAmount} wei! Which is ${filledPercentage}%`
   }
   send(mailOptions)
 }
