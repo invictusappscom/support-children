@@ -38,17 +38,17 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "donationAmount",
+          "name": "currentAmount",
           "type": "uint256"
         },
         {
           "indexed": false,
-          "internalType": "string",
-          "name": "notifyEmail",
-          "type": "string"
+          "internalType": "string[]",
+          "name": "notifyEmails",
+          "type": "string[]"
         }
       ],
-      "name": "DonationMade",
+      "name": "CampaignFinishedBeforeGoal",
       "type": "event"
     },
     {
@@ -66,6 +66,11 @@
         {
           "internalType": "string",
           "name": "_creatorEmail",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_image",
           "type": "string"
         },
         {
@@ -95,14 +100,47 @@
           "internalType": "string",
           "name": "_donorEmail",
           "type": "string"
+        }
+      ],
+      "name": "donate",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
         },
         {
+          "indexed": false,
           "internalType": "uint256",
-          "name": "_amount",
+          "name": "donationAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "notifyEmail",
+          "type": "string"
+        }
+      ],
+      "name": "DonationMade",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_campaignId",
           "type": "uint256"
         }
       ],
-      "name": "donateTest",
+      "name": "endCampaign",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -113,38 +151,18 @@
           "internalType": "uint256",
           "name": "_campaignId",
           "type": "uint256"
-        },
-        {
-          "internalType": "string",
-          "name": "_donorEmail",
-          "type": "string"
         }
       ],
-      "name": "donate",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function",
-      "payable": true
-    },
-    {
-      "inputs": [
+      "name": "getCampaignAmount",
+      "outputs": [
         {
           "internalType": "uint256",
-          "name": "_campaignId",
+          "name": "",
           "type": "uint256"
         }
       ],
-      "name": "getDonorEmails",
-      "outputs": [
-        {
-          "internalType": "string[]",
-          "name": "",
-          "type": "string[]"
-        }
-      ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -173,6 +191,11 @@
               "type": "string"
             },
             {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
               "internalType": "uint256",
               "name": "targetAmount",
               "type": "uint256"
@@ -188,6 +211,11 @@
               "type": "address"
             },
             {
+              "internalType": "address",
+              "name": "creatorAddress",
+              "type": "address"
+            },
+            {
               "internalType": "bool",
               "name": "active",
               "type": "bool"
@@ -199,8 +227,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -210,17 +237,35 @@
           "type": "uint256"
         }
       ],
-      "name": "getCampaignAmount",
+      "name": "getDonorEmails",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "string[]",
           "name": "",
-          "type": "uint256"
+          "type": "string[]"
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_donor",
+          "type": "address"
+        }
+      ],
+      "name": "getDonorsCampaingsList",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"campaignId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"currentAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string[]\",\"name\":\"notifyEmails\",\"type\":\"string[]\"}],\"name\":\"CampaignFinished\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"campaignId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"donationAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"notifyEmail\",\"type\":\"string\"}],\"name\":\"DonationMade\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_creatorEmail\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_targetAmount\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"_beneficiaryAddress\",\"type\":\"address\"}],\"name\":\"createCampaign\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_campaignId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_donorEmail\",\"type\":\"string\"}],\"name\":\"donate\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_campaignId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_donorEmail\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"donateTest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_campaignId\",\"type\":\"uint256\"}],\"name\":\"getCampaignAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCampaigns\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"creatorEmail\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"targetAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentAmount\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"beneficiaryAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"}],\"internalType\":\"struct SupportChildren.Campaign[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_campaignId\",\"type\":\"uint256\"}],\"name\":\"getDonorEmails\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/SupportChildren.sol\":\"SupportChildren\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/SupportChildren.sol\":{\"keccak256\":\"0xb487942344ee045f5bba62725240ce6a64da055be3198745a669810df2a39893\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://68f19bca9cf9b24b00684f5d049599d5ae7f2fe079855115b2f39390becad19d\",\"dweb:/ipfs/QmZcS9eDBPRtkbdTsZ9QSc2L6PYe69KhfScgRHZJM827Ba\"]}},\"version\":1}",
