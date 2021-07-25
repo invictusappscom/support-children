@@ -23,56 +23,69 @@ contract SupportChildren {
         string name; 
         string description;
         string creatorEmail; 
+        string image; 
         uint targetAmount;
         uint currentAmount;
         address payable beneficiaryAddress;
+        address creatorAddress;
         bool active;
     }
     
     Campaign[] campaigns;
     
     mapping(uint => string[]) campaignDonationsEmails;
+    mapping(address => uint[]) campaignDonors;
     
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, uint _targetAmount, address payable _beneficiaryAddress) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _targetAmount, address payable _beneficiaryAddress) public {
          campaigns.push(Campaign({
             id: count,
             name: _name,
             description: _description,
             creatorEmail: _creatorEmail,
+            image: _image,
             targetAmount: _targetAmount,
             currentAmount: 0,
             beneficiaryAddress: _beneficiaryAddress,
+            creatorAddress: tx.origin,
             active: true
         }));
         
         count++;
     }
     
-    // Only for test
-    function donateTest(uint _campaignId, string memory _donorEmail, uint _amount) public {
-        campaignDonationsEmails[_campaignId].push(_donorEmail);
-        
-        campaigns[_campaignId].targetAmount = campaigns[_campaignId].currentAmount + _amount;
+    function endCampaign(uint _campaignId) public {
+        require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be creator of campaign to close it");
+        finishCampaign(_campaignId);
+    }
+
+    function finishCampaign(uint _campaignId) private {
+        emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);
+        // Send ETH to the address of the child
+        campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);
+        campaigns[_campaignId].active = false;
     }
 
     // Real ETH donation
     function donate(uint _campaignId, string memory _donorEmail) payable public {
         require(campaigns[_campaignId].active, "campaign is not active");
+        require(msg.value > 0, "donation must be larger than 0");
         campaignDonationsEmails[_campaignId].push(_donorEmail);
+        campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
 
         emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail);
 
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
-            emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);
-            // Send ETH to the address of the child
-            campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);
-            campaigns[_campaignId].active = false;
+            finishCampaign(_campaignId);
         }
     }
     
     function getDonorEmails(uint _campaignId) view public returns (string[] memory) {
         return campaignDonationsEmails[_campaignId];
+    }
+    
+    function getDonorsCampaingsList(address _donor) view public returns (uint[] memory) {
+        return campaignDonors[_donor];
     }
     
     function getCampaigns() public view returns (Campaign[] memory) {
