@@ -1,0 +1,24 @@
+.campaignWrapper {width: 33%; padding: 15px;}
+.campaign {height: 500px; border: 1px solid #f1f1f1; position: relative;}
+.campaign.inactive .campaignPhoto {-webkit-filter: grayscale(1); filter: grayscale(1); opacity: 0.6;}
+.campaign.inactive .campaignBody {-webkit-filter: grayscale(.5); filter: grayscale(.5);}
+.campaign.inactive:hover .campaignPhoto {-webkit-filter: grayscale(0); filter: grayscale(0); opacity: 1;}
+.campaign.inactive:hover .campaignBody {-webkit-filter: grayscale(0); filter: grayscale(0);}
+.finished {display: none;}
+.campaign.inactive .finished {position: absolute; display: block; top: -6px; left: 0; right: 0; z-index: 6; height: 35px; background: url('asset/sticker.svg') no-repeat top center; background-size: contain; color: #ffffff; padding-top: 5px;}
+
+.campaignPhoto {transition: all .5s linear; height: 300px; background-size: cover;}
+.campaignName {font-weight: bold; text-align: center; font-size: 18px; text-transform: uppercase;}
+.campaignDescription {text-align: justify;}
+
+.campaignBody {transition: all .5s linear; padding: 15px; height: calc(100% - 300px);}
+.campaignGoalWrapper {position: absolute; left: 5%; right: 5%; bottom: 60px;}
+.campaignGoalProgress {height: 6px; border-radius: 3px; background-color: #eeeeee; width: 100%; position: relative;}
+.campaignProgress {background-color: #00baa3; height: 100%; border-radius: 3px 0 0 3px;}
+.campaignProgressText {transition: all .2s linear; overflow: hidden; position: absolute; width: 20px; height: 20px; border-radius: 10px; background-color: #00baa3; color: #ffffff; text-align: center; z-index: 2; top: -8px; font-size: 13px; box-sizing: border-box; padding-top: 15px; margin-left: -10px; box-shadow: 2px 2px 3px rgb(0 0 0 / 50%); text-align: center;}
+.campaign:hover .campaignProgressText {width: 30px; height: 30px; top: -13px; width: 50px; margin-left: -25px;}
+.campaignProgressText strong {transition: all .2s linear; opacity: 0; position: relative; top: -15px;}
+.campaign:hover .campaignProgressText strong {opacity: 1; top: -8px;}
+
+.campaignRaised {position: absolute; bottom: 20px; left: 3%;}
+.campaignGoal {position: absolute; bottom: 20px; right: 3%;}

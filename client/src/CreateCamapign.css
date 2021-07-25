@@ -1,0 +1,16 @@
+#createCamapignWrapper {position: fixed; top: 50%; left: 50%; width: 700px; height: 900px; margin-left: -350px; margin-top: -450px; background-color: rgba(255, 255, 255, 0.95); z-index: 110; border-radius: 10px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); overflow: hidden;}
+
+textarea:focus, input:focus{outline: none;}
+
+.createCamapignBg {height: 350px; background: url('asset/create-campaign-bg.jpg') no-repeat center; background-size: cover; border-bottom: solid 2px #d55342;}
+.createCamapignBody {padding: 15px; height: calc(100% - 350px); position: relative;}
+.createCamapignBody input {transition: all .5s linear; width: 100%; border-style: none; padding: 10px 20px; margin-bottom: 10px; border: solid 1px #cccccc; border-radius: 15px;}
+.createCamapignBody textarea {transition: all .5s linear; width: 100%; border-style: none; padding: 10px 20px; resize: none; height: 100px; margin-bottom: 0; border: solid 1px #cccccc;; border-radius: 15px;}
+.createCamapignBody input:hover, .createCamapignBody textarea:hover {border: solid 1px #aaaaaa;}
+
+.createCamapignBody .error {border-color: #ff0000;}
+
+#createCampaignSave {cursor: pointer; position: absolute; right: 3%; bottom: 20px; width: 45%; background-color: #d55342; border: solid 2px #d55342; border-radius: 25px; padding: 10px 20px; color: #ffffff; text-transform: uppercase;}
+#createCampaignCancel {cursor: pointer; position: absolute; left: 3%; bottom: 20px; width: 45%; background-color: #ffffff; border: solid 2px #d55342; border-radius: 25px; padding: 10px 20px; color: #d55342; text-transform: uppercase;}
+
+h3 {font-size: 18px; text-transform: uppercase; margin: 0; padding: 0; color: #d55342}
