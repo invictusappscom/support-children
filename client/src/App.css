@@ -23,7 +23,7 @@
 
 BODY {background: url('asset/world-bg.png') no-repeat center top; background-size: cover;}
 
-#modalDim {position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 110; background-color: rgba(0, 0, 0, 0.25);}
+#modalDim {position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 110; background-color: rgba(0, 0, 0, 0.7); background-image: url('asset/world-bg.png');}
 
 header {height: 70px; background-color: rgba(255, 255, 255, 0.95); position: fixed; top: 0; left: 0; right: 0; z-index: 100;}
 .wrapper {width: 90%; margin: 0 auto; position: relative;}

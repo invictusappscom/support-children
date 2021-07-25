@@ -4,6 +4,7 @@ import getWeb3 from "./getWeb3";
 
 import Campaign from "./Campaign";
 import Modal from "./Modal";
+import CreateCampaign from "./CreateCampaign";
 
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +16,8 @@ class App extends Component {
     accounts: null,
     contract: null,
     list: [],
-    isModal: false
+    isModal: false,
+    isCreateCampaign: false
   };
 
   componentDidMount = async () => {
@@ -59,6 +61,7 @@ class App extends Component {
     })
 
     // await contract.methods.donate(3, 'zarej@svrljig.net').send({ from: accounts[0], value: 1000000000000000000 })
+
     // console.log(accounts)
     // Stores a given value, 5 by default.
     // await contract.methods.set(5).send({ from: accounts[0] });
@@ -68,28 +71,46 @@ class App extends Component {
 
     // // Update state with the result.
     // this.setState({ storageValue: response });
-  };
+  }
 
   handlePress = () => {
-    console.log('presss')
-    this.showModal()
-  }
-  showModal = () => {
     this.setState({
-      isModal: true
+      isModal: true,
+      isCreateCampaign: true
     })
+  }
+  handleModalClick = () => {
+    this.handleCloseModal()
+  }
+  handleCreateCampaign = (data) => {
+    const { accounts, contract } = this.state;
+    console.log('Create campaign', data)
+    let newCampaign = contract.methods.createCampaign(data.name, data.description, data.email, parseFloat(data.targetAmount), data.beneficiaryAddress).call()
+    console.log(newCampaign)
+    this.handleCloseModal()
+  }
+  handleCloseModal = () => {
+    this.setState({
+      isModal: false,
+      isCreateCampaign: false
+    })
+
   }
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
-    let modal;
+    let modal, createCampaign
     if (this.state.isModal) {
-      modal = <Modal onClick={this.handleModalClick} />;
+      modal = <Modal closeModal={this.handleCloseModal} />;
+    }
+    if (this.state.isCreateCampaign) {
+      createCampaign = <CreateCampaign createCampaign={this.handleCreateCampaign} closeModal={this.handleCloseModal} />;
     }
     return (
       <div className="App">
         {modal}
+        {createCampaign}
         <header>
           <div className="wrapper">
             <div id="addCampaign" onClick={this.handlePress}>Add Campaign</div>
