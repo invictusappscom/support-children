@@ -18,3 +18,10 @@ function format(amount, decimalCount = 2, decimal = ".", thousands = ",") {
         console.log(e)
     }
 }
+
+export const trimText = (input, size) => {
+    if (input.length > size) {
+        return input.substring(0, size) + '...';
+     }
+     return input;
+}
