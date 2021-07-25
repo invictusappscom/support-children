@@ -3,6 +3,7 @@ import SupportChildrenContract from "./contracts/SupportChildren.json";
 import getWeb3 from "./getWeb3";
 
 import Campaign from "./Campaign";
+import Modal from "./Modal";
 
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +14,8 @@ class App extends Component {
     web3: null,
     accounts: null,
     contract: null,
-    list: []
+    list: [],
+    isModal: false
   };
 
   componentDidMount = async () => {
@@ -68,17 +70,37 @@ class App extends Component {
     // this.setState({ storageValue: response });
   };
 
+  handlePress = () => {
+    console.log('presss')
+    this.showModal()
+  }
+  showModal = () => {
+    this.setState({
+      isModal: true
+    })
+  }
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
+    let modal;
+    if (this.state.isModal) {
+      modal = <Modal onClick={this.handleModalClick} />;
+    }
     return (
       <div className="App">
-        <header></header>
-        <div className="list">
-        {this.state.list.map(function (campaign, i) {
-          return <Campaign campaign={campaign} index={i} key={i} />;
-        })}
+        {modal}
+        <header>
+          <div className="wrapper">
+            <div id="addCampaign" onClick={this.handlePress}>Add Campaign</div>
+          </div>
+        </header>
+        <div className="content">
+          <div className="list">
+            {this.state.list.map(function (campaign, i) {
+              return <Campaign campaign={campaign} index={i} key={i} />;
+            })}
+          </div>
         </div>
         <footer></footer>
       </div>
