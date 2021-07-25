@@ -37,7 +37,8 @@ contract SupportChildren {
     mapping(address => uint[]) campaignDonors;
     
     function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _targetAmount, address payable _beneficiaryAddress) public {
-         campaigns.push(Campaign({
+        require(_targetAmount > 0, "campaign target amount must be larger than 0");
+        campaigns.push(Campaign({
             id: count,
             name: _name,
             description: _description,
@@ -55,6 +56,7 @@ contract SupportChildren {
     
     function endCampaign(uint _campaignId) public {
         require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be creator of campaign to close it");
+        require(campaigns[_campaignId].active == true, "campaings in finished");
         finishCampaign(_campaignId);
     }
 
