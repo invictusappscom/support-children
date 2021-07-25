@@ -41,7 +41,7 @@ class App extends Component {
       this.setState({ web3, accounts, contract: instance }, this.runExample);
 
 
-      console.log(instance);
+      // console.log(instance);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -84,9 +84,9 @@ class App extends Component {
   }
   handleCreateCampaign = (data) => {
     const { accounts, contract } = this.state;
-    console.log('Create campaign', data)
-    let newCampaign = contract.methods.createCampaign(data.name, data.description, data.email, parseFloat(data.targetAmount), data.beneficiaryAddress).call()
-    console.log(newCampaign)
+    // console.log('Create campaign', data)
+    contract.methods.createCampaign(data.name, data.description, data.email, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
+    // console.log(newCampaign)
     this.handleCloseModal()
   }
   handleCloseModal = () => {
@@ -95,6 +95,12 @@ class App extends Component {
       isCreateCampaign: false
     })
 
+  }
+  handleDonation = (data, userData) => {
+    const { accounts, contract } = this.state;
+    // console.log('Donation', data, userData)
+    // data.beneficiaryAddress
+    contract.methods.donate(data.id, userData.email).send({ from: accounts[0], value: this.state.web3.utils.toWei(userData.ethAmount, 'ether') })
   }
   render() {
     if (!this.state.web3) {
@@ -118,8 +124,8 @@ class App extends Component {
         </header>
         <div className="content">
           <div className="list">
-            {this.state.list.map(function (campaign, i) {
-              return <Campaign campaign={campaign} index={i} key={i} />;
+            {this.state.list.map((campaign, i) => {
+              return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} />;
             })}
           </div>
         </div>
