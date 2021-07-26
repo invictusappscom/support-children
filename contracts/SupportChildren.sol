@@ -9,6 +9,10 @@ contract SupportChildren {
         string notifyEmail
     );
 
+    event CampaignCreated (
+        uint campaignId
+    );
+
     event CampaignFinished (
         uint campaignId,
         uint currentAmount,
@@ -50,6 +54,8 @@ contract SupportChildren {
             creatorAddress: tx.origin,
             active: true
         }));
+
+        emit CampaignCreated(count);
         
         count++;
     }

@@ -43,7 +43,7 @@ contract('SupportChildren', ([deployer, user]) => {
                 campaignsLenght = (await supportChildren.getCampaigns()).length
             })
             it('campaign created', async () => {
-                await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 1001, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
+                let result = await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 1001, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
                 campaigns = await supportChildren.getCampaigns()
                 expect(Number(campaigns.length)).to.eq(campaignsLenght + 1)
                 expect(campaigns[campaignsLenght].name).to.eq('Child')
@@ -54,6 +54,10 @@ contract('SupportChildren', ([deployer, user]) => {
                 expect(campaigns[campaignsLenght].targetAmount).to.eq("1001")
                 expect(campaigns[campaignsLenght].currentAmount).to.eq("0")
                 expect(campaigns[campaignsLenght].active).to.eq(true)
+
+                // event emitted
+                const event = result.logs[0].args
+                expect(Number(event.campaignId)).to.eq(campaignsLenght)
             })
 
 
@@ -126,7 +130,7 @@ contract('SupportChildren', ([deployer, user]) => {
             beforeEach(async () => {
                 result = await supportChildren.donate(0, 'donator@gmail.com', { value: 10 ** 16, from: user }) //0.01 ETH
             })
-            
+
             it('current amount should increase', async () => {
                 expect(Number(await supportChildren.getCampaignAmount(0))).to.eq(10 ** 16)
             })
