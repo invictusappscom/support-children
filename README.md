@@ -14,7 +14,7 @@ truffle migrate
 truffle migrate --network rinkeby
 ```
 
-## Build
+### Build
 Install dependecies
 ```bash
 cd client && npm i && cd ../server && npm i
@@ -28,6 +28,7 @@ npm run build
 ```bash
 npm start
 ```
+Default location of the frontend app http://localhost:9000/
 
 ### Dockerized Run
 ```bash
