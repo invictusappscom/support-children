@@ -63,7 +63,12 @@ contract SupportChildren {
     function endCampaign(uint _campaignId) public {
         require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be creator of campaign to close it");
         require(campaigns[_campaignId].active == true, "campaings in finished");
-        finishCampaign(_campaignId);
+        if (campaigns[_campaignId].currentAmount > 0) {
+            finishCampaign(_campaignId);
+        } else {
+            emit CampaignFinished(_campaignId, 0, campaignDonationsEmails[_campaignId]);
+            campaigns[_campaignId].active = false;
+        }
     }
 
     function finishCampaign(uint _campaignId) private {
