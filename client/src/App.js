@@ -19,8 +19,8 @@ class App extends Component {
     isModal: false,
     isCreateCampaign: false
   };
-
   componentDidMount = async () => {
+    this._child = React.createRef();
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
@@ -39,19 +39,15 @@ class App extends Component {
         if (error) {
           return console.log('Error: ' + error)
         }
-      
-        const campaignId = data.returnValues[0]
-        const donationAmount = data.returnValues[1]
-        const email = data.returnValues[2]
-        console.log('campaignId: ' + campaignId)
-        console.log('donationAmount: ' + donationAmount)
-        console.log('email: ' + email)
+        this._child.current.refreshPage()
         this.pullList()
-        // mail.donationMade(campaignId, donationAmount, email, await filledPercentage(campaignId))
       })
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
+      instance.events.CampaignCreated({}, async (error, data) => {
+        console.log('CampaignCreated')
+        this.pullList()
+      })
+
       this.setState({ web3, accounts, contract: instance }, this.pullList);
 
 
@@ -72,18 +68,6 @@ class App extends Component {
     this.setState({
       list: list
     })
-
-    // await contract.methods.donate(3, 'zarej@svrljig.net').send({ from: accounts[0], value: 1000000000000000000 })
-
-    // console.log(accounts)
-    // Stores a given value, 5 by default.
-    // await contract.methods.set(5).send({ from: accounts[0] });
-
-    // // Get the value from the contract to prove it worked.
-    // const response = await contract.methods.get().call();
-
-    // // Update state with the result.
-    // this.setState({ storageValue: response });
   }
 
   handlePress = () => {
@@ -137,7 +121,7 @@ class App extends Component {
         <div className="content">
           <div className="list">
             {this.state.list.map((campaign, i) => {
-              return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} />;
+              return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} ref={this._child} />;
             })}
           </div>
         </div>

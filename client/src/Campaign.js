@@ -4,7 +4,7 @@ import "./Campaign.css";
 import { ethDisplay, trimText } from './util'
 
 class Campaign extends Component {
-
+  
   constructor(props) {
     super(props);
 
@@ -20,6 +20,7 @@ class Campaign extends Component {
     let cover = 'cause-' + this.props.index % 7 + '.jpg'
     if (props.campaign.image) cover = props.campaign.image
     this.state = {
+      reload: false,
       ethAmount: 0,
       email: '',
       campaign: null,
@@ -27,7 +28,8 @@ class Campaign extends Component {
       progressText: progressText,
       color: color,
       isDonationInProgress: false,
-      cover: cover
+      cover: cover,
+      paymantInProgress: false
     }
   }
 
@@ -40,6 +42,10 @@ class Campaign extends Component {
       email: this.state.email,
       ethAmount: this.state.ethAmount
     })
+    this.setState({ 
+      isDonationInProgress: false,
+      paymantInProgress: true
+     })
   }
   donationCancel = () => {
     this.setState({ isDonationInProgress: false })
@@ -49,8 +55,17 @@ class Campaign extends Component {
       [event.target.name]: event.target.value
     })
   }
-
+  refreshPage = () => {
+    console.log('in')
+    this.setState(
+      {paymantInProgress: false}
+    )
+  }
   render() {
+    let progress = Math.round((this.props.campaign.currentAmount / this.props.campaign.targetAmount) * 100)
+    let progressText = progress
+    if (progress > 100) progress = 100
+
     let renderDonate, renderBody
     renderBody = <div className="campaignDescription">{trimText(this.props.campaign.description, 100)}</div>
     if (this.state.isDonationInProgress) {
@@ -80,17 +95,20 @@ class Campaign extends Component {
     if (this.props.campaign) {
       return (
         <div className="campaignWrapper">
-          <div className={`campaign ${this.props.campaign.active ? "active" : "inactive"}`}>
+          <div className={`campaign ${this.props.campaign.active ? "active" : "inactive"} ${this.state.paymantInProgress ? "loading" : ""}`}>
             <div className="finished">Campaign Sucsesfull</div>
             <div className="campaignPhoto" style={{
               backgroundImage: `url("${this.state.cover}")`
-            }}>
+            }}
+            onClick={this.refreshPage}
+            >
               <h2 className="campaignName" style={{ backgroundColor: this.state.color }}>{this.props.campaign.name}</h2>
             </div>
             <div className="campaignBody">
+              <div className="loader"><span>Paymant In Progress</span></div>
               {renderBody}
               {renderDonate}
-              <div className="campaignGoalWrapper"><div className="campaignGoalProgress"><div className="campaignProgressText" style={{ left: this.state.progress + "%", backgroundColor: this.state.color }} ><strong>{this.state.progressText}%</strong></div><div className="campaignProgress" style={{ width: this.state.progress + '%', backgroundColor: this.state.color }}></div></div></div>
+              <div className="campaignGoalWrapper"><div className="campaignGoalProgress"><div className="campaignProgressText" style={{ left: progress + "%", backgroundColor: this.state.color }} ><strong>{progressText}%</strong></div><div className="campaignProgress" style={{ width: progress + '%', backgroundColor: this.state.color }}></div></div></div>
               <div className="campaignRaised"><strong>Raised:</strong> {ethDisplay(this.props.campaign.currentAmount)}<div className="eth"></div></div>
               <div className="campaignGoal"><strong>Goal:</strong> {ethDisplay(this.props.campaign.targetAmount)}<div className="eth"></div></div>
             </div>
