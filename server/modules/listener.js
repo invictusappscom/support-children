@@ -4,7 +4,7 @@ const supportChildrenContract = require('../../client/src/contracts/SupportChild
 const deployedNetwork = supportChildrenContract.networks[config.networkId]
 const mail = require('./mail')
 
-let web3 = new Web3(
+const web3 = new Web3(
   new Web3.providers.WebsocketProvider(config.websocketProvider)
 )
 
@@ -22,7 +22,14 @@ contract.events.DonationMade({}, async (error, data) => {
   console.log('donationAmount: ' + donationAmount)
   console.log('email: ' + email)
 
-  mail.donationMade(campaignId, donationAmount, email, await filledPercentage(campaignId))
+  const calcPerc = await filledPercentage(campaignId, donationAmount)
+
+  mail.donationMade(campaignId, donationAmount, email, calcPerc.perc)
+
+  if (calcPerc.notifyDonorsOnReachedPercentage) {
+    const emails = await contract.methods.getDonorEmails(campaignId).call()
+    mail.campaignReachedInterestedPercentage(campaignId, calcPerc.collectedAmount, emails, (await filledPercentage(campaignId)).perc)
+  }
 })
 
 contract.events.CampaignFinished({}, async (error, data) => {
@@ -37,21 +44,44 @@ contract.events.CampaignFinished({}, async (error, data) => {
   console.log('donationAmount: ' + collectedAmount)
   console.log('emails: ' + emails)
 
-  mail.campaignFinished(campaignId, collectedAmount, emails, await filledPercentage(campaignId))
+  mail.campaignFinished(campaignId, collectedAmount, emails, (await filledPercentage(campaignId)).perc)
 })
 
-async function filledPercentage (campaignId) {
-  let campaigns = await contract.methods.getCampaigns().call()
+async function filledPercentage (campaignId, donationAmount) {
+  let notifyDonorsOnReachedPercentage = false
+  const campaigns = await contract.methods.getCampaigns().call()
+  const targetAmount = campaigns[campaignId].targetAmount
+  const currentAmount = campaigns[campaignId].currentAmount
+
   console.log(campaigns[campaignId].name)
-  console.log(campaigns[campaignId].targetAmount)
-  console.log(campaigns[campaignId].currentAmount)
+  console.log(targetAmount)
+  console.log(currentAmount)
 
   let perc = 0
   try {
-    perc = (campaigns[campaignId].currentAmount / campaigns[campaignId].targetAmount * 100).toFixed(2)
+    perc = (currentAmount / targetAmount * 100).toFixed(2)
   } catch (e) {
     console.error(e)
   }
   console.log(perc)
-  return perc
+
+  if (donationAmount) {
+    let beforePercentage
+    try {
+      beforePercentage = ((currentAmount - donationAmount) / targetAmount * 100).toFixed(2)
+    } catch (e) {
+      console.error(e)
+      return { perc, notifyDonorsOnReachedPercentage: false }
+    }
+    if (beforePercentage < 25 && perc >= 25 && perc < 50) {
+      notifyDonorsOnReachedPercentage = true
+    } else if (beforePercentage < 50 && perc >= 50 && perc <= 75) {
+      notifyDonorsOnReachedPercentage = true
+    } else if (beforePercentage < 75 && perc >= 75 && perc <= 75) {
+      notifyDonorsOnReachedPercentage = true
+    } else if (beforePercentage < 100 && perc >= 100) {
+      notifyDonorsOnReachedPercentage = true
+    }
+  }
+  return { perc, notifyDonorsOnReachedPercentage, collectedAmount: currentAmount }
 }

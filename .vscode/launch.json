@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/server/index.js",
-            "cwd": "${fileDirname}"
+            "cwd": "${workspaceFolder}/server/"
         },
         {
             "name": "Run Tests",

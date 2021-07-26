@@ -1,6 +1,8 @@
 const path = require('path')
 require('dotenv').config({ path: path.resolve(process.cwd(), '../.env') })
 
+console.log (path.resolve(process.cwd(), '../.env'))
+
 module.exports = {
   port: process.env.PORT || 9000,
   mail: {

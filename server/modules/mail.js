@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const config = require('../config').mail
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: config.user,
@@ -30,18 +30,14 @@ function donationMade (campaignId, donationAmount, email, filledPercentage) {
 }
 
 function campaignFinished (campaignId, collectedAmount, emails, filledPercentage) {
-  // remove duplicates, if someone contributed more then once in capmaign
-  emails = [...new Set(emails)]
-  
-  // remove empty emails, for people which wants to be anonym and did not provide email
-  emails = emails.filter((email)=> email)
+  emails = cleanEmails(emails)
 
   let text = `Congratulations, campaign that you supported is finished. For campaign with id: ${campaignId} total collected amount is ${collectedAmount} wei! Which is ${filledPercentage}%`
   let subject = 'Campaign is finished!'
   // check if campaign is finished successfully or stopped
   if (filledPercentage < 100) {
     text = `Campaign with id: ${campaignId} is stopped. total collected amount is ${collectedAmount} wei! Which is ${filledPercentage}%`
-    'Campaign is stopped!'
+    subject = 'Campaign is stopped!'
   }
 
   const mailOptions = {
@@ -53,5 +49,31 @@ function campaignFinished (campaignId, collectedAmount, emails, filledPercentage
   send(mailOptions)
 }
 
+function campaignReachedInterestedPercentage (campaignId, collectedAmount, emails, filledPercentage) {
+  emails = cleanEmails(emails)
+
+  const text = `For campaign with id: ${campaignId} total collected amount is ${collectedAmount} wei! Which is ${filledPercentage}%`
+  const subject = `Campaign that you supported has reached ${filledPercentage}%`
+
+  const mailOptions = {
+    from: config.user,
+    bcc: emails,
+    subject,
+    text
+  }
+  send(mailOptions)
+}
+
+function cleanEmails (emails) {
+  // remove duplicates, if someone contributed more then once in capmaign
+  emails = [...new Set(emails)]
+
+  // remove empty emails, for people which wants to be anonym and did not provide email
+  emails = emails.filter((email) => email)
+
+  return emails
+}
+
 exports.donationMade = donationMade
 exports.campaignFinished = campaignFinished
+exports.campaignReachedInterestedPercentage = campaignReachedInterestedPercentage
