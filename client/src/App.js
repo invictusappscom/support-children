@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SupportChildrenContract from "./contracts/SupportChildren.json";
-import getWeb3 from "./getWeb3";
+import { getWeb3 } from "./getWeb3";
 
 import Campaign from "./Campaign";
 import Modal from "./Modal";
@@ -24,7 +24,6 @@ class App extends Component {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
@@ -34,11 +33,26 @@ class App extends Component {
       const instance = new web3.eth.Contract(
         SupportChildrenContract.abi,
         deployedNetwork && deployedNetwork.address
-      );
+      )
+
+      instance.events.DonationMade({}, async (error, data) => {
+        if (error) {
+          return console.log('Error: ' + error)
+        }
+      
+        const campaignId = data.returnValues[0]
+        const donationAmount = data.returnValues[1]
+        const email = data.returnValues[2]
+        console.log('campaignId: ' + campaignId)
+        console.log('donationAmount: ' + donationAmount)
+        console.log('email: ' + email)
+        this.pullList()
+        // mail.donationMade(campaignId, donationAmount, email, await filledPercentage(campaignId))
+      })
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance }, this.pullList);
 
 
       // console.log(instance);
@@ -51,11 +65,10 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
+  pullList = async () => {
     const { accounts, contract } = this.state;
-
     let list = await contract.methods.getCampaigns().call()
-    // console.log(list)
+    console.log(list)
     this.setState({
       list: list
     })
@@ -85,8 +98,7 @@ class App extends Component {
   handleCreateCampaign = (data) => {
     const { accounts, contract } = this.state;
     // console.log('Create campaign', data)
-    contract.methods.createCampaign(data.name, data.description, data.email, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
-    // console.log(newCampaign)
+    contract.methods.createCampaign(data.name, data.description, data.email, data.imageUrl, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
     this.handleCloseModal()
   }
   handleCloseModal = () => {

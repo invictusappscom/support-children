@@ -10,19 +10,24 @@ class Campaign extends Component {
 
     let colorArray = ['#00baa3', '#efc94c', '#d55342', '#2780ba']
 
-    // console.log("Campaign", props.campaign)
+    console.log("Campaign", props.campaign)
     // console.log("Index", props.index)
     let progress = (props.campaign.currentAmount / props.campaign.targetAmount) * 100
+    let progressText = progress
     if (progress > 100) progress = 100
     // console.log('progress', progress)
     let color = colorArray[props.index % 4]
+    let cover = 'cause-' + this.props.index % 7 + '.jpg'
+    if (props.campaign.image) cover = props.campaign.image
     this.state = {
       ethAmount: 0,
       email: '',
       campaign: null,
       progress: progress,
+      progressText: progressText,
       color: color,
-      isDonationInProgress: false
+      isDonationInProgress: false,
+      cover: cover
     }
   }
 
@@ -78,14 +83,14 @@ class Campaign extends Component {
           <div className={`campaign ${this.props.campaign.active ? "active" : "inactive"}`}>
             <div className="finished">Campaign Sucsesfull</div>
             <div className="campaignPhoto" style={{
-              backgroundImage: `url("cause-${this.props.index % 7}.jpg")`
+              backgroundImage: `url("${this.state.cover}")`
             }}>
               <h2 className="campaignName" style={{ backgroundColor: this.state.color }}>{this.props.campaign.name}</h2>
             </div>
             <div className="campaignBody">
               {renderBody}
               {renderDonate}
-              <div className="campaignGoalWrapper"><div className="campaignGoalProgress"><div className="campaignProgressText" style={{ left: this.state.progress + "%", backgroundColor: this.state.color }} ><strong>{this.state.progress}%</strong></div><div className="campaignProgress" style={{ width: this.state.progress + '%', backgroundColor: this.state.color }}></div></div></div>
+              <div className="campaignGoalWrapper"><div className="campaignGoalProgress"><div className="campaignProgressText" style={{ left: this.state.progress + "%", backgroundColor: this.state.color }} ><strong>{this.state.progressText}%</strong></div><div className="campaignProgress" style={{ width: this.state.progress + '%', backgroundColor: this.state.color }}></div></div></div>
               <div className="campaignRaised"><strong>Raised:</strong> {ethDisplay(this.props.campaign.currentAmount)}<div className="eth"></div></div>
               <div className="campaignGoal"><strong>Goal:</strong> {ethDisplay(this.props.campaign.targetAmount)}<div className="eth"></div></div>
             </div>

@@ -14,3 +14,6 @@ textarea:focus, input:focus{outline: none;}
 #createCampaignCancel {cursor: pointer; position: absolute; right: 3%; bottom: 20px; width: 45%; background-color: #ffffff; border: solid 2px #d55342; border-radius: 25px; padding: 10px 20px; color: #d55342; text-transform: uppercase;}
 
 h3 {font-size: 18px; text-transform: uppercase; margin: 0; padding: 0; color: #d55342}
+
+.ethCell {padding-left: 10px;}
+.ethCell input {width: 80%; margin-right: 5px;}
