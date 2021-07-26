@@ -35,3 +35,7 @@ textarea:focus, input:focus{outline: none;}
 
 .donateInput {transition: all .5s linear; width: 100%; border-style: none; padding: 5px 10px; margin-bottom: 10px; border: solid 1px #cccccc; border-radius: 15px;}
 .donateInput.ethValue {width: 50%;}
+.ethValue.error {border-color: #ff0000;}
+
+.removeCampaing {position: absolute; width: 30px; height: 30px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.7); right: -15px; top: -15px; z-index: 8; cursor: pointer; background-image: url('asset/close-icon.svg'); background-position: center; background-size: contain; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4); cursor: pointer;}
+.inactive .removeCampaing {display: none;}

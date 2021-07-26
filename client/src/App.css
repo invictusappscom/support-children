@@ -31,7 +31,7 @@ header {height: 70px; background-color: rgba(255, 255, 255, 0.95); position: fix
 
 #addCampaign {cursor: pointer; position: absolute; right: 5%; top: 10px; background-color: #d55342; border-radius: 25px; padding: 10px 20px; color: #ffffff; text-transform: uppercase; }
 
-#root {height: 100vh; background-color: #ffffff; width: 90%; margin: 0 auto;}
+#root {background-color: #ffffff; width: 90%; margin: 0 auto;}
 .list {display: flex; flex-wrap: wrap;}
 
 .eth {display: inline-block; width: 20px; height: 20px; margin-bottom: -3px; background: url('asset/ethereum.svg') no-repeat center; background-size: contain;}
