@@ -1,11 +1,11 @@
-## Configure
+### Configure
 
 Create .env from .env.example and adjust params
 ```bash
 cp .env.example .env
 ```
 
-## Deploy contract
+### Deploy contract
 ```bash
 # on develop network
 truffle migrate
@@ -29,12 +29,12 @@ npm run build
 npm start
 ```
 
-## Dockerized Run
+### Dockerized Run
 ```bash
 docker-compose up --build
 ```
 
-## Test
+### Test
 Test all .js and .sol files in ./test directory with `truffle test`
 ```bash
 npm run test
