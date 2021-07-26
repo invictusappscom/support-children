@@ -30,6 +30,10 @@ function donationMade (campaignId, donationAmount, email, filledPercentage) {
 }
 
 function campaignFinished (campaignId, collectedAmount, emails, filledPercentage) {
+  // remove duplicates, if someone contributed more then once in capmaign
+  emails = [...new Set(emails)]
+  // remove empty emails, for people which wants to be anonym and did not provid email
+  emails = emails.filter((email)=> email)
   const mailOptions = {
     from: config.user,
     bcc: emails,
