@@ -120,7 +120,7 @@ class Campaign extends Component {
     if (this.props.campaign) {
       let flag
       if (parseInt(this.props.campaign.currentAmount) >= parseInt(this.props.campaign.targetAmount)) {
-        flag = <div className="finished">Campaign Sucsesfull</div>
+        flag = <div className="finished">Campaign Successful</div>
       } else {
         flag = <div className="finished">Campaign Inactive</div>
       }

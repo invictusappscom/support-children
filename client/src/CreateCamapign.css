@@ -2,7 +2,7 @@
 
 textarea:focus, input:focus{outline: none;}
 
-.createCamapignBg {height: 350px; background: url('asset/create-campaign-bg.jpg') no-repeat center; background-size: cover; border-bottom: solid 2px #d55342;}
+.createCamapignBg {height: 350px; background: url('./asset/create-campaign-bg.jpg') no-repeat center; background-size: cover; border-bottom: solid 2px #d55342;}
 .createCamapignBody {padding: 15px; height: calc(100% - 350px); position: relative;}
 .createCamapignBody input {transition: all .5s linear; width: 100%; border-style: none; padding: 10px 20px; margin-bottom: 10px; border: solid 1px #cccccc; border-radius: 15px;}
 .createCamapignBody textarea {transition: all .5s linear; width: 100%; border-style: none; padding: 10px 20px; resize: none; height: 100px; margin-bottom: 0; border: solid 1px #cccccc;; border-radius: 15px;}
