@@ -1,5 +1,5 @@
-.campaignWrapper {width: 33%; padding: 15px;}
-.campaign {height: 550px; border: 1px solid #f1f1f1; position: relative;}
+.campaignWrapper {width: 33%; max-width: 400px; min-width: 300px;  padding: 15px;}
+.campaign {height: 550px; border: 1px solid #f1f1f1; position: relative; background-color: #ffffff;}
 .campaign.inactive .campaignPhoto {-webkit-filter: grayscale(1); filter: grayscale(1); opacity: 0.6;}
 .campaign.inactive .campaignBody {-webkit-filter: grayscale(.5); filter: grayscale(.5);}
 .campaign.inactive:hover .campaignPhoto {-webkit-filter: grayscale(0); filter: grayscale(0); opacity: 1;}
@@ -7,7 +7,7 @@
 .finished {display: none;}
 .campaign.inactive .finished {position: absolute; display: block; top: -6px; left: 0; right: 0; z-index: 6; height: 35px; background: url('asset/sticker.svg') no-repeat top center; background-size: contain; color: #ffffff; padding-top: 5px;}
 
-.campaignPhoto {transition: all .5s linear; height: 300px; background-size: cover; position: relative;}
+.campaignPhoto {transition: all .5s linear; height: 300px; background-size: cover; position: relative; background-position: top center;}
 .campaignName {font-weight: bold; text-align: center; font-size: 18px; text-transform: uppercase; position: absolute; bottom: 0; left: 0; right: 0; z-index: 8; margin: 0; padding: 5px; opacity: 0.8; color: #ffffff;}
 .campaignDescription {text-align: justify; height: 70px; overflow: hidden;}
 

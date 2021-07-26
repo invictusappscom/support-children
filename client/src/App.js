@@ -36,25 +36,24 @@ class App extends Component {
       )
 
       instance.events.DonationMade({}, async (error, data) => {
+        // console.log('DonationMade')
         if (error) {
           return console.log('Error: ' + error)
         }
-        this._child.current.refreshPage()
-        this.pullList()
+        this.refreshList()
       })
 
       instance.events.CampaignFinished({}, async (error, data) => {
+        // console.log('CampaignFinished')
         if (error) {
           return console.log('Error: ' + error)
         }
-        this._child.current.refreshPage()
-        this.pullList()
+        this.refreshList()
       })
 
       instance.events.CampaignCreated({}, async (error, data) => {
         // console.log('CampaignCreated')
-        this._child.current.refreshPage()
-        this.pullList()
+        this.refreshList()
       })
 
 
@@ -96,8 +95,7 @@ class App extends Component {
     try {
       await contract.methods.createCampaign(data.name, data.description, data.email, data.imageUrl, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
     } catch (e) {
-      this._child.current.refreshPage()
-      this.pullList()
+      this.refreshList()
     }
   }
   handleCloseModal = () => {
@@ -105,7 +103,14 @@ class App extends Component {
       isModal: false,
       isCreateCampaign: false
     })
-
+  }
+  refreshList = () => {
+    try {
+      this._child.current.refreshPage()
+      this.pullList()
+    } catch (e) {
+      console.log(e)
+    }
   }
   handleDonation = async (data, userData) => {
     const { accounts, contract } = this.state;
