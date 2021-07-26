@@ -152,6 +152,7 @@ class App extends Component {
         {createCampaign}
         <header>
           <div className="wrapper">
+            <div className="logo"></div>
             <div id="addCampaign" onClick={this.handlePress}>Add Campaign</div>
           </div>
         </header>
