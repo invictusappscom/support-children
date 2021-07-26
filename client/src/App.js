@@ -74,6 +74,7 @@ class App extends Component {
     const { accounts, contract } = this.state;
     let list = await contract.methods.getCampaigns().call()
     // console.log(list)
+
     this.setState({
       list: list
     })
@@ -130,7 +131,7 @@ class App extends Component {
       await contract.methods.endCampaign(id).send({ from: accounts[0] })
     } catch (e) {
       this._child.current.refreshPage()
-      this.pullList() 
+      this.pullList()
     }
   }
 
