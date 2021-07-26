@@ -29,6 +29,11 @@ npm build
 npm start
 ```
 
+# Dockerized Run
+```bash
+docker-compose up --build
+```
+
 # Test
 Test all .js and .sol files in ./test directory with `truffle test`
 ```bash
