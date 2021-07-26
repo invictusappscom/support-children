@@ -5,11 +5,12 @@ require('chai')
     .should()
 
 contract('SupportChildren', ([deployer, user]) => {
+    let supportChildren
     beforeEach(async () => {
         supportChildren = await SupportChildren.new()
         // await supportChildren.deposit({value: 10**16, from: user})
-        await supportChildren.createCampaign('Dora', 'Da ne ujeda', 'zarej@svrljig.net', 100, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
-        await supportChildren.createCampaign('Loki', 'Da ne bezi', 'nemanja@svrljig.net', 100, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
+        await supportChildren.createCampaign('Dora', 'Da ne ujeda', 'zarej@svrljig.net', '', 100, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
+        await supportChildren.createCampaign('Loki', 'Da ne bezi', 'nemanja@svrljig.net', '', 100, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
     })
 
     describe('testing getters...', () => {
@@ -37,10 +38,11 @@ contract('SupportChildren', ([deployer, user]) => {
     })
     
     describe('testing campaign...', () => {
-        describe('success', () => {
-            campaignsLenght = await supportChildren.getCampaigns().length
-            await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 1001, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
-            
+        describe('success', async () => {
+            beforeEach(async () => {
+                campaignsLenght = await supportChildren.getCampaigns().length
+                await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 1001, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
+            })
             it('campaign created', async () => {
                 campaigns = await supportChildren.getCampaigns()
                 expect(Number(campaigns.length)).to.eq(campaignsLenght + 1)
@@ -54,26 +56,28 @@ contract('SupportChildren', ([deployer, user]) => {
                 expect(campaigns[campaignsLenght].active).to.eq(true)
             })
 
-            await supportChildren.endCampaign(campaignsLenght)
             it('campaign ended', async () => {
+                await supportChildren.endCampaign(campaignsLenght)
                 expect(campaigns[campaignsLenght].active).to.eq(false)
             })
 
         })
         
-        describe('failure', () => {
+        describe('failure', async () => {
             let campaigns
-            campaignsLenght = await supportChildren.getCampaigns().length
-            await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 0, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
+            beforeEach(async () => {
+                campaignsLenght = await supportChildren.getCampaigns().length
+                await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 0, '0x8B24BA3Aa2505AbB0f9086fa50ca6197cEdF0B83')
+            })
             
             it('total campaigns not increased after 0 target amount', async () => {
                 campaigns = await supportChildren.getCampaigns()
                 expect(Number(campaigns.length)).to.eq(campaignsLenght)
             })
 
-            await supportChildren.createCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 1110, '0x8B0ca6197cEdF0B83')
             
             it('total campaigns not increased campaign after bad address', async () => {
+                await supportChildren.creasteCampaign('Child', 'Final', 'zarej@svrljig.net', 'http://www.example.com/image.jpg', 1110, '0x8B0ca6197cEdF0B83')
                 campaigns = await supportChildren.getCampaigns()
                 expect(Number(campaigns.length)).to.eq(campaignsLenght)
             })
@@ -90,7 +94,7 @@ contract('SupportChildren', ([deployer, user]) => {
         })
     })
 
-    describe('testing donation...', () => {
+    describe('testing donation...', async () => {
         describe('success', () => {
             beforeEach(async () => {
                 await supportChildren.donate(0, 'donator@gmail.com', { value: 10 ** 16, from: user }) //0.01 ETH
@@ -101,9 +105,11 @@ contract('SupportChildren', ([deployer, user]) => {
             })
         })
 
-        describe('failure', () => {
-            amountBefore = await supportChildren.getCampaignAmount(0)
-            await supportChildren.donate(0, 'donator@gmail.com', { value: 0, from: user }) //0.0 ETH
+        describe('failure', async () => {
+            beforeEach(async () => {
+                amountBefore = await supportChildren.getCampaignAmount(0)
+                await supportChildren.donate(0, 'donator@gmail.com', { value: 0, from: user }) //0.0 ETH
+            })
 
             it('amount should not increase', async () => {
                 expect(Number(await supportChildren.getCampaignAmount(0))).to.eq(amountBefore)
