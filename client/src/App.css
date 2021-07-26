@@ -35,3 +35,8 @@ header {height: 70px; background-color: rgba(255, 255, 255, 0.95); position: fix
 .list {display: flex; flex-wrap: wrap;}
 
 .eth {display: inline-block; width: 20px; height: 20px; margin-bottom: -3px; background: url('asset/ethereum.svg') no-repeat center; background-size: contain;}
+
+.flexRow {display: flex; flex-wrap: wrap;}
+.col8 {width: 66%;}
+.col6 {width: 50%;}
+.col4 {width: 33%;}

@@ -12,7 +12,8 @@ class CreateCampaign extends Component {
         errorName: false,
         errorEmail: false,
         errorTarget: false,
-        errorBeneficiaryAddress: false
+        errorBeneficiaryAddress: false,
+        imageUrl: ''
     }
     constructor(props) {
         super(props)
@@ -25,19 +26,19 @@ class CreateCampaign extends Component {
     saveCampaignHandle = () => {
         let error = false
         if (this.state.name == '') {
-            this.setState({errorName: true})
+            this.setState({ errorName: true })
             error = true
         }
         if (this.state.email == '') {
-            this.setState({errorEmail: true})
+            this.setState({ errorEmail: true })
             error = true
         }
         if (this.state.targetAmount <= 0) {
-            this.setState({errorTarget: true})
+            this.setState({ errorTarget: true })
             error = true
         }
         if (this.state.beneficiaryAddress == '') {
-            this.setState({errorBeneficiaryAddress: true})
+            this.setState({ errorBeneficiaryAddress: true })
             error = true
         }
         if (!error) {
@@ -47,7 +48,7 @@ class CreateCampaign extends Component {
                 description: this.state.description,
                 targetAmount: this.state.targetAmount,
                 imageUrl: this.state.imageUrl,
-                beneficiaryAddress: this.state.beneficiaryAddress
+                beneficiaryAddress: this.state.beneficiaryAddress,
             })
         }
     }
@@ -60,11 +61,23 @@ class CreateCampaign extends Component {
                 <div className="createCamapignBg"></div>
                 <div className="createCamapignBody">
                     <h3>Create Campaign</h3>
-                    <input type="text" placeholder="Campaign Name" className={`${this.state.errorName ? "error" : ""}`}
-                        name="name"
-                        value={this.state.name}
-                        onChange={this.onInputchange}
-                    />
+                    <div className="flexRow">
+                        <div className="col8">
+                            <input type="text" placeholder="Campaign Name" className={`${this.state.errorName ? "error" : ""}`}
+                                name="name"
+                                value={this.state.name}
+                                onChange={this.onInputchange}
+                            />
+                        </div>
+                        <div className="col4 ethCell">
+                            <input type="number" placeholder="Target Amount" className={`${this.state.errorTarget ? "error" : ""}`}
+                                name="targetAmount"
+                                value={this.state.targetAmount}
+                                onChange={this.onInputchange}
+                            />
+                            <div className="eth"></div>
+                        </div>
+                    </div>
                     <input type="text" placeholder="Beneficiary Address" className={`${this.state.errorBeneficiaryAddress ? "error" : ""}`}
                         name="beneficiaryAddress"
                         value={this.state.beneficiaryAddress}
@@ -78,11 +91,6 @@ class CreateCampaign extends Component {
                     <input type="text" placeholder="Email" className={`${this.state.errorEmail ? "error" : ""}`}
                         name="email"
                         value={this.state.email}
-                        onChange={this.onInputchange}
-                    />
-                    <input type="number" placeholder="Target Amount" className={`${this.state.errorTarget ? "error" : ""}`}
-                        name="targetAmount"
-                        value={this.state.targetAmount}
                         onChange={this.onInputchange}
                     />
                     <input type="text" placeholder="Image URL"
