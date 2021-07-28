@@ -28,6 +28,7 @@ contract SupportChildren {
         string description;
         string creatorEmail; 
         string image; 
+        string targetCurrency; 
         uint targetAmount;
         uint currentAmount;
         address payable beneficiaryAddress;
@@ -38,10 +39,13 @@ contract SupportChildren {
     Campaign[] campaigns;
     
     mapping(uint => string[]) campaignDonationsEmails;
+    mapping(uint => mapping(string => uint)) currentCampaingAmountsByCurrency;
     mapping(address => uint[]) campaignDonors;
     
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _targetAmount, address payable _beneficiaryAddress) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, string memory _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
         require(_targetAmount > 0, "campaign target amount must be larger than 0");
+        // TODO: save keccak256(bytes("ETH") as variable to reduce gas fee's
+        require(keccak256(bytes(_targetCurrency)) == keccak256(bytes("ETH")) || keccak256(bytes(_targetCurrency)) == keccak256(bytes("DAI")), "campaing target currency must be ETH or DAI");
         campaigns.push(Campaign({
             id: count,
             name: _name,
@@ -49,6 +53,7 @@ contract SupportChildren {
             creatorEmail: _creatorEmail,
             image: _image,
             targetAmount: _targetAmount,
+            targetCurrency: _targetCurrency,
             currentAmount: 0,
             beneficiaryAddress: _beneficiaryAddress,
             creatorAddress: tx.origin,
@@ -80,6 +85,8 @@ contract SupportChildren {
 
     // Real ETH donation
     function donate(uint _campaignId, string memory _donorEmail) payable public {
+        require(campaigns[_campaignId].creatorAddress != tx.origin, "can't donate to your campaign you've created");
+        require(campaigns[_campaignId].beneficiaryAddress != tx.origin, "can't donate to your own campaign");
         require(campaigns[_campaignId].active, "campaign is not active");
         require(msg.value > 0, "donation must be larger than 0");
         campaignDonationsEmails[_campaignId].push(_donorEmail);
@@ -87,6 +94,7 @@ contract SupportChildren {
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
 
         emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail);
+        currentCampaingAmountsByCurrency[_campaignId]["ETH"] = currentCampaingAmountsByCurrency[_campaignId]["ETH"] + msg.value;
 
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
             finishCampaign(_campaignId);
