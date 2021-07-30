@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
+import "./UniswapV3.sol";
+
 contract SupportChildren {
 
+    Uniswap3 public constant uniswap = Uniswap3(payable(address(0xd9145CCE52D386f254917e481eB44e9943F39138)));
+    
     event DonationMade (
         uint campaignId,
         uint donationAmount,
-        string notifyEmail
+        string notifyEmail,
+        string currency
     );
 
     event CampaignCreated (
@@ -28,7 +33,7 @@ contract SupportChildren {
         string description;
         string creatorEmail; 
         string image; 
-        string targetCurrency; 
+        uint targetCurrency; 
         uint targetAmount;
         uint currentAmount;
         address payable beneficiaryAddress;
@@ -41,10 +46,40 @@ contract SupportChildren {
     mapping(uint => string[]) campaignDonationsEmails;
     mapping(address => uint[]) campaignDonors;
     
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, string memory _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
+    modifier campaignCreator(uint _campaignId) {
+        require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be campaign creator to do this");
+        _;
+    }
+    
+    modifier notCampaignCreator(uint _campaignId) {
+        require(campaigns[_campaignId].creatorAddress != tx.origin, "you can't be campaign creator to do this");
+        _;
+    }
+
+    modifier ethCampaign(uint _campaignId) {
+        require(campaigns[_campaignId].targetCurrency == 0, "This is not ETH campaign");
+        _;
+    }
+
+    modifier daiCampaign(uint _campaignId) {
+        require(campaigns[_campaignId].targetCurrency == 1, "This is not DAI campaign");
+        _;
+    }
+
+    modifier notCampaignBenefactor(uint _campaignId) {
+        require(campaigns[_campaignId].beneficiaryAddress != tx.origin, "you can't be campaign benefactor to do this");
+        _;
+    }
+
+    modifier campaignActive(uint _campaignId) {
+        require(campaigns[_campaignId].active == true, "campaing has finished");
+        _;
+    }
+
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
         require(_targetAmount > 0, "campaign target amount must be larger than 0");
         // TODO: save keccak256(bytes("ETH") as variable to reduce gas fee's
-        require(keccak256(bytes(_targetCurrency)) == keccak256(bytes("ETH")) || keccak256(bytes(_targetCurrency)) == keccak256(bytes("DAI")), "campaing target currency must be ETH or DAI");
+        require(_targetCurrency == 1 || _targetCurrency == 0, "campaing target currency must be ETH or DAI");
         campaigns.push(Campaign({
             id: count,
             name: _name,
@@ -62,16 +97,6 @@ contract SupportChildren {
         emit CampaignCreated(count);
         
         count++;
-    }
-
-    modifier campaignCreator(uint _campaignId) {
-        require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be creator of campaign");
-        _;
-    }
-
-    modifier campaignActive(uint _campaignId) {
-        require(campaigns[_campaignId].active == true, "campaing has finished");
-        _;
     }
 
     function endCampaign(uint _campaignId) public campaignActive(_campaignId) campaignCreator(_campaignId) {
@@ -97,15 +122,31 @@ contract SupportChildren {
         campaigns[_campaignId].active = false;
     }
 
-    // Real ETH donation
-    function donate(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) campaignCreator(_campaignId) {
-        require(campaigns[_campaignId].beneficiaryAddress != tx.origin, "can't donate to your own campaign");
+
+    // ETH to ETH
+    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {
         require(msg.value > 0, "donation must be larger than 0");
+        // curentamount must be fetched from frontend
+        require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
 
-        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail);
+        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, "ETH");
+
+        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
+            finishCampaign(_campaignId);
+        }
+    }
+
+    // ETH to DAI
+    function donateEthtoDaiCampaign(uint _campaignId, string memory _donorEmail, uint daiAmount) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) daiCampaign(_campaignId) {
+        require(msg.value > 0, "donation must be larger than 0");
+        uniswap.convertEthToExactDai{ value: msg.value }(daiAmount);
+        campaignDonationsEmails[_campaignId].push(_donorEmail);
+        campaignDonors[tx.origin].push(_campaignId);
+        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + daiAmount;
+        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, "ETH");
 
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
             finishCampaign(_campaignId);
@@ -127,5 +168,4 @@ contract SupportChildren {
     function getCampaignAmount(uint _campaignId) public view returns (uint) {
         return campaigns[_campaignId].currentAmount;
     }
-    
 }
