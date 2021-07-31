@@ -80,11 +80,16 @@ class App extends Component {
     })
   }
 
-  handlePress = () => {
+  handlePress = async () => {
     this.setState({
       isModal: true,
       isCreateCampaign: true
     })
+    try {
+      this.state.web3.eth.personal.sign('{"timestamp":  1627753792758}', this.state.accounts[0]).then(console.log)
+    }catch (e) {
+      console.log({error: e})
+    }
   }
   handleModalClick = () => {
     this.handleCloseModal()
