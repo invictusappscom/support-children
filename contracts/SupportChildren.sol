@@ -33,6 +33,7 @@ contract SupportChildren {
         address payable beneficiaryAddress;
         address creatorAddress;
         bool active;
+        uint endTimestamp;
     }
     
     Campaign[] campaigns;
@@ -40,8 +41,9 @@ contract SupportChildren {
     mapping(uint => string[]) campaignDonationsEmails;
     mapping(address => uint[]) campaignDonors;
     
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _targetAmount, address payable _beneficiaryAddress) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _endTimestamp, uint _targetAmount, address payable _beneficiaryAddress) public {
         require(_targetAmount > 0, "campaign target amount must be larger than 0");
+        require(_endTimestamp > block.timestamp, "Campaign must end in the future");
         campaigns.push(Campaign({
             id: count,
             name: _name,
@@ -52,7 +54,8 @@ contract SupportChildren {
             currentAmount: 0,
             beneficiaryAddress: _beneficiaryAddress,
             creatorAddress: tx.origin,
-            active: true
+            active: true,
+            endTimestamp: _endTimestamp 
         }));
 
         emit CampaignCreated(count);
@@ -82,6 +85,8 @@ contract SupportChildren {
     function donate(uint _campaignId, string memory _donorEmail) payable public {
         require(campaigns[_campaignId].active, "campaign is not active");
         require(msg.value > 0, "donation must be larger than 0");
+        require(campaigns[_campaignId].endTimestamp > block.timestamp, "Campaign already finished");
+
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
