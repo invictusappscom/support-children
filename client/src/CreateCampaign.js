@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
 import "./CreateCamapign.css";
+import TokenSelector from "./TokenSelector"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 class CreateCampaign extends Component {
     state = {
@@ -13,7 +16,9 @@ class CreateCampaign extends Component {
         errorEmail: false,
         errorTarget: false,
         errorBeneficiaryAddress: false,
-        imageUrl: ''
+        imageUrl: '',
+        token: this.props.tokens[0],
+        startDate: new Date(),
     }
     constructor(props) {
         super(props)
@@ -55,6 +60,17 @@ class CreateCampaign extends Component {
     closeModal = () => {
         this.props.closeModal()
     }
+    setToken = (token) => {
+        console.log('Set Token', token)
+        this.setState({
+            token: token
+        })
+    }
+    setStartDate = (date) => {
+        this.setState({
+            startDate: date
+        })
+    }
     render() {
         return (
             <div id="createCamapignWrapper">
@@ -62,20 +78,22 @@ class CreateCampaign extends Component {
                 <div className="createCamapignBody">
                     <h3>Create Campaign</h3>
                     <div className="flexRow">
-                        <div className="col8">
+                        <div className="col6">
                             <input type="text" placeholder="Campaign Name" className={`${this.state.errorName ? "error" : ""}`}
                                 name="name"
                                 value={this.state.name}
                                 onChange={this.onInputchange}
                             />
                         </div>
-                        <div className="col4 ethCell">
+                        <div className="col3 ethCell">
                             <input type="number" placeholder="Target Amount" className={`${this.state.errorTarget ? "error" : ""}`}
                                 name="targetAmount"
                                 value={this.state.targetAmount}
                                 onChange={this.onInputchange}
                             />
-                            <div className="eth"></div>
+                        </div>
+                        <div className="col3 ethCell">
+                            <TokenSelector tokens={this.props.tokens} setToken={this.setToken} />
                         </div>
                     </div>
                     <input type="text" placeholder="Beneficiary Address" className={`${this.state.errorBeneficiaryAddress ? "error" : ""}`}
@@ -93,11 +111,21 @@ class CreateCampaign extends Component {
                         value={this.state.email}
                         onChange={this.onInputchange}
                     />
-                    <input type="text" placeholder="Image URL"
-                        name="imageUrl"
-                        value={this.state.imageUrl}
-                        onChange={this.onInputchange}
-                    />
+                    <div className="flexRow">
+                        <div className="col6">
+                            <input type="text" placeholder="Image URL"
+                                name="imageUrl"
+                                value={this.state.imageUrl}
+                                onChange={this.onInputchange}
+                            />
+                        </div>
+                        <div className="col6">
+                            <span>Valid till: </span>
+                            <DatePicker selected={this.state.startDate}
+                                onChange={(date) => this.setStartDate(date)}
+                            />
+                        </div>
+                    </div>
                     <div id="createCampaignSave" onClick={this.saveCampaignHandle}>Create Campaign</div>
                     <div id="createCampaignCancel" onClick={this.closeModal}>Cancel</div>
                 </div>

@@ -31,10 +31,10 @@ header {height: 70px; background-color: rgba(255, 255, 255, 0.95); position: fix
 
 .logo {position: absolute; left: 5%; top: 2px; width: 275px; height: 65px; background: url('./asset/logo.svg') no-repeat center; background-size: contain;}
 
-#addCampaign {cursor: pointer; position: absolute; right: 5%; top: 10px; background-color: #d55342; border-radius: 25px; padding: 10px 20px; color: #ffffff; text-transform: uppercase; }
-
-#root {background-color: rgba(255, 255, 255, 0.9); width: 90%; margin: 0 auto; min-height: 100vh;}
+#root {}
 .list {display: flex; flex-wrap: wrap;}
+
+.App {background-color: rgba(255, 255, 255, 0.9); width: 90%; margin: 0 auto; min-height: 100vh;}
 
 .eth {display: inline-block; width: 20px; height: 20px; margin-bottom: -3px; background: url('asset/ethereum.svg') no-repeat center; background-size: contain;}
 
