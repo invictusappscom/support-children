@@ -2,8 +2,11 @@
 pragma solidity >=0.7.6 <0.9.0;
 pragma abicoder v2;
 
-import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol";
-import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
+// import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol";
+// import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
+
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol";
 
 interface IUniswapRouter is ISwapRouter {
     function refundETH() external payable;
@@ -12,7 +15,7 @@ interface IUniswapRouter is ISwapRouter {
 contract Uniswap3 {
   IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
   IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
-  address private constant multiDaiKovan = 0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa;
+  address private constant multiDaiKovan = 0xc3dbf84Abb494ce5199D5d4D815b10EC29529ff8;
   address private constant WETH9 = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
 
   function convertExactEthToDai() external payable {
