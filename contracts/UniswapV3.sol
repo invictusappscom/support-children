@@ -6,7 +6,6 @@ pragma abicoder v2;
 // import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
 
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol";
 
 interface IUniswapRouter is ISwapRouter {
     function refundETH() external payable;
@@ -20,11 +19,15 @@ interface IERC20 {
         external 
         returns (bool);
     function approve(address spender, uint tokens)  external returns (bool);
+    function totalSupply() external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    function transfer(address recipient, uint256 amount) external returns (bool);
 }
 
 contract Uniswap3 {
   IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
-  IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
   address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
   address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
@@ -59,33 +62,61 @@ contract Uniswap3 {
     require(success, "refund failed");
   }
   
-  function convertExactTokenToEth(address token, uint amountIn, uint amountOutMinimum) external {
-    IERC20(token).approve(address(this), amountIn);
-    IERC20(token).transferFrom(msg.sender, address(this), amountIn);
+  function convertTokenToExactEth(address token, uint amountOut, uint amountInMaximum) external {
+    uint256 allowance = IERC20(token).allowance(msg.sender, address(this));
+    require(allowance >= amountInMaximum, "Check the token allowance");
+    IERC20(token).transferFrom(msg.sender, address(this), amountInMaximum);
     uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
     address tokenIn = token;
     address tokenOut = WETH9;
     uint24 fee = 3000;
     address recipient = msg.sender;
     uint160 sqrtPriceLimitX96 = 0;
-    IERC20(token).approve(address(uniswapRouter), amountIn);
+    IERC20(token).approve(address(uniswapRouter), amountInMaximum);
     
-    ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(
+    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
         tokenIn,
         tokenOut,
         fee,
         recipient,
         deadline,
-        amountIn,
-        amountOutMinimum,
+        amountOut,
+        amountInMaximum,
         sqrtPriceLimitX96
     );
     
-    uniswapRouter.exactInputSingle(params);
-    uniswapRouter.refundETH();
+    uint256 amountOFTokenUsed = uniswapRouter.exactOutputSingle(params);
     
-    // refund leftover ETH to user
-    (bool success,) = msg.sender.call{ value: address(this).balance }("");
+    // refund leftover Tokens to user
+    (bool success) = IERC20(token).transfer(msg.sender, amountInMaximum-amountOFTokenUsed);
+    require(success, "refund failed");
+  }
+  
+  function convertTokenToExactToken(address tokenIn, address tokenOut, uint amountOut, uint amountInMaximum) external {
+    uint256 allowance = IERC20(tokenIn).allowance(msg.sender, address(this));
+    require(allowance >= amountInMaximum, "Check the token allowance");
+    IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMaximum);
+    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
+    uint24 fee = 3000;
+    address recipient = msg.sender;
+    uint160 sqrtPriceLimitX96 = 0;
+    IERC20(tokenIn).approve(address(uniswapRouter), amountInMaximum);
+    
+    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
+        tokenIn,
+        tokenOut,
+        fee,
+        recipient,
+        deadline,
+        amountOut,
+        amountInMaximum,
+        sqrtPriceLimitX96
+    );
+    
+    uint256 amountOFTokenUsed = uniswapRouter.exactOutputSingle(params);
+    
+    // refund leftover Tokens to user
+    (bool success) = IERC20(tokenIn).transfer(msg.sender, amountInMaximum-amountOFTokenUsed);
     require(success, "refund failed");
   }
   
