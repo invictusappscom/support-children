@@ -9,18 +9,28 @@ interface IUniswapRouter is ISwapRouter {
     function refundETH() external payable;
 }
 
+interface IERC20 {
+    function transferFrom(
+        address sender, 
+        address recipient, 
+        uint256 amount) 
+        external 
+        returns (bool);
+    function approve(address spender, uint tokens)  external returns (bool);
+}
+
 contract Uniswap3 {
   IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
   IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
-  address private constant multiDaiKovan = 0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa;
-  address private constant WETH9 = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
+  address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+  address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
-  function convertExactEthToDai() external payable {
+  function convertExactEthToToken(address token) external payable {
     require(msg.value > 0, "Must pass non 0 ETH amount");
 
     uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
     address tokenIn = WETH9;
-    address tokenOut = multiDaiKovan;
+    address tokenOut = token;
     uint24 fee = 3000;
     address recipient = msg.sender;
     uint256 amountIn = msg.value;
@@ -45,65 +55,32 @@ contract Uniswap3 {
     (bool success,) = msg.sender.call{ value: address(this).balance }("");
     require(success, "refund failed");
   }
-
-//   function convertDaiToExactEth(uint daiAmount) external payable {
-//     require(daiAmount > 0, "Must pass non 0 DAI amount");
-
-//     uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
-//     address tokenIn = multiDaiKovan;
-//     address tokenOut = WETH9;
-//     uint24 fee = 3000;
-//     address recipient = msg.sender;
-//     uint256 amountIn = daiAmount;
-//     uint256 amountOutMinimum = 1;
-//     uint160 sqrtPriceLimitX96 = 0;
-    
-//     ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(
-//         tokenIn,
-//         tokenOut,
-//         fee,
-//         recipient,
-//         deadline,
-//         amountIn,
-//         amountOutMinimum,
-//         sqrtPriceLimitX96
-//     );
-    
-//     uniswapRouter.exactInputSingle{ value: msg.value }(params);
-//     uniswapRouter.refundETH();
-    
-//     // refund leftover ETH to user
-//     (bool success,) = msg.sender.call{ value: address(this).balance }("");
-//     require(success, "refund failed");
-//   }
   
-  function convertEthToExactDai(uint256 daiAmount) external payable {
-    require(daiAmount > 0, "Must pass non 0 DAI amount");
-    require(msg.value > 0, "Must pass non 0 ETH amount");
-      
+  function convertExactTokenToEth(address token, uint amountIn, uint amountOutMinimum) external {
+    IERC20(token).approve(address(this), amountIn);
+    IERC20(token).transferFrom(msg.sender, address(this), amountIn);
     uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
-    address tokenIn = WETH9;
-    address tokenOut = multiDaiKovan;
+    address tokenIn = token;
+    address tokenOut = WETH9;
     uint24 fee = 3000;
     address recipient = msg.sender;
-    uint256 amountOut = daiAmount;
-    uint256 amountInMaximum = msg.value;
     uint160 sqrtPriceLimitX96 = 0;
-
-    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
+    IERC20(token).approve(address(uniswapRouter), amountIn);
+    
+    ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(
         tokenIn,
         tokenOut,
         fee,
         recipient,
         deadline,
-        amountOut,
-        amountInMaximum,
+        amountIn,
+        amountOutMinimum,
         sqrtPriceLimitX96
     );
-
-    uniswapRouter.exactOutputSingle{ value: msg.value }(params);
+    
+    uniswapRouter.exactInputSingle(params);
     uniswapRouter.refundETH();
-
+    
     // refund leftover ETH to user
     (bool success,) = msg.sender.call{ value: address(this).balance }("");
     require(success, "refund failed");
