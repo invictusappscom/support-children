@@ -1,11 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
-import "./UniswapV3.sol";
+interface IUniswap {
+    function swapExactTokensForETH(
+        uint amountIn, 
+        uint amountOutMin, 
+        address[] calldata path, 
+        address to, 
+        uint deadline)
+        external
+        returns (uint[] memory amounts);
+    function WETH() external pure returns (address);
+}
 
+interface IERC20 {
+    function transferFrom(
+        address sender, 
+        address recipient, 
+        uint256 amount) 
+        external 
+        returns (bool);
+    function approve(address spender, uint tokens)  external returns (bool);
+}
+    
 contract SupportChildren {
 
-    Uniswap3 public constant uniswap = Uniswap3(payable(address(0xd9145CCE52D386f254917e481eB44e9943F39138)));
+    IUniswap public constant uniswap = IUniswap(0xE592427A0AEce92De3Edee1F18E0157C05861564);
     
     event DonationMade (
         uint campaignId,
@@ -139,14 +159,25 @@ contract SupportChildren {
         }
     }
 
-    // ETH to DAI
-    function donateEthtoDaiCampaign(uint _campaignId, string memory _donorEmail, uint daiAmount) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) daiCampaign(_campaignId) {
-        require(msg.value > 0, "donation must be larger than 0");
-        uniswap.convertEthToExactDai{ value: msg.value }(daiAmount);
+    // Token to ETH
+    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountIn, uint amountOutMin, uint deadline) public {
+        IERC20(token).approve(address(uniswap), amountIn);
+        address[] memory path = new address[](2);
+        path[0] = address(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+        path[1] = uniswap.WETH();
+        IERC20(token).approve(address(uniswap), amountIn);
+        uniswap.swapExactTokensForETH(
+            amountIn, 
+            amountOutMin, 
+            path, 
+            address(this), 
+            deadline
+        );
+
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
-        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + daiAmount;
-        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, "ETH");
+        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOutMin;
+        emit DonationMade(_campaignId, amountIn, campaigns[_campaignId].creatorEmail, "DAI");
 
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
             finishCampaign(_campaignId);
