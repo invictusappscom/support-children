@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "apollo": "^2.33.4",
+    "@uniswap/v3-periphery": "^1.1.1",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "truffle": "^5.4.2",

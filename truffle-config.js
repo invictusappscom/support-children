@@ -28,6 +28,11 @@ module.exports = {
       network_id: 4,
       gas: 6700000,
       gasPrice: 10000000000
+    },
+    forked: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '*'
     }
   }
 }
