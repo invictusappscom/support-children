@@ -17,8 +17,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "truffle test",
-    "start": "cd server && npm start",
-    "build": "cd client && yarn build"
+    "start": "cd backend && npm start",
+    "build": "cd client && yarn build && cd ../backend && yarn build"
   },
   "repository": {
     "type": "git",

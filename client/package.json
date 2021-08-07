@@ -16,12 +16,12 @@
     "react-datepicker": "^4.1.1",
     "react-dom": "16.11.0",
     "react-notifications-component": "^3.1.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "4.0.3",
     "web3": "1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "BUILD_PATH=../backend/public react-scripts build && cp src/contracts/* ../backend/src/contracts",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -39,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/helper-builder-react-jsx": "^7.14.5"
   }
 }
