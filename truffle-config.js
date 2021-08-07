@@ -2,6 +2,7 @@ const path = require('path')
 const HDWalletProvider = require('truffle-hdwallet-provider')
 const mnemonic = 'glue check pupil prefer lounge brother hawk wage plate bomb luxury gas'
 const infuraProjectId = '92a23becb91d48d5b7ca23b757cd79a2'
+const menmonicForked = 'until gaze carry chicken spoon curious toward spread price they easily fall'
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -28,6 +29,14 @@ module.exports = {
       network_id: 4,
       gas: 6700000,
       gasPrice: 10000000000
+    },
+    forked: {
+      host: 'localhost',
+      provider: function () {
+        return new HDWalletProvider(menmonicForked, 'http://localhost:8545')
+      },
+      port: 8545,
+      network_id: 1
     }
   }
 }

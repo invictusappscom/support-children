@@ -2,12 +2,23 @@ import React, { Component } from "react";
 import SupportChildrenContract from "./contracts/SupportChildren.json";
 import { getWeb3 } from "./getWeb3";
 
+import Header from "./Header";
 import Campaign from "./Campaign";
 import Modal from "./Modal";
 import CreateCampaign from "./CreateCampaign";
 
+import { ApolloProvider } from 'react-apollo'
+
+import ReactNotification from 'react-notifications-component'
+import { store } from 'react-notifications-component';
+
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'animate.css/animate.min.css'
+import 'react-notifications-component/dist/theme.css'
+
+import Uniswap from './uniswap';
+import { client } from './uniswap'
 
 class App extends Component {
   state = {
@@ -17,7 +28,33 @@ class App extends Component {
     contract: null,
     list: [],
     isModal: false,
-    isCreateCampaign: false
+    isCreateCampaign: false,
+    isLoginRegister: false,
+    tokenIn: null,
+    tokenOut: null,
+    tokens: [
+      {
+        name: 'ETH',
+        address: '',
+        cssClass: 'tokenEth'
+      },
+      {
+        name: 'DAI',
+        address: '',
+        cssClass: 'tokenDai'
+      },
+      {
+        name: 'CEL',
+        address: '',
+        cssClass: 'tokenCel'
+      },
+      {
+        name: 'OMG',
+        address: '',
+        cssClass: 'tokenOmg'
+      },
+    ]
+
   };
   componentDidMount = async () => {
     this._child = React.createRef();
@@ -80,7 +117,7 @@ class App extends Component {
     })
   }
 
-  handlePress = () => {
+  handlePress = async () => {
     this.setState({
       isModal: true,
       isCreateCampaign: true
@@ -135,6 +172,39 @@ class App extends Component {
     }
   }
 
+  loginRegister = () => {
+    this.setState({
+      tokenIn: 'DAI',
+      tokenOut: 'ETH',
+      isModal: true,
+      isLoginRegister: true
+    })
+
+    store.addNotification({
+      title: "Wonderful!",
+      message: "teodosii@react-notifications-component",
+      type: "success",
+      insert: "top",
+      container: "bottom-right",
+      animationIn: ["animate__animated animate__fadeIn"],
+      animationOut: ["animate__animated animate__fadeOut"],
+      dismiss: {
+        duration: 5000,
+        onScreen: true
+      }
+    })
+
+    try {
+      // this.state.web3.eth.personal.sign('{"timestamp":  1627753792758}', this.state.accounts[0]).then(console.log)
+    } catch (e) {
+      console.log({ error: e })
+    }
+  }
+
+  uniswapReturn = (data) => {
+    console.log(data)
+  }
+
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -144,28 +214,27 @@ class App extends Component {
       modal = <Modal closeModal={this.handleCloseModal} />;
     }
     if (this.state.isCreateCampaign) {
-      createCampaign = <CreateCampaign createCampaign={this.handleCreateCampaign} closeModal={this.handleCloseModal} />;
+      createCampaign = <CreateCampaign createCampaign={this.handleCreateCampaign} closeModal={this.handleCloseModal} tokens={this.state.tokens} />;
     }
     return (
-      <div className="App">
-        {modal}
-        {createCampaign}
-        <header>
-          <div className="wrapper">
-            <div className="logo"></div>
-            <div id="addCampaign" onClick={this.handlePress}>Add Campaign</div>
+      <>
+        <ReactNotification />
+        <ApolloProvider client={client}><Uniswap tokenIn={this.state.tokenIn} tokenOut={this.state.tokenOut} uniswapReturn={this.uniswapReturn} /></ApolloProvider>
+        <div className="App">
+          {modal}
+          {createCampaign}
+          <Header handlePress={this.handlePress} loginRegister={this.loginRegister} />
+          <div className="content">
+            <div className="list">
+              {this.state.list.map((campaign, i) => {
+                return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} accounts={this.state.accounts} ref={this._child} removeCampaign={this.removeCampaign} />;
+              })}
+            </div>
           </div>
-        </header>
-        <div className="content">
-          <div className="list">
-            {this.state.list.map((campaign, i) => {
-              return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} accounts={this.state.accounts} ref={this._child} removeCampaign={this.removeCampaign} />;
-            })}
-          </div>
+          <footer></footer>
         </div>
-        <footer></footer>
-      </div>
-    );
+      </>
+    )
   }
 }
 

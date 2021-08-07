@@ -24,6 +24,28 @@ interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
 }
 
+interface IUniswap {
+    function swapExactTokensForETH(
+        uint amountIn, 
+        uint amountOutMin, 
+        address[] calldata path, 
+        address to, 
+        uint deadline)
+        external
+        returns (uint[] memory amounts);
+    function WETH() external pure returns (address);
+}
+
+interface IERC20 {
+    function transferFrom(
+        address sender, 
+        address recipient, 
+        uint256 amount) 
+        external 
+        returns (bool);
+    function approve(address spender, uint tokens)  external returns (bool);
+}
+    
 contract SupportChildren {
       IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
   IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
@@ -175,6 +197,7 @@ contract SupportChildren {
         address payable beneficiaryAddress;
         address creatorAddress;
         bool active;
+        uint endTimestamp;
     }
     
     Campaign[] campaigns;
@@ -197,7 +220,6 @@ contract SupportChildren {
         _;
     }
 
-
     modifier notCampaignBenefactor(uint _campaignId) {
         require(campaigns[_campaignId].beneficiaryAddress != tx.origin, "you can't be campaign benefactor to do this");
         _;
@@ -208,9 +230,11 @@ contract SupportChildren {
         _;
     }
 
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _endTimestamp, uint _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
         require(_targetAmount > 0, "campaign target amount must be larger than 0");
+        require(_endTimestamp > block.timestamp, "Campaign must end in the future");
         // TODO: save keccak256(bytes("ETH") as variable to reduce gas fee's
+        require(_targetCurrency == 1 || _targetCurrency == 0, "campaing target currency must be ETH or DAI");
         campaigns.push(Campaign({
             id: count,
             name: _name,
@@ -222,7 +246,8 @@ contract SupportChildren {
             currentAmount: 0,
             beneficiaryAddress: _beneficiaryAddress,
             creatorAddress: tx.origin,
-            active: true
+            active: true,
+            endTimestamp: _endTimestamp 
         }));
 
         emit CampaignCreated(count);
@@ -257,6 +282,8 @@ contract SupportChildren {
     // ETH to ETH
     function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {
         require(msg.value > 0, "donation must be larger than 0");
+        require(campaigns[_campaignId].endTimestamp > block.timestamp, "Campaign already finished");
+
         // curentamount must be fetched from frontend
         require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
         campaignDonationsEmails[_campaignId].push(_donorEmail);
