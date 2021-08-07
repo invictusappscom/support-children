@@ -59,7 +59,7 @@ contract SupportChildren {
     address tokenIn = WETH9;
     address tokenOut = token;
     uint24 fee = 3000;
-    address recipient = msg.sender;
+    address recipient = address(this);
     uint256 amountIn = msg.value;
     uint256 amountOutMinimum = 1;
     uint160 sqrtPriceLimitX96 = 0;
@@ -91,7 +91,7 @@ contract SupportChildren {
     address tokenIn = token;
     address tokenOut = WETH9;
     uint24 fee = 3000;
-    address recipient = msg.sender;
+    address recipient = address(this);
     uint160 sqrtPriceLimitX96 = 0;
     IERC20(token).approve(address(uniswapRouter), amountInMaximum);
     
@@ -121,7 +121,7 @@ contract SupportChildren {
     IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMaximum);
     uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
     uint24 fee = 3000;
-    address recipient = msg.sender;
+    address recipient = address(this);
     uint160 sqrtPriceLimitX96 = 0;
     IERC20(tokenIn).approve(address(uniswapRouter), amountInMaximum);
     
