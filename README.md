@@ -8,6 +8,9 @@ Also make sure that you have postgres db server and you created db with `created
 
 ### Deploy contract
 ```bash
+# Install dependencies
+yarn
+
 # on develop network
 truffle migrate
 

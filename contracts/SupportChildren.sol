@@ -2,8 +2,10 @@
 pragma solidity >=0.7.6 <0.9.0;
 pragma abicoder v2;
 
-import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol";
-import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
+// import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol";
+// import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol";
 
 interface IUniswapRouter is ISwapRouter {
     function refundETH() external payable;
@@ -36,15 +38,15 @@ interface IUniswap {
     function WETH() external pure returns (address);
 }
 
-interface IERC20 {
-    function transferFrom(
-        address sender, 
-        address recipient, 
-        uint256 amount) 
-        external 
-        returns (bool);
-    function approve(address spender, uint tokens)  external returns (bool);
-}
+// interface IERC20 {
+//     function transferFrom(
+//         address sender, 
+//         address recipient, 
+//         uint256 amount) 
+//         external 
+//         returns (bool);
+//     function approve(address spender, uint tokens)  external returns (bool);
+// }
     
 contract SupportChildren {
       IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);

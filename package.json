@@ -7,7 +7,6 @@
     "test": "test"
   },
   "dependencies": {
-    "apollo": "^2.33.4",
     "@uniswap/v3-periphery": "^1.1.1",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
@@ -19,7 +18,7 @@
     "test": "truffle test",
     "start": "cd backend && yarn start",
     "build": "cd client && yarn build && cd ../backend && yarn build",
-    "deps": "cd client && yarn && cd ../backend && yarn"
+    "deps": "cd client && yarn && cd ../backend && yarn && yarn migrate"
   },
   "repository": {
     "type": "git",
