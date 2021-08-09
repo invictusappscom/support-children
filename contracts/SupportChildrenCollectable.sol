@@ -1,62 +1,35 @@
 pragma solidity >=0.7.6 <0.9.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
+contract SupportChildrenCollectable is ERC721URIStorage {
     uint256 public tokenCounter;
     enum Type{FirstDonation, LastDonation, FullCampaingDonation, CampaignSuccessfullyFinished}
-    enum TestRandomness{First, Second, Third, Fourth, Final}
-    // add other things
-    mapping(bytes32 => address) public requestIdToSender;
-    mapping(bytes32 => Type) public requestIdToType;
-    mapping(bytes32 => string) public requestIdToTokenURI;
+    
     mapping(uint256 => Type) public tokenIdToType;
-    mapping(uint256 => TestRandomness) public tokenIdToTestRandomness;
-    mapping(bytes32 => uint256) public requestIdToTokenId;
-    event requestedCollectible(bytes32 indexed requestId); 
+    mapping(address => uint[]) tokenListbyUser;
+    
+    event NFTCreated (
+        uint id,
+        uint nftType,
+        string tokenUrl
+    );
+
+    constructor() ERC721("SupportChildrenCollectible", "SCC") {
+        tokenCounter = 0;
+    }
 
 
-    bytes32 internal keyHash;
-    uint256 internal fee;
-    uint256 internal owner;
-
-
-    modifier owner {
-        require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be campaign creator to do this");
-        _;
+    function createCollectible(string memory tokenURI, uint tokenType) public {
+        _safeMint(tx.origin, tokenCounter);
+        _setTokenURI(tokenCounter, tokenURI);
+        tokenIdToType[tokenCounter] = Type(tokenType);
+        tokenListbyUser[tx.origin].push(tokenCounter);
+        emit NFTCreated(tokenCounter, tokenType, tokenURI);
+        tokenCounter = tokenCounter + 1;
     }
     
-    constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash, address owner)
-    public 
-    VRFConsumerBase(_VRFCoordinator, _LinkToken)
-    ERC721("SupportChildrenCollectible", "SCC")
-    {
-        tokenCounter = 0;
-        keyHash = _keyhash;
-        fee = 0.1 * 10 ** 18;
-        owner = owner;
-    }
-
-    function createCollectible(string memory tokenURI, string memory typeId) 
-        public returns (bytes32){
-            bytes32 requestId = requestRandomness(keyHash, fee);
-            requestIdToSender[requestId] = msg.sender;
-            requestIdToTokenURI[requestId] = tokenURI;
-            requestIdToType[requestId] = Type(typeId);
-            emit requestedCollectible(requestId);
-    }
-
-    function fulfillRandomness(bytes32 requestId, uint256 randomNumber) internal override {
-        address owner = requestIdToSender[requestId];
-        string memory tokenURI = requestIdToTokenURI[requestId];
-        uint256 newItemId = tokenCounter;
-        _safeMint(owner, newItemId);
-        _setTokenURI(newItemId, tokenURI);
-        TestRandomness random = TestRandomness(randomNumber % 5); 
-        tokenIdToTestRandomness[newItemId] = random;
-        requestIdToTokenId[requestId] = newItemId;
-        tokenIdToType[newItemId] = requestIdToType[requestId];
-        tokenCounter = tokenCounter + 1;
+    function getCollectibleList(address _donor) view public returns (uint[] memory) {
+        return tokenListbyUser[_donor];
     }
 }
