@@ -4,6 +4,11 @@ import TokenSelector from "./TokenSelector"
 import "./Campaign.css";
 import { ethDisplay, trimText } from './util'
 
+import Uniswap from './uniswap';
+import { client } from './uniswap'
+import { ApolloProvider } from 'react-apollo'
+import axios from "axios"
+
 class Campaign extends Component {
 
   constructor(props) {
@@ -11,7 +16,7 @@ class Campaign extends Component {
 
     let colorArray = ['#00baa3', '#efc94c', '#d55342', '#2780ba']
 
-    // console.log("Campaign", props.campaign)
+    console.log("Campaign", props.campaign)
     // console.log("Accounts", props.accounts)
     let owner = false
     if (props.accounts.indexOf(props.campaign.creatorAddress) !== -1) owner = true
@@ -39,18 +44,24 @@ class Campaign extends Component {
       owner: owner,
       loaderText: '',
       token: this.props.tokens[0],
+      campaignToken: this.props.tokens[0],
+      unisvapProgress: false,
     }
   }
 
   donationClick = () => {
     // this.props.donation(this.props.campaign)
-    this.setState({ isDonationInProgress: true })
+    this.setState({
+      isDonationInProgress: true,
+      unisvapProgress: true
+    })
   }
   donationFinish = () => {
     if (this.state.ethAmount > 0) {
       this.props.donation(this.props.campaign, {
         email: this.state.email,
-        ethAmount: this.state.ethAmount
+        ethAmount: this.state.ethAmount,
+        token: this.state.token
       })
       this.setState({
         isDonationInProgress: false,
@@ -70,6 +81,28 @@ class Campaign extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+
+    let url = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
+    let data = { query: "{ pairs(where: { token0: \"" + this.state.token.address.toLowerCase() + "\" token1: \"" + this.props.campaign.targetCurrency.toLowerCase() + "\" }) { token0Price token1Price }}" }
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    axios
+      .post(url, data, axiosConfig)
+      .then((response) => {
+        console.log('uniswap response', response.data.data.pairs)
+        if (Array.isArray(response.data.data.pairs)) {
+          try {
+            let calculateValue = response.data.data.pairs[0].token1Price * this.state.ethAmount
+            this.setState({
+              calculateValue: calculateValue
+            })
+          } catch (e) { }
+        }
+      })
+
   }
   refreshPage = () => {
     this.setState(
@@ -90,23 +123,78 @@ class Campaign extends Component {
   }
   setToken = (token) => {
     console.log('Set Token', token)
+    console.log(token, this.props.campaign.targetCurrency)
+    let url = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
+    let data = { query: "{ pairs(where: { token0: \"" + token.address.toLowerCase() + "\" token1: \"" + this.props.campaign.targetCurrency.toLowerCase() + "\" }) { token0Price token1Price }}" }
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    if (token.address.toLowerCase() === this.props.campaign.targetCurrency.toLowerCase()) {
+      this.setState({
+        calculateValue: this.state.ethAmount
+      })
+    } else {
+      axios
+        .post(url, data, axiosConfig)
+        .then((response) => {
+          console.log('uniswap response', response.data.data.pairs)
+          if (Array.isArray(response.data.data.pairs)) {
+            try {
+              let calculateValue = response.data.data.pairs[0].token1Price * this.state.ethAmount
+              this.setState({
+                calculateValue: calculateValue
+              })
+            } catch (e) { }
+          }
+        })
+    }
+
     this.setState({
-      token: token
+      token: token,
+      // unisvapProgress: true,
+      tokenIn: token
     })
   }
 
+  uniswapReturn = (data) => {
+    console.log(data)
+    this.setState({
+      unisvapProgress: false
+    })
+
+  }
+
   render() {
+    let renderDonate, renderBody, uniswapElement
+
+    // if (this.state.unisvapProgress) {
+    //   uniswapElement = <ApolloProvider client={client}><Uniswap tokenIn={this.state.tokenIn} tokenOut={this.state.tokenOut} uniswapReturn={this.uniswapReturn} /></ApolloProvider>
+    // } else {
+    //   uniswapElement = <></>
+    // }
+
+    let currencyClass = 'tokenEth'
+    this.props.tokens.map((token) => {
+      // console.log(token.address, this.props.campaign.targetCurrency, token.cssClass)
+      if (token.address.toLowerCase() === this.props.campaign.targetCurrency.toLowerCase()) {
+        currencyClass = token.cssClass
+      }
+    })
+
+
     let progress = Math.round((this.props.campaign.currentAmount / this.props.campaign.targetAmount) * 100)
     let progressText = progress
     if (progress > 100) progress = 100
 
-    let renderDonate, renderBody
     renderBody = <div className="campaignDescription">{trimText(this.props.campaign.description, 100)}</div>
     if (this.state.isDonationInProgress) {
       renderBody = <div>
         <div className="flexRow">
+          {/* <div className="col3"><strong>Donate: </strong></div> */}
           <div className="col8">
-            <strong>Donate: </strong>
+
             <input type="number" className={`donateInput ethValue ${this.state.ethAmountError ? "error" : ""}`}
               name="ethAmount"
               value={this.state.ethAmount}
@@ -115,6 +203,18 @@ class Campaign extends Component {
           </div>
           <div className="col4">
             <TokenSelector tokens={this.props.tokens} setToken={this.setToken} />
+          </div>
+        </div>
+        <div className="flexRow">
+          <div className="col10">
+            <input type="number" className={`donateInput ethValue`}
+              name="calculateValue"
+              value={this.state.calculateValue}
+              disabled
+            />
+          </div>
+          <div className="col2">
+            <div className={`tokenImg ${currencyClass}`}></div>
           </div>
         </div>
         <input type="text" className="donateInput"
@@ -141,6 +241,7 @@ class Campaign extends Component {
       }
       return (
         <div className="campaignWrapper">
+          {uniswapElement}
           <div className={`campaign ${this.props.campaign.active ? "active" : "inactive"} ${this.state.removingInProgress ? "loading" : ""} ${this.state.paymantInProgress ? "loading" : ""} ${this.state.owner ? "owner" : ""} `}>
             <div className="removeCampaing" onClick={this.removeCampaign}></div>
             {flag}
@@ -156,8 +257,8 @@ class Campaign extends Component {
               {renderBody}
               {renderDonate}
               <div className="campaignGoalWrapper"><div className="campaignGoalProgress"><div className="campaignProgressText" style={{ left: progress + "%", backgroundColor: this.state.color }} ><strong>{progressText}%</strong></div><div className="campaignProgress" style={{ width: progress + '%', backgroundColor: this.state.color }}></div></div></div>
-              <div className="campaignRaised"><strong>Raised:</strong> {ethDisplay(this.props.campaign.currentAmount)}<div className="eth"></div></div>
-              <div className="campaignGoal"><strong>Goal:</strong> {ethDisplay(this.props.campaign.targetAmount)}<div className="eth"></div></div>
+              <div className="campaignRaised"><strong>Raised:</strong> {ethDisplay(this.props.campaign.currentAmount)}<div className={`tokenImg ${currencyClass}`}></div></div>
+              <div className="campaignGoal"><strong>Goal:</strong> {ethDisplay(this.props.campaign.targetAmount)}<div className={`tokenImg ${currencyClass}`}></div></div>
             </div>
 
           </div>
