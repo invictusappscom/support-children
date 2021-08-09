@@ -6,6 +6,7 @@ pragma abicoder v2;
 // import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol";
+import "./SupportChildrenCollectable.sol";
 
 interface IUniswapRouter is ISwapRouter {
     function refundETH() external payable;
@@ -39,6 +40,7 @@ interface IUniswap {
 }
     
 contract SupportChildren {
+    SupportChildrenCollectable public constant nft = SupportChildrenCollectable(0x2E48d65dD6933E8146A7D2b891d173BFa438b244);
     IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
     IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
     address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
@@ -189,64 +191,77 @@ contract SupportChildren {
 
         emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, address(this));
 
-        if (initialCampaingAmount == 0) {
-            if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
-                emit CreateNFT(_campaignId, campaigns[_campaignId].image, 2);
-            }
-            emit CreateNFT(_campaignId, campaigns[_campaignId].image, 0);
-        }
-
-        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
-            finishCampaign(_campaignId);
-            if (initialCampaingAmount != 0) {
-                emit CreateNFT(_campaignId, campaigns[_campaignId].image, 1);
-            }
-        }
+        checkForSpecialEvents(_campaignId, initialCampaingAmount);  
     }
 
     // ETH to Token
     function donateEthToTokenCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) {
         require(msg.value > 0, "donation must be larger than 0");
+
         (uint256 tokensReceived) = convertExactEthToToken(campaigns[_campaignId].targetCurrency);
+        require((campaigns[_campaignId].currentAmount  + tokensReceived) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+        uint initialCampaingAmount = campaigns[_campaignId].currentAmount;        
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + tokensReceived;
 
         emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, address(this));
 
-        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
-            finishCampaign(_campaignId);
-        }
+        checkForSpecialEvents(_campaignId, initialCampaingAmount);  
     }
 
     // Token to ETH
     function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
         require(amountInMax > 0, "token donation must be larger than 0");
         require(amountOut > 0, "token donation must be larger than 0");
+        require((campaigns[_campaignId].currentAmount  + amountOut) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+        
         (uint256 tokensSpent) = convertTokenToExactEth(token, amountOut, amountInMax);
+        uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].amountInWeth = campaigns[_campaignId].amountInWeth + amountOut;
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;
         emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, token);
 
-        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
-            finishCampaign(_campaignId);
-        }
+        checkForSpecialEvents(_campaignId, initialCampaingAmount);  
     }
     
     // Token to Token
     function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
         require(amountInMax > 0, "token donation must be larger than 0");
         require(amountOut > 0, "token donation must be larger than 0");
+        require((campaigns[_campaignId].currentAmount  + amountOut) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
         (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, campaigns[_campaignId].targetCurrency, amountOut, amountInMax);
+        uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;
         emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, tokenIn);
 
+        checkForSpecialEvents(_campaignId, initialCampaingAmount);       
+    }
+
+    function checkForSpecialEvents(uint _campaignId, uint initialCampaingAmount) internal {
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
             finishCampaign(_campaignId);
+            if (initialCampaingAmount != 0) {
+                // Closed a campaing NFT
+                nft.createCollectible(campaigns[_campaignId].image, 1, tx.origin);
+                emit CreateNFT(_campaignId, campaigns[_campaignId].image, 1);
+            } else {
+                // Was only donator to the campaing NFT
+                nft.createCollectible(campaigns[_campaignId].image, 2, tx.origin);
+                emit CreateNFT(_campaignId, campaigns[_campaignId].image, 2);
+            }
+
+            return;
+        }
+
+        if (initialCampaingAmount == 0) {
+            // First donation to the campaign NFT
+            nft.createCollectible(campaigns[_campaignId].image, 0, tx.origin);
+            emit CreateNFT(_campaignId, campaigns[_campaignId].image, 0);
         }
     }
     
