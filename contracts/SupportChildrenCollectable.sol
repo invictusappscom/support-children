@@ -15,7 +15,7 @@ contract SupportChildrenCollectable is ERC721URIStorage {
         string tokenUrl
     );
 
-    constructor() public ERC721("SupportChildrenCollectible", "SCC") {
+    constructor() ERC721("SupportChildrenCollectible", "SCC") {
         tokenCounter = 0;
     }
 
