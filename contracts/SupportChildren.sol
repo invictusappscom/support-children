@@ -312,7 +312,7 @@ contract SupportChildren {
         }
     }
     // Token to Token
-    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, address tokenOut, uint amountOut, uint amountInMax) public {
+    function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, address tokenOut, uint amountOut, uint amountInMax) public {
         (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, tokenOut, amountOut, amountInMax);
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);

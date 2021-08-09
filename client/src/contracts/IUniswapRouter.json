@@ -246,7 +246,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"bytes\",\"name\":\"path\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinimum\",\"type\":\"uint256\"}],\"internalType\":\"struct ISwapRouter.ExactInputParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactInput\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenIn\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenOut\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"fee\",\"type\":\"uint24\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinimum\",\"type\":\"uint256\"},{\"internalType\":\"uint160\",\"name\":\"sqrtPriceLimitX96\",\"type\":\"uint160\"}],\"internalType\":\"struct ISwapRouter.ExactInputSingleParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactInputSingle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes\",\"name\":\"path\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMaximum\",\"type\":\"uint256\"}],\"internalType\":\"struct ISwapRouter.ExactOutputParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactOutput\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenIn\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenOut\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"fee\",\"type\":\"uint24\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMaximum\",\"type\":\"uint256\"},{\"internalType\":\"uint160\",\"name\":\"sqrtPriceLimitX96\",\"type\":\"uint160\"}],\"internalType\":\"struct ISwapRouter.ExactOutputSingleParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactOutputSingle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"refundETH\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int256\",\"name\":\"amount0Delta\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"amount1Delta\",\"type\":\"int256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"uniswapV3SwapCallback\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"exactInput((bytes,address,uint256,uint256,uint256))\":{\"params\":{\"params\":\"The parameters necessary for the multi-hop swap, encoded as `ExactInputParams` in calldata\"},\"returns\":{\"amountOut\":\"The amount of the received token\"}},\"exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"params\":{\"params\":\"The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata\"},\"returns\":{\"amountOut\":\"The amount of the received token\"}},\"exactOutput((bytes,address,uint256,uint256,uint256))\":{\"params\":{\"params\":\"The parameters necessary for the multi-hop swap, encoded as `ExactOutputParams` in calldata\"},\"returns\":{\"amountIn\":\"The amount of the input token\"}},\"exactOutputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"params\":{\"params\":\"The parameters necessary for the swap, encoded as `ExactOutputSingleParams` in calldata\"},\"returns\":{\"amountIn\":\"The amount of the input token\"}},\"uniswapV3SwapCallback(int256,int256,bytes)\":{\"details\":\"In the implementation you must pay the pool tokens owed for the swap. The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory. amount0Delta and amount1Delta can both be 0 if no tokens were swapped.\",\"params\":{\"amount0Delta\":\"The amount of token0 that was sent (negative) or must be received (positive) by the pool by the end of the swap. If positive, the callback must send that amount of token0 to the pool.\",\"amount1Delta\":\"The amount of token1 that was sent (negative) or must be received (positive) by the pool by the end of the swap. If positive, the callback must send that amount of token1 to the pool.\",\"data\":\"Any data passed through by the caller via the IUniswapV3PoolActions#swap call\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"exactInput((bytes,address,uint256,uint256,uint256))\":{\"notice\":\"Swaps `amountIn` of one token for as much as possible of another along the specified path\"},\"exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"notice\":\"Swaps `amountIn` of one token for as much as possible of another token\"},\"exactOutput((bytes,address,uint256,uint256,uint256))\":{\"notice\":\"Swaps as little as possible of one token for `amountOut` of another along the specified path (reversed)\"},\"exactOutputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"notice\":\"Swaps as little as possible of one token for `amountOut` of another token\"},\"uniswapV3SwapCallback(int256,int256,bytes)\":{\"notice\":\"Called to `msg.sender` after executing a swap via IUniswapV3Pool#swap.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/SupportChildren.sol\":\"IUniswapRouter\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3SwapCallback.sol\":{\"keccak256\":\"0x3f485fb1a44e8fbeadefb5da07d66edab3cfe809f0ac4074b1e54e3eb3c4cf69\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://095ce0626b41318c772b3ebf19d548282607f6a8f3d6c41c13edfbd5370c8652\",\"dweb:/ipfs/QmVDZfJJ89UUCE1hMyzqpkZAtQ8jUsBgZNE5AMRG7RzRFS\"]},\"@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol\":{\"keccak256\":\"0x124b4334f058f70afd8f3b04315cc0812961d400957225d0875872b2a31afbff\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://efdc8133033a1596f60f3619a317f8b3af98a6adffd85a9898c5a809c5c22417\",\"dweb:/ipfs/QmRkGjgzgSxhUVxwqiWZuz9M4Ff3TwTbzUgN3yJd4gxMfN\"]},\"@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol\":{\"keccak256\":\"0x9bfaf1feb32814623e627ab70f2409760b15d95f1f9b058e2b3399a8bb732975\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://a8a2c3e55965b61bcd91993d8e1d5d34b8b8a63e0fdfce87a85f6af92526fd53\",\"dweb:/ipfs/QmQj2CSCSwqDSU4KMNWxGsN2336Cy64WgpV1X1EHXNZWxM\"]},\"project:/contracts/SupportChildren.sol\":{\"keccak256\":\"0xd414009b1a5c69a5d0b412c60bd77735c72c77270b8e96bb8d9fa25c6a5478e4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3bd56744ce187b8d18f634c9794ddf75887bca57ead535b17a30bc3adf86eaa7\",\"dweb:/ipfs/QmdKZeH3nm6S6XL5LWFizmBNQbELKSucr7x2snziPnyEpV\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"bytes\",\"name\":\"path\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinimum\",\"type\":\"uint256\"}],\"internalType\":\"struct ISwapRouter.ExactInputParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactInput\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenIn\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenOut\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"fee\",\"type\":\"uint24\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOutMinimum\",\"type\":\"uint256\"},{\"internalType\":\"uint160\",\"name\":\"sqrtPriceLimitX96\",\"type\":\"uint160\"}],\"internalType\":\"struct ISwapRouter.ExactInputSingleParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactInputSingle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"bytes\",\"name\":\"path\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMaximum\",\"type\":\"uint256\"}],\"internalType\":\"struct ISwapRouter.ExactOutputParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactOutput\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenIn\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenOut\",\"type\":\"address\"},{\"internalType\":\"uint24\",\"name\":\"fee\",\"type\":\"uint24\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountOut\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountInMaximum\",\"type\":\"uint256\"},{\"internalType\":\"uint160\",\"name\":\"sqrtPriceLimitX96\",\"type\":\"uint160\"}],\"internalType\":\"struct ISwapRouter.ExactOutputSingleParams\",\"name\":\"params\",\"type\":\"tuple\"}],\"name\":\"exactOutputSingle\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amountIn\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"refundETH\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int256\",\"name\":\"amount0Delta\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"amount1Delta\",\"type\":\"int256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"uniswapV3SwapCallback\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"exactInput((bytes,address,uint256,uint256,uint256))\":{\"params\":{\"params\":\"The parameters necessary for the multi-hop swap, encoded as `ExactInputParams` in calldata\"},\"returns\":{\"amountOut\":\"The amount of the received token\"}},\"exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"params\":{\"params\":\"The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata\"},\"returns\":{\"amountOut\":\"The amount of the received token\"}},\"exactOutput((bytes,address,uint256,uint256,uint256))\":{\"params\":{\"params\":\"The parameters necessary for the multi-hop swap, encoded as `ExactOutputParams` in calldata\"},\"returns\":{\"amountIn\":\"The amount of the input token\"}},\"exactOutputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"params\":{\"params\":\"The parameters necessary for the swap, encoded as `ExactOutputSingleParams` in calldata\"},\"returns\":{\"amountIn\":\"The amount of the input token\"}},\"uniswapV3SwapCallback(int256,int256,bytes)\":{\"details\":\"In the implementation you must pay the pool tokens owed for the swap. The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory. amount0Delta and amount1Delta can both be 0 if no tokens were swapped.\",\"params\":{\"amount0Delta\":\"The amount of token0 that was sent (negative) or must be received (positive) by the pool by the end of the swap. If positive, the callback must send that amount of token0 to the pool.\",\"amount1Delta\":\"The amount of token1 that was sent (negative) or must be received (positive) by the pool by the end of the swap. If positive, the callback must send that amount of token1 to the pool.\",\"data\":\"Any data passed through by the caller via the IUniswapV3PoolActions#swap call\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"exactInput((bytes,address,uint256,uint256,uint256))\":{\"notice\":\"Swaps `amountIn` of one token for as much as possible of another along the specified path\"},\"exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"notice\":\"Swaps `amountIn` of one token for as much as possible of another token\"},\"exactOutput((bytes,address,uint256,uint256,uint256))\":{\"notice\":\"Swaps as little as possible of one token for `amountOut` of another along the specified path (reversed)\"},\"exactOutputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))\":{\"notice\":\"Swaps as little as possible of one token for `amountOut` of another token\"},\"uniswapV3SwapCallback(int256,int256,bytes)\":{\"notice\":\"Called to `msg.sender` after executing a swap via IUniswapV3Pool#swap.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/SupportChildren.sol\":\"IUniswapRouter\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3SwapCallback.sol\":{\"keccak256\":\"0x3f485fb1a44e8fbeadefb5da07d66edab3cfe809f0ac4074b1e54e3eb3c4cf69\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://095ce0626b41318c772b3ebf19d548282607f6a8f3d6c41c13edfbd5370c8652\",\"dweb:/ipfs/QmVDZfJJ89UUCE1hMyzqpkZAtQ8jUsBgZNE5AMRG7RzRFS\"]},\"@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol\":{\"keccak256\":\"0x124b4334f058f70afd8f3b04315cc0812961d400957225d0875872b2a31afbff\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://efdc8133033a1596f60f3619a317f8b3af98a6adffd85a9898c5a809c5c22417\",\"dweb:/ipfs/QmRkGjgzgSxhUVxwqiWZuz9M4Ff3TwTbzUgN3yJd4gxMfN\"]},\"@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol\":{\"keccak256\":\"0x9bfaf1feb32814623e627ab70f2409760b15d95f1f9b058e2b3399a8bb732975\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://a8a2c3e55965b61bcd91993d8e1d5d34b8b8a63e0fdfce87a85f6af92526fd53\",\"dweb:/ipfs/QmQj2CSCSwqDSU4KMNWxGsN2336Cy64WgpV1X1EHXNZWxM\"]},\"project:/contracts/SupportChildren.sol\":{\"keccak256\":\"0x38aaad582b3f5630b7bab837627647b8aabe9d38d37b74ba2a9f8a1506deab1d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://652722ff6c16120899a5570d7b2a0c661b74fd747e93ba438a0cd8deabe180a5\",\"dweb:/ipfs/QmVc6jaS3stsPRHLUmbYDjWCKC5teUS6GALWhrtzNHq4A8\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -254,7 +254,7 @@
   "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.7.6 <0.9.0;\npragma abicoder v2;\n\n// import \"https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol\";\n// import \"https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol\";\nimport \"@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol\";\nimport \"@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol\";\n\ninterface IUniswapRouter is ISwapRouter {\n    function refundETH() external payable;\n}\n\ninterface IERC20 {\n    function transferFrom(\n        address sender, \n        address recipient, \n        uint256 amount) \n        external \n        returns (bool);\n    function approve(address spender, uint tokens)  external returns (bool);\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address account) external view returns (uint256);\n    function allowance(address owner, address spender) external view returns (uint256);\n\n    function transfer(address recipient, uint256 amount) external returns (bool);\n}\n\ninterface IUniswap {\n    function swapExactTokensForETH(\n        uint amountIn, \n        uint amountOutMin, \n        address[] calldata path, \n        address to, \n        uint deadline)\n        external\n        returns (uint[] memory amounts);\n    function WETH() external pure returns (address);\n}\n\n// interface IERC20 {\n//     function transferFrom(\n//         address sender, \n//         address recipient, \n//         uint256 amount) \n//         external \n//         returns (bool);\n//     function approve(address spender, uint tokens)  external returns (bool);\n// }\n    \ncontract SupportChildren {\n      IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);\n  IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);\n  address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;\n  address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;\n\n  function convertExactEthToToken(address token) internal {\n    require(msg.value > 0, \"Must pass non 0 ETH amount\");\n\n    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!\n    address tokenIn = WETH9;\n    address tokenOut = token;\n    uint24 fee = 3000;\n    address recipient = address(this);\n    uint256 amountIn = msg.value;\n    uint256 amountOutMinimum = 1;\n    uint160 sqrtPriceLimitX96 = 0;\n    \n    ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(\n        tokenIn,\n        tokenOut,\n        fee,\n        recipient,\n        deadline,\n        amountIn,\n        amountOutMinimum,\n        sqrtPriceLimitX96\n    );\n    \n    uniswapRouter.exactInputSingle{ value: msg.value }(params);\n    uniswapRouter.refundETH();\n    \n    // refund leftover ETH to user\n    (bool success,) = msg.sender.call{ value: address(this).balance }(\"\");\n    require(success, \"refund failed\");\n  }\n  \n  function convertTokenToExactEth(address token, uint amountOut, uint amountInMaximum) internal returns (uint256) {\n    uint256 allowance = IERC20(token).allowance(msg.sender, address(this));\n    require(allowance >= amountInMaximum, \"Check the token allowance\");\n    IERC20(token).transferFrom(msg.sender, address(this), amountInMaximum);\n    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!\n    address tokenIn = token;\n    address tokenOut = WETH9;\n    uint24 fee = 3000;\n    address recipient = address(this);\n    uint160 sqrtPriceLimitX96 = 0;\n    IERC20(token).approve(address(uniswapRouter), amountInMaximum);\n    \n    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(\n        tokenIn,\n        tokenOut,\n        fee,\n        recipient,\n        deadline,\n        amountOut,\n        amountInMaximum,\n        sqrtPriceLimitX96\n    );\n    \n    uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);\n    uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;\n    // refund leftover Tokens to user\n    (bool success) = IERC20(token).transfer(msg.sender, remainderOfTokens);\n    require(success, \"refund failed\");\n    \n    return amountOfTokenUsed;\n  }\n  \n  function convertTokenToExactToken(address tokenIn, address tokenOut, uint amountOut, uint amountInMaximum) internal returns (uint256) {\n    uint256 allowance = IERC20(tokenIn).allowance(msg.sender, address(this));\n    require(allowance >= amountInMaximum, \"Check the token allowance\");\n    IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMaximum);\n    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!\n    uint24 fee = 3000;\n    address recipient = address(this);\n    uint160 sqrtPriceLimitX96 = 0;\n    IERC20(tokenIn).approve(address(uniswapRouter), amountInMaximum);\n    \n    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(\n        tokenIn,\n        tokenOut,\n        fee,\n        recipient,\n        deadline,\n        amountOut,\n        amountInMaximum,\n        sqrtPriceLimitX96\n    );\n    \n    uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);\n    uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;\n    \n    // refund leftover Tokens to user\n    (bool success) = IERC20(tokenIn).transfer(msg.sender, remainderOfTokens);\n    require(success, \"refund failed\");\n    \n    return amountOfTokenUsed;\n  }\n  \n  // do not used on-chain, gas inefficient!\n  function getEstimatedETHforDAI(uint daiAmount) internal returns (uint256) {\n    address tokenIn = WETH9;\n    address tokenOut = multiDaiKovan;\n    uint24 fee = 3000;\n    uint160 sqrtPriceLimitX96 = 0;\n\n    return quoter.quoteExactOutputSingle(\n        tokenIn,\n        tokenOut,\n        fee,\n        daiAmount,\n        sqrtPriceLimitX96\n    );\n  }\n  \n  // important to receive ETH\n  receive() payable external {}\n  \n    event DonationMade (\n        uint campaignId,\n        uint donationAmount,\n        string notifyEmail,\n        address token\n    );\n\n    event CampaignCreated (\n        uint campaignId\n    );\n\n    event CampaignFinished (\n        uint campaignId,\n        uint currentAmount,\n        string[] notifyEmails\n    );\n    \n    uint campaignIndex;\n    uint count;\n    \n    struct Campaign {\n        uint id;\n        string name; \n        string description;\n        string creatorEmail; \n        string image; \n        uint targetCurrency; \n        uint targetAmount;\n        uint currentAmount;\n        address payable beneficiaryAddress;\n        address creatorAddress;\n        bool active;\n        uint endTimestamp;\n    }\n    \n    Campaign[] campaigns;\n    \n    mapping(uint => string[]) campaignDonationsEmails;\n    mapping(address => uint[]) campaignDonors;\n    \n    modifier campaignCreator(uint _campaignId) {\n        require(campaigns[_campaignId].creatorAddress == tx.origin, \"you must be campaign creator to do this\");\n        _;\n    }\n    \n    modifier notCampaignCreator(uint _campaignId) {\n        require(campaigns[_campaignId].creatorAddress != tx.origin, \"you can't be campaign creator to do this\");\n        _;\n    }\n\n    modifier ethCampaign(uint _campaignId) {\n        require(campaigns[_campaignId].targetCurrency == 0, \"This is not ETH campaign\");\n        _;\n    }\n\n    modifier notCampaignBenefactor(uint _campaignId) {\n        require(campaigns[_campaignId].beneficiaryAddress != tx.origin, \"you can't be campaign benefactor to do this\");\n        _;\n    }\n\n    modifier campaignActive(uint _campaignId) {\n        require(campaigns[_campaignId].active == true, \"campaing has finished\");\n        _;\n    }\n\n    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _endTimestamp, uint _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {\n        require(_targetAmount > 0, \"campaign target amount must be larger than 0\");\n        require(_endTimestamp > block.timestamp, \"Campaign must end in the future\");\n        // TODO: save keccak256(bytes(\"ETH\") as variable to reduce gas fee's\n        require(_targetCurrency == 1 || _targetCurrency == 0, \"campaing target currency must be ETH or DAI\");\n        campaigns.push(Campaign({\n            id: count,\n            name: _name,\n            description: _description,\n            creatorEmail: _creatorEmail,\n            image: _image,\n            targetAmount: _targetAmount,\n            targetCurrency: _targetCurrency,\n            currentAmount: 0,\n            beneficiaryAddress: _beneficiaryAddress,\n            creatorAddress: tx.origin,\n            active: true,\n            endTimestamp: _endTimestamp \n        }));\n\n        emit CampaignCreated(count);\n        \n        count++;\n    }\n\n    function endCampaign(uint _campaignId) public campaignActive(_campaignId) campaignCreator(_campaignId) {\n        if (campaigns[_campaignId].currentAmount > 0) {\n            finishCampaign(_campaignId);\n        } else {\n            emit CampaignFinished(_campaignId, 0, campaignDonationsEmails[_campaignId]);\n            campaigns[_campaignId].active = false;\n        }\n    }\n\n    function editCampaign(uint _campaignId, string memory _name, string memory _description, string memory _creatorEmail, string memory _image) public campaignActive(_campaignId) campaignCreator(_campaignId) {\n        campaigns[_campaignId].name = _name;\n        campaigns[_campaignId].description = _description;\n        campaigns[_campaignId].creatorEmail = _creatorEmail;\n        campaigns[_campaignId].image = _image;\n    }\n\n    function finishCampaign(uint _campaignId) private {\n        emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);\n        // Send ETH to the address of the child\n        campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);\n        campaigns[_campaignId].active = false;\n    }\n\n\n    // ETH to ETH\n    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {\n        require(msg.value > 0, \"donation must be larger than 0\");\n        require(campaigns[_campaignId].endTimestamp > block.timestamp, \"Campaign already finished\");\n\n        // curentamount must be fetched from frontend\n        require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, \"Target amount exceded\");\n        campaignDonationsEmails[_campaignId].push(_donorEmail);\n        campaignDonors[tx.origin].push(_campaignId);\n        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;\n\n        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, address(this));\n\n        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {\n            finishCampaign(_campaignId);\n        }\n    }\n\n    // Token to ETH\n    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public {\n        (uint256 tokensSpent) = convertTokenToExactEth(token, amountOut, amountInMax);\n        campaignDonationsEmails[_campaignId].push(_donorEmail);\n        campaignDonors[tx.origin].push(_campaignId);\n        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;\n        emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, token);\n\n        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {\n            finishCampaign(_campaignId);\n        }\n    }\n    // Token to Token\n    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, address tokenOut, uint amountOut, uint amountInMax) public {\n        (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, tokenOut, amountOut, amountInMax);\n        campaignDonationsEmails[_campaignId].push(_donorEmail);\n        campaignDonors[tx.origin].push(_campaignId);\n        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;\n        emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, tokenIn);\n\n        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {\n            finishCampaign(_campaignId);\n        }\n    }\n    \n    function getDonorEmails(uint _campaignId) view public returns (string[] memory) {\n        return campaignDonationsEmails[_campaignId];\n    }\n    \n    function getDonorsCampaingsList(address _donor) view public returns (uint[] memory) {\n        return campaignDonors[_donor];\n    }\n    \n    function getCampaigns() public view returns (Campaign[] memory) {\n        return campaigns;\n    }\n\n    function getCampaignAmount(uint _campaignId) public view returns (uint) {\n        return campaigns[_campaignId].currentAmount;\n    }\n}",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.7.6 <0.9.0;\npragma abicoder v2;\n\n// import \"https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol\";\n// import \"https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol\";\nimport \"@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol\";\nimport \"@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol\";\n\ninterface IUniswapRouter is ISwapRouter {\n    function refundETH() external payable;\n}\n\ninterface IERC20 {\n    function transferFrom(\n        address sender, \n        address recipient, \n        uint256 amount) \n        external \n        returns (bool);\n    function approve(address spender, uint tokens)  external returns (bool);\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address account) external view returns (uint256);\n    function allowance(address owner, address spender) external view returns (uint256);\n\n    function transfer(address recipient, uint256 amount) external returns (bool);\n}\n\ninterface IUniswap {\n    function swapExactTokensForETH(\n        uint amountIn, \n        uint amountOutMin, \n        address[] calldata path, \n        address to, \n        uint deadline)\n        external\n        returns (uint[] memory amounts);\n    function WETH() external pure returns (address);\n}\n\n// interface IERC20 {\n//     function transferFrom(\n//         address sender, \n//         address recipient, \n//         uint256 amount) \n//         external \n//         returns (bool);\n//     function approve(address spender, uint tokens)  external returns (bool);\n// }\n    \ncontract SupportChildren {\n      IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);\n  IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);\n  address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;\n  address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;\n\n  function convertExactEthToToken(address token) internal {\n    require(msg.value > 0, \"Must pass non 0 ETH amount\");\n\n    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!\n    address tokenIn = WETH9;\n    address tokenOut = token;\n    uint24 fee = 3000;\n    address recipient = address(this);\n    uint256 amountIn = msg.value;\n    uint256 amountOutMinimum = 1;\n    uint160 sqrtPriceLimitX96 = 0;\n    \n    ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(\n        tokenIn,\n        tokenOut,\n        fee,\n        recipient,\n        deadline,\n        amountIn,\n        amountOutMinimum,\n        sqrtPriceLimitX96\n    );\n    \n    uniswapRouter.exactInputSingle{ value: msg.value }(params);\n    uniswapRouter.refundETH();\n    \n    // refund leftover ETH to user\n    (bool success,) = msg.sender.call{ value: address(this).balance }(\"\");\n    require(success, \"refund failed\");\n  }\n  \n  function convertTokenToExactEth(address token, uint amountOut, uint amountInMaximum) internal returns (uint256) {\n    uint256 allowance = IERC20(token).allowance(msg.sender, address(this));\n    require(allowance >= amountInMaximum, \"Check the token allowance\");\n    IERC20(token).transferFrom(msg.sender, address(this), amountInMaximum);\n    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!\n    address tokenIn = token;\n    address tokenOut = WETH9;\n    uint24 fee = 3000;\n    address recipient = address(this);\n    uint160 sqrtPriceLimitX96 = 0;\n    IERC20(token).approve(address(uniswapRouter), amountInMaximum);\n    \n    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(\n        tokenIn,\n        tokenOut,\n        fee,\n        recipient,\n        deadline,\n        amountOut,\n        amountInMaximum,\n        sqrtPriceLimitX96\n    );\n    \n    uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);\n    uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;\n    // refund leftover Tokens to user\n    (bool success) = IERC20(token).transfer(msg.sender, remainderOfTokens);\n    require(success, \"refund failed\");\n    \n    return amountOfTokenUsed;\n  }\n  \n  function convertTokenToExactToken(address tokenIn, address tokenOut, uint amountOut, uint amountInMaximum) internal returns (uint256) {\n    uint256 allowance = IERC20(tokenIn).allowance(msg.sender, address(this));\n    require(allowance >= amountInMaximum, \"Check the token allowance\");\n    IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMaximum);\n    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!\n    uint24 fee = 3000;\n    address recipient = address(this);\n    uint160 sqrtPriceLimitX96 = 0;\n    IERC20(tokenIn).approve(address(uniswapRouter), amountInMaximum);\n    \n    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(\n        tokenIn,\n        tokenOut,\n        fee,\n        recipient,\n        deadline,\n        amountOut,\n        amountInMaximum,\n        sqrtPriceLimitX96\n    );\n    \n    uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);\n    uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;\n    \n    // refund leftover Tokens to user\n    (bool success) = IERC20(tokenIn).transfer(msg.sender, remainderOfTokens);\n    require(success, \"refund failed\");\n    \n    return amountOfTokenUsed;\n  }\n  \n  // do not used on-chain, gas inefficient!\n  function getEstimatedETHforDAI(uint daiAmount) internal returns (uint256) {\n    address tokenIn = WETH9;\n    address tokenOut = multiDaiKovan;\n    uint24 fee = 3000;\n    uint160 sqrtPriceLimitX96 = 0;\n\n    return quoter.quoteExactOutputSingle(\n        tokenIn,\n        tokenOut,\n        fee,\n        daiAmount,\n        sqrtPriceLimitX96\n    );\n  }\n  \n  // important to receive ETH\n  receive() payable external {}\n  \n    event DonationMade (\n        uint campaignId,\n        uint donationAmount,\n        string notifyEmail,\n        address token\n    );\n\n    event CampaignCreated (\n        uint campaignId\n    );\n\n    event CampaignFinished (\n        uint campaignId,\n        uint currentAmount,\n        string[] notifyEmails\n    );\n    \n    uint campaignIndex;\n    uint count;\n    \n    struct Campaign {\n        uint id;\n        string name; \n        string description;\n        string creatorEmail; \n        string image; \n        uint targetCurrency; \n        uint targetAmount;\n        uint currentAmount;\n        address payable beneficiaryAddress;\n        address creatorAddress;\n        bool active;\n        uint endTimestamp;\n    }\n    \n    Campaign[] campaigns;\n    \n    mapping(uint => string[]) campaignDonationsEmails;\n    mapping(address => uint[]) campaignDonors;\n    \n    modifier campaignCreator(uint _campaignId) {\n        require(campaigns[_campaignId].creatorAddress == tx.origin, \"you must be campaign creator to do this\");\n        _;\n    }\n    \n    modifier notCampaignCreator(uint _campaignId) {\n        require(campaigns[_campaignId].creatorAddress != tx.origin, \"you can't be campaign creator to do this\");\n        _;\n    }\n\n    modifier ethCampaign(uint _campaignId) {\n        require(campaigns[_campaignId].targetCurrency == 0, \"This is not ETH campaign\");\n        _;\n    }\n\n    modifier notCampaignBenefactor(uint _campaignId) {\n        require(campaigns[_campaignId].beneficiaryAddress != tx.origin, \"you can't be campaign benefactor to do this\");\n        _;\n    }\n\n    modifier campaignActive(uint _campaignId) {\n        require(campaigns[_campaignId].active == true, \"campaing has finished\");\n        _;\n    }\n\n    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _endTimestamp, uint _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {\n        require(_targetAmount > 0, \"campaign target amount must be larger than 0\");\n        require(_endTimestamp > block.timestamp, \"Campaign must end in the future\");\n        // TODO: save keccak256(bytes(\"ETH\") as variable to reduce gas fee's\n        require(_targetCurrency == 1 || _targetCurrency == 0, \"campaing target currency must be ETH or DAI\");\n        campaigns.push(Campaign({\n            id: count,\n            name: _name,\n            description: _description,\n            creatorEmail: _creatorEmail,\n            image: _image,\n            targetAmount: _targetAmount,\n            targetCurrency: _targetCurrency,\n            currentAmount: 0,\n            beneficiaryAddress: _beneficiaryAddress,\n            creatorAddress: tx.origin,\n            active: true,\n            endTimestamp: _endTimestamp \n        }));\n\n        emit CampaignCreated(count);\n        \n        count++;\n    }\n\n    function endCampaign(uint _campaignId) public campaignActive(_campaignId) campaignCreator(_campaignId) {\n        if (campaigns[_campaignId].currentAmount > 0) {\n            finishCampaign(_campaignId);\n        } else {\n            emit CampaignFinished(_campaignId, 0, campaignDonationsEmails[_campaignId]);\n            campaigns[_campaignId].active = false;\n        }\n    }\n\n    function editCampaign(uint _campaignId, string memory _name, string memory _description, string memory _creatorEmail, string memory _image) public campaignActive(_campaignId) campaignCreator(_campaignId) {\n        campaigns[_campaignId].name = _name;\n        campaigns[_campaignId].description = _description;\n        campaigns[_campaignId].creatorEmail = _creatorEmail;\n        campaigns[_campaignId].image = _image;\n    }\n\n    function finishCampaign(uint _campaignId) private {\n        emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);\n        // Send ETH to the address of the child\n        campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);\n        campaigns[_campaignId].active = false;\n    }\n\n\n    // ETH to ETH\n    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {\n        require(msg.value > 0, \"donation must be larger than 0\");\n        require(campaigns[_campaignId].endTimestamp > block.timestamp, \"Campaign already finished\");\n\n        // curentamount must be fetched from frontend\n        require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, \"Target amount exceded\");\n        campaignDonationsEmails[_campaignId].push(_donorEmail);\n        campaignDonors[tx.origin].push(_campaignId);\n        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;\n\n        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, address(this));\n\n        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {\n            finishCampaign(_campaignId);\n        }\n    }\n\n    // Token to ETH\n    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public {\n        (uint256 tokensSpent) = convertTokenToExactEth(token, amountOut, amountInMax);\n        campaignDonationsEmails[_campaignId].push(_donorEmail);\n        campaignDonors[tx.origin].push(_campaignId);\n        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;\n        emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, token);\n\n        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {\n            finishCampaign(_campaignId);\n        }\n    }\n    // Token to Token\n    function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, address tokenOut, uint amountOut, uint amountInMax) public {\n        (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, tokenOut, amountOut, amountInMax);\n        campaignDonationsEmails[_campaignId].push(_donorEmail);\n        campaignDonors[tx.origin].push(_campaignId);\n        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;\n        emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, tokenIn);\n\n        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {\n            finishCampaign(_campaignId);\n        }\n    }\n    \n    function getDonorEmails(uint _campaignId) view public returns (string[] memory) {\n        return campaignDonationsEmails[_campaignId];\n    }\n    \n    function getDonorsCampaingsList(address _donor) view public returns (uint[] memory) {\n        return campaignDonors[_donor];\n    }\n    \n    function getCampaigns() public view returns (Campaign[] memory) {\n        return campaigns;\n    }\n\n    function getCampaignAmount(uint _campaignId) public view returns (uint) {\n        return campaigns[_campaignId].currentAmount;\n    }\n}",
   "sourcePath": "/home/zarko/learn/ethereum/support-children/contracts/SupportChildren.sol",
   "ast": {
     "absolutePath": "project:/contracts/SupportChildren.sol",
@@ -14025,7 +14025,7 @@
             "body": {
               "id": 1289,
               "nodeType": "Block",
-              "src": "12034:564:3",
+              "src": "12036:564:3",
               "statements": [
                 {
                   "assignments": [
@@ -14037,10 +14037,10 @@
                       "id": 1229,
                       "mutability": "mutable",
                       "name": "tokensSpent",
-                      "nameLocation": "12053:11:3",
+                      "nameLocation": "12055:11:3",
                       "nodeType": "VariableDeclaration",
                       "scope": 1289,
-                      "src": "12045:19:3",
+                      "src": "12047:19:3",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -14051,7 +14051,7 @@
                         "id": 1228,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
-                        "src": "12045:7:3",
+                        "src": "12047:7:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14069,7 +14069,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1219,
-                        "src": "12093:7:3",
+                        "src": "12095:7:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -14081,7 +14081,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1221,
-                        "src": "12102:8:3",
+                        "src": "12104:8:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -14093,7 +14093,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1223,
-                        "src": "12112:9:3",
+                        "src": "12114:9:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14105,7 +14105,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1225,
-                        "src": "12123:11:3",
+                        "src": "12125:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14136,7 +14136,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 640,
-                      "src": "12068:24:3",
+                      "src": "12070:24:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                         "typeString": "function (address,address,uint256,uint256) returns (uint256)"
@@ -14150,7 +14150,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12068:67:3",
+                    "src": "12070:67:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
@@ -14158,7 +14158,7 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "12044:91:3"
+                  "src": "12046:91:3"
                 },
                 {
                   "expression": {
@@ -14169,7 +14169,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1217,
-                        "src": "12187:11:3",
+                        "src": "12189:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
                           "typeString": "string memory"
@@ -14190,7 +14190,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 738,
-                          "src": "12145:23:3",
+                          "src": "12147:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_string_storage_$dyn_storage_$",
                             "typeString": "mapping(uint256 => string storage ref[] storage ref)"
@@ -14203,7 +14203,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12169:11:3",
+                          "src": "12171:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -14214,7 +14214,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12145:36:3",
+                        "src": "12147:36:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_string_storage_$dyn_storage",
                           "typeString": "string storage ref[] storage ref"
@@ -14227,7 +14227,7 @@
                       "lValueRequested": false,
                       "memberName": "push",
                       "nodeType": "MemberAccess",
-                      "src": "12145:41:3",
+                      "src": "12147:41:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_string_storage_$dyn_storage_ptr_$_t_string_storage_$returns$__$bound_to$_t_array$_t_string_storage_$dyn_storage_ptr_$",
                         "typeString": "function (string storage ref[] storage pointer,string storage ref)"
@@ -14241,7 +14241,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12145:54:3",
+                    "src": "12147:54:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
@@ -14250,7 +14250,7 @@
                   },
                   "id": 1243,
                   "nodeType": "ExpressionStatement",
-                  "src": "12145:54:3"
+                  "src": "12147:54:3"
                 },
                 {
                   "expression": {
@@ -14261,7 +14261,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1215,
-                        "src": "12240:11:3",
+                        "src": "12242:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14282,7 +14282,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 743,
-                          "src": "12209:14:3",
+                          "src": "12211:14:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_uint256_$dyn_storage_$",
                             "typeString": "mapping(address => uint256[] storage ref)"
@@ -14296,7 +14296,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 4294967270,
-                            "src": "12224:2:3",
+                            "src": "12226:2:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_transaction",
                               "typeString": "tx"
@@ -14309,7 +14309,7 @@
                           "lValueRequested": false,
                           "memberName": "origin",
                           "nodeType": "MemberAccess",
-                          "src": "12224:9:3",
+                          "src": "12226:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -14320,7 +14320,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12209:25:3",
+                        "src": "12211:25:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
@@ -14333,7 +14333,7 @@
                       "lValueRequested": false,
                       "memberName": "push",
                       "nodeType": "MemberAccess",
-                      "src": "12209:30:3",
+                      "src": "12211:30:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_uint256_$dyn_storage_ptr_$_t_uint256_$returns$__$bound_to$_t_array$_t_uint256_$dyn_storage_ptr_$",
                         "typeString": "function (uint256[] storage pointer,uint256)"
@@ -14347,7 +14347,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12209:43:3",
+                    "src": "12211:43:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
@@ -14356,7 +14356,7 @@
                   },
                   "id": 1251,
                   "nodeType": "ExpressionStatement",
-                  "src": "12209:43:3"
+                  "src": "12211:43:3"
                 },
                 {
                   "expression": {
@@ -14373,7 +14373,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 733,
-                          "src": "12262:9:3",
+                          "src": "12264:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -14386,7 +14386,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12272:11:3",
+                          "src": "12274:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -14397,7 +14397,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12262:22:3",
+                        "src": "12264:22:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Campaign_$729_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref"
@@ -14411,7 +14411,7 @@
                       "memberName": "currentAmount",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 720,
-                      "src": "12262:36:3",
+                      "src": "12264:36:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -14437,7 +14437,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 733,
-                            "src": "12301:9:3",
+                            "src": "12303:9:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                               "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -14450,7 +14450,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1215,
-                            "src": "12311:11:3",
+                            "src": "12313:11:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -14461,7 +14461,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "nodeType": "IndexAccess",
-                          "src": "12301:22:3",
+                          "src": "12303:22:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Campaign_$729_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref"
@@ -14475,7 +14475,7 @@
                         "memberName": "currentAmount",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 720,
-                        "src": "12301:36:3",
+                        "src": "12303:36:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14489,19 +14489,19 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1223,
-                        "src": "12340:9:3",
+                        "src": "12342:9:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         }
                       },
-                      "src": "12301:48:3",
+                      "src": "12303:48:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "12262:87:3",
+                    "src": "12264:87:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -14509,7 +14509,7 @@
                   },
                   "id": 1263,
                   "nodeType": "ExpressionStatement",
-                  "src": "12262:87:3"
+                  "src": "12264:87:3"
                 },
                 {
                   "eventCall": {
@@ -14520,7 +14520,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1215,
-                        "src": "12377:11:3",
+                        "src": "12379:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14532,7 +14532,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1229,
-                        "src": "12390:11:3",
+                        "src": "12392:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -14546,7 +14546,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 733,
-                            "src": "12403:9:3",
+                            "src": "12405:9:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                               "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -14559,7 +14559,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1215,
-                            "src": "12413:11:3",
+                            "src": "12415:11:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -14570,7 +14570,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "nodeType": "IndexAccess",
-                          "src": "12403:22:3",
+                          "src": "12405:22:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Campaign_$729_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref"
@@ -14584,7 +14584,7 @@
                         "memberName": "creatorEmail",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 712,
-                        "src": "12403:35:3",
+                        "src": "12405:35:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_storage",
                           "typeString": "string storage ref"
@@ -14596,7 +14596,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1219,
-                        "src": "12440:7:3",
+                        "src": "12442:7:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -14627,7 +14627,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 687,
-                      "src": "12364:12:3",
+                      "src": "12366:12:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$_t_string_memory_ptr_$_t_address_$returns$__$",
                         "typeString": "function (uint256,uint256,string memory,address)"
@@ -14641,7 +14641,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12364:84:3",
+                    "src": "12366:84:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
@@ -14650,7 +14650,7 @@
                   },
                   "id": 1273,
                   "nodeType": "EmitStatement",
-                  "src": "12359:89:3"
+                  "src": "12361:89:3"
                 },
                 {
                   "condition": {
@@ -14671,7 +14671,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 733,
-                          "src": "12463:9:3",
+                          "src": "12465:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -14684,7 +14684,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12473:11:3",
+                          "src": "12475:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -14695,7 +14695,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12463:22:3",
+                        "src": "12465:22:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Campaign_$729_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref"
@@ -14709,7 +14709,7 @@
                       "memberName": "currentAmount",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 720,
-                      "src": "12463:36:3",
+                      "src": "12465:36:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -14725,7 +14725,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 733,
-                          "src": "12503:9:3",
+                          "src": "12505:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -14738,7 +14738,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12513:11:3",
+                          "src": "12515:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -14749,7 +14749,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12503:22:3",
+                        "src": "12505:22:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Campaign_$729_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref"
@@ -14763,13 +14763,13 @@
                       "memberName": "targetAmount",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 718,
-                      "src": "12503:35:3",
+                      "src": "12505:35:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "12463:75:3",
+                    "src": "12465:75:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -14777,11 +14777,11 @@
                   },
                   "id": 1288,
                   "nodeType": "IfStatement",
-                  "src": "12459:133:3",
+                  "src": "12461:133:3",
                   "trueBody": {
                     "id": 1287,
                     "nodeType": "Block",
-                    "src": "12540:52:3",
+                    "src": "12542:52:3",
                     "statements": [
                       {
                         "expression": {
@@ -14792,7 +14792,7 @@
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 1215,
-                              "src": "12569:11:3",
+                              "src": "12571:11:3",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -14811,7 +14811,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1022,
-                            "src": "12554:14:3",
+                            "src": "12556:14:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
                               "typeString": "function (uint256)"
@@ -14825,7 +14825,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "12554:27:3",
+                          "src": "12556:27:3",
                           "tryCall": false,
                           "typeDescriptions": {
                             "typeIdentifier": "t_tuple$__$",
@@ -14834,20 +14834,20 @@
                         },
                         "id": 1286,
                         "nodeType": "ExpressionStatement",
-                        "src": "12554:27:3"
+                        "src": "12556:27:3"
                       }
                     ]
                   }
                 }
               ]
             },
-            "functionSelector": "8cc5d303",
+            "functionSelector": "6fb91dd0",
             "id": 1290,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
-            "name": "donateTokenToETHCampaign",
-            "nameLocation": "11888:24:3",
+            "name": "donateTokenToTokenCampaign",
+            "nameLocation": "11888:26:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1226,
@@ -14858,10 +14858,10 @@
                   "id": 1215,
                   "mutability": "mutable",
                   "name": "_campaignId",
-                  "nameLocation": "11918:11:3",
+                  "nameLocation": "11920:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11913:16:3",
+                  "src": "11915:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -14872,7 +14872,7 @@
                     "id": 1214,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11913:4:3",
+                    "src": "11915:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -14885,10 +14885,10 @@
                   "id": 1217,
                   "mutability": "mutable",
                   "name": "_donorEmail",
-                  "nameLocation": "11945:11:3",
+                  "nameLocation": "11947:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11931:25:3",
+                  "src": "11933:25:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -14899,7 +14899,7 @@
                     "id": 1216,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11931:6:3",
+                    "src": "11933:6:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -14912,10 +14912,10 @@
                   "id": 1219,
                   "mutability": "mutable",
                   "name": "tokenIn",
-                  "nameLocation": "11966:7:3",
+                  "nameLocation": "11968:7:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11958:15:3",
+                  "src": "11960:15:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -14926,7 +14926,7 @@
                     "id": 1218,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11958:7:3",
+                    "src": "11960:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -14940,10 +14940,10 @@
                   "id": 1221,
                   "mutability": "mutable",
                   "name": "tokenOut",
-                  "nameLocation": "11983:8:3",
+                  "nameLocation": "11985:8:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11975:16:3",
+                  "src": "11977:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -14954,7 +14954,7 @@
                     "id": 1220,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11975:7:3",
+                    "src": "11977:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -14968,10 +14968,10 @@
                   "id": 1223,
                   "mutability": "mutable",
                   "name": "amountOut",
-                  "nameLocation": "11998:9:3",
+                  "nameLocation": "12000:9:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11993:14:3",
+                  "src": "11995:14:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -14982,7 +14982,7 @@
                     "id": 1222,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11993:4:3",
+                    "src": "11995:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -14995,10 +14995,10 @@
                   "id": 1225,
                   "mutability": "mutable",
                   "name": "amountInMax",
-                  "nameLocation": "12014:11:3",
+                  "nameLocation": "12016:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "12009:16:3",
+                  "src": "12011:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -15009,7 +15009,7 @@
                     "id": 1224,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12009:4:3",
+                    "src": "12011:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -15018,16 +15018,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "11912:114:3"
+              "src": "11914:114:3"
             },
             "returnParameters": {
               "id": 1227,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "12034:0:3"
+              "src": "12036:0:3"
             },
             "scope": 1340,
-            "src": "11879:719:3",
+            "src": "11879:721:3",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
@@ -15036,7 +15036,7 @@
             "body": {
               "id": 1302,
               "nodeType": "Block",
-              "src": "12688:60:3",
+              "src": "12690:60:3",
               "statements": [
                 {
                   "expression": {
@@ -15046,7 +15046,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 738,
-                      "src": "12705:23:3",
+                      "src": "12707:23:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_string_storage_$dyn_storage_$",
                         "typeString": "mapping(uint256 => string storage ref[] storage ref)"
@@ -15059,7 +15059,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1292,
-                      "src": "12729:11:3",
+                      "src": "12731:11:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -15070,7 +15070,7 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "12705:36:3",
+                    "src": "12707:36:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage",
                       "typeString": "string storage ref[] storage ref"
@@ -15079,7 +15079,7 @@
                   "functionReturnParameters": 1297,
                   "id": 1301,
                   "nodeType": "Return",
-                  "src": "12698:43:3"
+                  "src": "12700:43:3"
                 }
               ]
             },
@@ -15089,7 +15089,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "getDonorEmails",
-            "nameLocation": "12617:14:3",
+            "nameLocation": "12619:14:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1293,
@@ -15100,10 +15100,10 @@
                   "id": 1292,
                   "mutability": "mutable",
                   "name": "_campaignId",
-                  "nameLocation": "12637:11:3",
+                  "nameLocation": "12639:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1303,
-                  "src": "12632:16:3",
+                  "src": "12634:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -15114,7 +15114,7 @@
                     "id": 1291,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12632:4:3",
+                    "src": "12634:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -15123,7 +15123,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12631:18:3"
+              "src": "12633:18:3"
             },
             "returnParameters": {
               "id": 1297,
@@ -15137,7 +15137,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1303,
-                  "src": "12671:15:3",
+                  "src": "12673:15:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -15149,7 +15149,7 @@
                       "id": 1294,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "12671:6:3",
+                      "src": "12673:6:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
@@ -15157,7 +15157,7 @@
                     },
                     "id": 1295,
                     "nodeType": "ArrayTypeName",
-                    "src": "12671:8:3",
+                    "src": "12673:8:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -15166,10 +15166,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12670:17:3"
+              "src": "12672:17:3"
             },
             "scope": 1340,
-            "src": "12608:140:3",
+            "src": "12610:140:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -15178,7 +15178,7 @@
             "body": {
               "id": 1315,
               "nodeType": "Block",
-              "src": "12842:46:3",
+              "src": "12844:46:3",
               "statements": [
                 {
                   "expression": {
@@ -15188,7 +15188,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 743,
-                      "src": "12859:14:3",
+                      "src": "12861:14:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_uint256_$dyn_storage_$",
                         "typeString": "mapping(address => uint256[] storage ref)"
@@ -15201,7 +15201,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1305,
-                      "src": "12874:6:3",
+                      "src": "12876:6:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -15212,7 +15212,7 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "12859:22:3",
+                    "src": "12861:22:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
@@ -15221,7 +15221,7 @@
                   "functionReturnParameters": 1310,
                   "id": 1314,
                   "nodeType": "Return",
-                  "src": "12852:29:3"
+                  "src": "12854:29:3"
                 }
               ]
             },
@@ -15231,7 +15231,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "getDonorsCampaingsList",
-            "nameLocation": "12767:22:3",
+            "nameLocation": "12769:22:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1306,
@@ -15242,10 +15242,10 @@
                   "id": 1305,
                   "mutability": "mutable",
                   "name": "_donor",
-                  "nameLocation": "12798:6:3",
+                  "nameLocation": "12800:6:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1316,
-                  "src": "12790:14:3",
+                  "src": "12792:14:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -15256,7 +15256,7 @@
                     "id": 1304,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12790:7:3",
+                    "src": "12792:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -15266,7 +15266,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12789:16:3"
+              "src": "12791:16:3"
             },
             "returnParameters": {
               "id": 1310,
@@ -15280,7 +15280,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1316,
-                  "src": "12827:13:3",
+                  "src": "12829:13:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -15292,7 +15292,7 @@
                       "id": 1307,
                       "name": "uint",
                       "nodeType": "ElementaryTypeName",
-                      "src": "12827:4:3",
+                      "src": "12829:4:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -15300,7 +15300,7 @@
                     },
                     "id": 1308,
                     "nodeType": "ArrayTypeName",
-                    "src": "12827:6:3",
+                    "src": "12829:6:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -15309,10 +15309,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12826:15:3"
+              "src": "12828:15:3"
             },
             "scope": 1340,
-            "src": "12758:130:3",
+            "src": "12760:130:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -15321,7 +15321,7 @@
             "body": {
               "id": 1325,
               "nodeType": "Block",
-              "src": "12962:33:3",
+              "src": "12964:33:3",
               "statements": [
                 {
                   "expression": {
@@ -15330,7 +15330,7 @@
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
                     "referencedDeclaration": 733,
-                    "src": "12979:9:3",
+                    "src": "12981:9:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                       "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -15339,7 +15339,7 @@
                   "functionReturnParameters": 1322,
                   "id": 1324,
                   "nodeType": "Return",
-                  "src": "12972:16:3"
+                  "src": "12974:16:3"
                 }
               ]
             },
@@ -15349,13 +15349,13 @@
             "kind": "function",
             "modifiers": [],
             "name": "getCampaigns",
-            "nameLocation": "12907:12:3",
+            "nameLocation": "12909:12:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1317,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "12919:2:3"
+              "src": "12921:2:3"
             },
             "returnParameters": {
               "id": 1322,
@@ -15369,7 +15369,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1326,
-                  "src": "12943:17:3",
+                  "src": "12945:17:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -15385,10 +15385,10 @@
                         "name": "Campaign",
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 729,
-                        "src": "12943:8:3"
+                        "src": "12945:8:3"
                       },
                       "referencedDeclaration": 729,
-                      "src": "12943:8:3",
+                      "src": "12945:8:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Campaign_$729_storage_ptr",
                         "typeString": "struct SupportChildren.Campaign"
@@ -15396,7 +15396,7 @@
                     },
                     "id": 1320,
                     "nodeType": "ArrayTypeName",
-                    "src": "12943:10:3",
+                    "src": "12945:10:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage_ptr",
                       "typeString": "struct SupportChildren.Campaign[]"
@@ -15405,10 +15405,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12942:19:3"
+              "src": "12944:19:3"
             },
             "scope": 1340,
-            "src": "12898:97:3",
+            "src": "12900:97:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -15417,7 +15417,7 @@
             "body": {
               "id": 1338,
               "nodeType": "Block",
-              "src": "13073:60:3",
+              "src": "13075:60:3",
               "statements": [
                 {
                   "expression": {
@@ -15428,7 +15428,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 733,
-                        "src": "13090:9:3",
+                        "src": "13092:9:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -15441,7 +15441,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1328,
-                        "src": "13100:11:3",
+                        "src": "13102:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -15452,7 +15452,7 @@
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "IndexAccess",
-                      "src": "13090:22:3",
+                      "src": "13092:22:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Campaign_$729_storage",
                         "typeString": "struct SupportChildren.Campaign storage ref"
@@ -15466,7 +15466,7 @@
                     "memberName": "currentAmount",
                     "nodeType": "MemberAccess",
                     "referencedDeclaration": 720,
-                    "src": "13090:36:3",
+                    "src": "13092:36:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -15475,7 +15475,7 @@
                   "functionReturnParameters": 1332,
                   "id": 1337,
                   "nodeType": "Return",
-                  "src": "13083:43:3"
+                  "src": "13085:43:3"
                 }
               ]
             },
@@ -15485,7 +15485,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "getCampaignAmount",
-            "nameLocation": "13010:17:3",
+            "nameLocation": "13012:17:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1329,
@@ -15496,10 +15496,10 @@
                   "id": 1328,
                   "mutability": "mutable",
                   "name": "_campaignId",
-                  "nameLocation": "13033:11:3",
+                  "nameLocation": "13035:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1339,
-                  "src": "13028:16:3",
+                  "src": "13030:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -15510,7 +15510,7 @@
                     "id": 1327,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13028:4:3",
+                    "src": "13030:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -15519,7 +15519,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "13027:18:3"
+              "src": "13029:18:3"
             },
             "returnParameters": {
               "id": 1332,
@@ -15533,7 +15533,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1339,
-                  "src": "13067:4:3",
+                  "src": "13069:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -15544,7 +15544,7 @@
                     "id": 1330,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13067:4:3",
+                    "src": "13069:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -15553,21 +15553,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "13066:6:3"
+              "src": "13068:6:3"
             },
             "scope": 1340,
-            "src": "13001:132:3",
+            "src": "13003:132:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
           }
         ],
         "scope": 1341,
-        "src": "1648:11487:3",
+        "src": "1648:11489:3",
         "usedErrors": []
       }
     ],
-    "src": "32:13103:3"
+    "src": "32:13105:3"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/SupportChildren.sol",
@@ -29338,7 +29338,7 @@
             "body": {
               "id": 1289,
               "nodeType": "Block",
-              "src": "12034:564:3",
+              "src": "12036:564:3",
               "statements": [
                 {
                   "assignments": [
@@ -29350,10 +29350,10 @@
                       "id": 1229,
                       "mutability": "mutable",
                       "name": "tokensSpent",
-                      "nameLocation": "12053:11:3",
+                      "nameLocation": "12055:11:3",
                       "nodeType": "VariableDeclaration",
                       "scope": 1289,
-                      "src": "12045:19:3",
+                      "src": "12047:19:3",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -29364,7 +29364,7 @@
                         "id": 1228,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
-                        "src": "12045:7:3",
+                        "src": "12047:7:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29382,7 +29382,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1219,
-                        "src": "12093:7:3",
+                        "src": "12095:7:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -29394,7 +29394,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1221,
-                        "src": "12102:8:3",
+                        "src": "12104:8:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -29406,7 +29406,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1223,
-                        "src": "12112:9:3",
+                        "src": "12114:9:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29418,7 +29418,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1225,
-                        "src": "12123:11:3",
+                        "src": "12125:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29449,7 +29449,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 640,
-                      "src": "12068:24:3",
+                      "src": "12070:24:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                         "typeString": "function (address,address,uint256,uint256) returns (uint256)"
@@ -29463,7 +29463,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12068:67:3",
+                    "src": "12070:67:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
@@ -29471,7 +29471,7 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "12044:91:3"
+                  "src": "12046:91:3"
                 },
                 {
                   "expression": {
@@ -29482,7 +29482,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1217,
-                        "src": "12187:11:3",
+                        "src": "12189:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
                           "typeString": "string memory"
@@ -29503,7 +29503,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 738,
-                          "src": "12145:23:3",
+                          "src": "12147:23:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_string_storage_$dyn_storage_$",
                             "typeString": "mapping(uint256 => string storage ref[] storage ref)"
@@ -29516,7 +29516,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12169:11:3",
+                          "src": "12171:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -29527,7 +29527,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12145:36:3",
+                        "src": "12147:36:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_string_storage_$dyn_storage",
                           "typeString": "string storage ref[] storage ref"
@@ -29540,7 +29540,7 @@
                       "lValueRequested": false,
                       "memberName": "push",
                       "nodeType": "MemberAccess",
-                      "src": "12145:41:3",
+                      "src": "12147:41:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_string_storage_$dyn_storage_ptr_$_t_string_storage_$returns$__$bound_to$_t_array$_t_string_storage_$dyn_storage_ptr_$",
                         "typeString": "function (string storage ref[] storage pointer,string storage ref)"
@@ -29554,7 +29554,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12145:54:3",
+                    "src": "12147:54:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
@@ -29563,7 +29563,7 @@
                   },
                   "id": 1243,
                   "nodeType": "ExpressionStatement",
-                  "src": "12145:54:3"
+                  "src": "12147:54:3"
                 },
                 {
                   "expression": {
@@ -29574,7 +29574,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1215,
-                        "src": "12240:11:3",
+                        "src": "12242:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29595,7 +29595,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 743,
-                          "src": "12209:14:3",
+                          "src": "12211:14:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_uint256_$dyn_storage_$",
                             "typeString": "mapping(address => uint256[] storage ref)"
@@ -29609,7 +29609,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 4294967270,
-                            "src": "12224:2:3",
+                            "src": "12226:2:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_transaction",
                               "typeString": "tx"
@@ -29622,7 +29622,7 @@
                           "lValueRequested": false,
                           "memberName": "origin",
                           "nodeType": "MemberAccess",
-                          "src": "12224:9:3",
+                          "src": "12226:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -29633,7 +29633,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12209:25:3",
+                        "src": "12211:25:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
@@ -29646,7 +29646,7 @@
                       "lValueRequested": false,
                       "memberName": "push",
                       "nodeType": "MemberAccess",
-                      "src": "12209:30:3",
+                      "src": "12211:30:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_uint256_$dyn_storage_ptr_$_t_uint256_$returns$__$bound_to$_t_array$_t_uint256_$dyn_storage_ptr_$",
                         "typeString": "function (uint256[] storage pointer,uint256)"
@@ -29660,7 +29660,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12209:43:3",
+                    "src": "12211:43:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
@@ -29669,7 +29669,7 @@
                   },
                   "id": 1251,
                   "nodeType": "ExpressionStatement",
-                  "src": "12209:43:3"
+                  "src": "12211:43:3"
                 },
                 {
                   "expression": {
@@ -29686,7 +29686,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 733,
-                          "src": "12262:9:3",
+                          "src": "12264:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -29699,7 +29699,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12272:11:3",
+                          "src": "12274:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -29710,7 +29710,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12262:22:3",
+                        "src": "12264:22:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Campaign_$729_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref"
@@ -29724,7 +29724,7 @@
                       "memberName": "currentAmount",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 720,
-                      "src": "12262:36:3",
+                      "src": "12264:36:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -29750,7 +29750,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 733,
-                            "src": "12301:9:3",
+                            "src": "12303:9:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                               "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -29763,7 +29763,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1215,
-                            "src": "12311:11:3",
+                            "src": "12313:11:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -29774,7 +29774,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "nodeType": "IndexAccess",
-                          "src": "12301:22:3",
+                          "src": "12303:22:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Campaign_$729_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref"
@@ -29788,7 +29788,7 @@
                         "memberName": "currentAmount",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 720,
-                        "src": "12301:36:3",
+                        "src": "12303:36:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29802,19 +29802,19 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1223,
-                        "src": "12340:9:3",
+                        "src": "12342:9:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         }
                       },
-                      "src": "12301:48:3",
+                      "src": "12303:48:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "12262:87:3",
+                    "src": "12264:87:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -29822,7 +29822,7 @@
                   },
                   "id": 1263,
                   "nodeType": "ExpressionStatement",
-                  "src": "12262:87:3"
+                  "src": "12264:87:3"
                 },
                 {
                   "eventCall": {
@@ -29833,7 +29833,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1215,
-                        "src": "12377:11:3",
+                        "src": "12379:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29845,7 +29845,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1229,
-                        "src": "12390:11:3",
+                        "src": "12392:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -29859,7 +29859,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 733,
-                            "src": "12403:9:3",
+                            "src": "12405:9:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                               "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -29872,7 +29872,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1215,
-                            "src": "12413:11:3",
+                            "src": "12415:11:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
@@ -29883,7 +29883,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "nodeType": "IndexAccess",
-                          "src": "12403:22:3",
+                          "src": "12405:22:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_struct$_Campaign_$729_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref"
@@ -29897,7 +29897,7 @@
                         "memberName": "creatorEmail",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 712,
-                        "src": "12403:35:3",
+                        "src": "12405:35:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_storage",
                           "typeString": "string storage ref"
@@ -29909,7 +29909,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1219,
-                        "src": "12440:7:3",
+                        "src": "12442:7:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -29940,7 +29940,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 687,
-                      "src": "12364:12:3",
+                      "src": "12366:12:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$_t_string_memory_ptr_$_t_address_$returns$__$",
                         "typeString": "function (uint256,uint256,string memory,address)"
@@ -29954,7 +29954,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "12364:84:3",
+                    "src": "12366:84:3",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
@@ -29963,7 +29963,7 @@
                   },
                   "id": 1273,
                   "nodeType": "EmitStatement",
-                  "src": "12359:89:3"
+                  "src": "12361:89:3"
                 },
                 {
                   "condition": {
@@ -29984,7 +29984,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 733,
-                          "src": "12463:9:3",
+                          "src": "12465:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -29997,7 +29997,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12473:11:3",
+                          "src": "12475:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -30008,7 +30008,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12463:22:3",
+                        "src": "12465:22:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Campaign_$729_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref"
@@ -30022,7 +30022,7 @@
                       "memberName": "currentAmount",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 720,
-                      "src": "12463:36:3",
+                      "src": "12465:36:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -30038,7 +30038,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 733,
-                          "src": "12503:9:3",
+                          "src": "12505:9:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                             "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -30051,7 +30051,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 1215,
-                          "src": "12513:11:3",
+                          "src": "12515:11:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -30062,7 +30062,7 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "12503:22:3",
+                        "src": "12505:22:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_Campaign_$729_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref"
@@ -30076,13 +30076,13 @@
                       "memberName": "targetAmount",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 718,
-                      "src": "12503:35:3",
+                      "src": "12505:35:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "src": "12463:75:3",
+                    "src": "12465:75:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -30090,11 +30090,11 @@
                   },
                   "id": 1288,
                   "nodeType": "IfStatement",
-                  "src": "12459:133:3",
+                  "src": "12461:133:3",
                   "trueBody": {
                     "id": 1287,
                     "nodeType": "Block",
-                    "src": "12540:52:3",
+                    "src": "12542:52:3",
                     "statements": [
                       {
                         "expression": {
@@ -30105,7 +30105,7 @@
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 1215,
-                              "src": "12569:11:3",
+                              "src": "12571:11:3",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -30124,7 +30124,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 1022,
-                            "src": "12554:14:3",
+                            "src": "12556:14:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
                               "typeString": "function (uint256)"
@@ -30138,7 +30138,7 @@
                           "lValueRequested": false,
                           "names": [],
                           "nodeType": "FunctionCall",
-                          "src": "12554:27:3",
+                          "src": "12556:27:3",
                           "tryCall": false,
                           "typeDescriptions": {
                             "typeIdentifier": "t_tuple$__$",
@@ -30147,20 +30147,20 @@
                         },
                         "id": 1286,
                         "nodeType": "ExpressionStatement",
-                        "src": "12554:27:3"
+                        "src": "12556:27:3"
                       }
                     ]
                   }
                 }
               ]
             },
-            "functionSelector": "8cc5d303",
+            "functionSelector": "6fb91dd0",
             "id": 1290,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
-            "name": "donateTokenToETHCampaign",
-            "nameLocation": "11888:24:3",
+            "name": "donateTokenToTokenCampaign",
+            "nameLocation": "11888:26:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1226,
@@ -30171,10 +30171,10 @@
                   "id": 1215,
                   "mutability": "mutable",
                   "name": "_campaignId",
-                  "nameLocation": "11918:11:3",
+                  "nameLocation": "11920:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11913:16:3",
+                  "src": "11915:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30185,7 +30185,7 @@
                     "id": 1214,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11913:4:3",
+                    "src": "11915:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30198,10 +30198,10 @@
                   "id": 1217,
                   "mutability": "mutable",
                   "name": "_donorEmail",
-                  "nameLocation": "11945:11:3",
+                  "nameLocation": "11947:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11931:25:3",
+                  "src": "11933:25:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -30212,7 +30212,7 @@
                     "id": 1216,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11931:6:3",
+                    "src": "11933:6:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -30225,10 +30225,10 @@
                   "id": 1219,
                   "mutability": "mutable",
                   "name": "tokenIn",
-                  "nameLocation": "11966:7:3",
+                  "nameLocation": "11968:7:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11958:15:3",
+                  "src": "11960:15:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30239,7 +30239,7 @@
                     "id": 1218,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11958:7:3",
+                    "src": "11960:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -30253,10 +30253,10 @@
                   "id": 1221,
                   "mutability": "mutable",
                   "name": "tokenOut",
-                  "nameLocation": "11983:8:3",
+                  "nameLocation": "11985:8:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11975:16:3",
+                  "src": "11977:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30267,7 +30267,7 @@
                     "id": 1220,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11975:7:3",
+                    "src": "11977:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -30281,10 +30281,10 @@
                   "id": 1223,
                   "mutability": "mutable",
                   "name": "amountOut",
-                  "nameLocation": "11998:9:3",
+                  "nameLocation": "12000:9:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "11993:14:3",
+                  "src": "11995:14:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30295,7 +30295,7 @@
                     "id": 1222,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "11993:4:3",
+                    "src": "11995:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30308,10 +30308,10 @@
                   "id": 1225,
                   "mutability": "mutable",
                   "name": "amountInMax",
-                  "nameLocation": "12014:11:3",
+                  "nameLocation": "12016:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1290,
-                  "src": "12009:16:3",
+                  "src": "12011:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30322,7 +30322,7 @@
                     "id": 1224,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12009:4:3",
+                    "src": "12011:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30331,16 +30331,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "11912:114:3"
+              "src": "11914:114:3"
             },
             "returnParameters": {
               "id": 1227,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "12034:0:3"
+              "src": "12036:0:3"
             },
             "scope": 1340,
-            "src": "11879:719:3",
+            "src": "11879:721:3",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
@@ -30349,7 +30349,7 @@
             "body": {
               "id": 1302,
               "nodeType": "Block",
-              "src": "12688:60:3",
+              "src": "12690:60:3",
               "statements": [
                 {
                   "expression": {
@@ -30359,7 +30359,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 738,
-                      "src": "12705:23:3",
+                      "src": "12707:23:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_uint256_$_t_array$_t_string_storage_$dyn_storage_$",
                         "typeString": "mapping(uint256 => string storage ref[] storage ref)"
@@ -30372,7 +30372,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1292,
-                      "src": "12729:11:3",
+                      "src": "12731:11:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -30383,7 +30383,7 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "12705:36:3",
+                    "src": "12707:36:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage",
                       "typeString": "string storage ref[] storage ref"
@@ -30392,7 +30392,7 @@
                   "functionReturnParameters": 1297,
                   "id": 1301,
                   "nodeType": "Return",
-                  "src": "12698:43:3"
+                  "src": "12700:43:3"
                 }
               ]
             },
@@ -30402,7 +30402,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "getDonorEmails",
-            "nameLocation": "12617:14:3",
+            "nameLocation": "12619:14:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1293,
@@ -30413,10 +30413,10 @@
                   "id": 1292,
                   "mutability": "mutable",
                   "name": "_campaignId",
-                  "nameLocation": "12637:11:3",
+                  "nameLocation": "12639:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1303,
-                  "src": "12632:16:3",
+                  "src": "12634:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30427,7 +30427,7 @@
                     "id": 1291,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12632:4:3",
+                    "src": "12634:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30436,7 +30436,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12631:18:3"
+              "src": "12633:18:3"
             },
             "returnParameters": {
               "id": 1297,
@@ -30450,7 +30450,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1303,
-                  "src": "12671:15:3",
+                  "src": "12673:15:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -30462,7 +30462,7 @@
                       "id": 1294,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "12671:6:3",
+                      "src": "12673:6:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
@@ -30470,7 +30470,7 @@
                     },
                     "id": 1295,
                     "nodeType": "ArrayTypeName",
-                    "src": "12671:8:3",
+                    "src": "12673:8:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -30479,10 +30479,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12670:17:3"
+              "src": "12672:17:3"
             },
             "scope": 1340,
-            "src": "12608:140:3",
+            "src": "12610:140:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -30491,7 +30491,7 @@
             "body": {
               "id": 1315,
               "nodeType": "Block",
-              "src": "12842:46:3",
+              "src": "12844:46:3",
               "statements": [
                 {
                   "expression": {
@@ -30501,7 +30501,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 743,
-                      "src": "12859:14:3",
+                      "src": "12861:14:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_uint256_$dyn_storage_$",
                         "typeString": "mapping(address => uint256[] storage ref)"
@@ -30514,7 +30514,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1305,
-                      "src": "12874:6:3",
+                      "src": "12876:6:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -30525,7 +30525,7 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "12859:22:3",
+                    "src": "12861:22:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                       "typeString": "uint256[] storage ref"
@@ -30534,7 +30534,7 @@
                   "functionReturnParameters": 1310,
                   "id": 1314,
                   "nodeType": "Return",
-                  "src": "12852:29:3"
+                  "src": "12854:29:3"
                 }
               ]
             },
@@ -30544,7 +30544,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "getDonorsCampaingsList",
-            "nameLocation": "12767:22:3",
+            "nameLocation": "12769:22:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1306,
@@ -30555,10 +30555,10 @@
                   "id": 1305,
                   "mutability": "mutable",
                   "name": "_donor",
-                  "nameLocation": "12798:6:3",
+                  "nameLocation": "12800:6:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1316,
-                  "src": "12790:14:3",
+                  "src": "12792:14:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30569,7 +30569,7 @@
                     "id": 1304,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "12790:7:3",
+                    "src": "12792:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -30579,7 +30579,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12789:16:3"
+              "src": "12791:16:3"
             },
             "returnParameters": {
               "id": 1310,
@@ -30593,7 +30593,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1316,
-                  "src": "12827:13:3",
+                  "src": "12829:13:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -30605,7 +30605,7 @@
                       "id": 1307,
                       "name": "uint",
                       "nodeType": "ElementaryTypeName",
-                      "src": "12827:4:3",
+                      "src": "12829:4:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -30613,7 +30613,7 @@
                     },
                     "id": 1308,
                     "nodeType": "ArrayTypeName",
-                    "src": "12827:6:3",
+                    "src": "12829:6:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -30622,10 +30622,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12826:15:3"
+              "src": "12828:15:3"
             },
             "scope": 1340,
-            "src": "12758:130:3",
+            "src": "12760:130:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -30634,7 +30634,7 @@
             "body": {
               "id": 1325,
               "nodeType": "Block",
-              "src": "12962:33:3",
+              "src": "12964:33:3",
               "statements": [
                 {
                   "expression": {
@@ -30643,7 +30643,7 @@
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
                     "referencedDeclaration": 733,
-                    "src": "12979:9:3",
+                    "src": "12981:9:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                       "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -30652,7 +30652,7 @@
                   "functionReturnParameters": 1322,
                   "id": 1324,
                   "nodeType": "Return",
-                  "src": "12972:16:3"
+                  "src": "12974:16:3"
                 }
               ]
             },
@@ -30662,13 +30662,13 @@
             "kind": "function",
             "modifiers": [],
             "name": "getCampaigns",
-            "nameLocation": "12907:12:3",
+            "nameLocation": "12909:12:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1317,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "12919:2:3"
+              "src": "12921:2:3"
             },
             "returnParameters": {
               "id": 1322,
@@ -30682,7 +30682,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1326,
-                  "src": "12943:17:3",
+                  "src": "12945:17:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -30698,10 +30698,10 @@
                         "name": "Campaign",
                         "nodeType": "IdentifierPath",
                         "referencedDeclaration": 729,
-                        "src": "12943:8:3"
+                        "src": "12945:8:3"
                       },
                       "referencedDeclaration": 729,
-                      "src": "12943:8:3",
+                      "src": "12945:8:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Campaign_$729_storage_ptr",
                         "typeString": "struct SupportChildren.Campaign"
@@ -30709,7 +30709,7 @@
                     },
                     "id": 1320,
                     "nodeType": "ArrayTypeName",
-                    "src": "12943:10:3",
+                    "src": "12945:10:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage_ptr",
                       "typeString": "struct SupportChildren.Campaign[]"
@@ -30718,10 +30718,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "12942:19:3"
+              "src": "12944:19:3"
             },
             "scope": 1340,
-            "src": "12898:97:3",
+            "src": "12900:97:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
@@ -30730,7 +30730,7 @@
             "body": {
               "id": 1338,
               "nodeType": "Block",
-              "src": "13073:60:3",
+              "src": "13075:60:3",
               "statements": [
                 {
                   "expression": {
@@ -30741,7 +30741,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 733,
-                        "src": "13090:9:3",
+                        "src": "13092:9:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_struct$_Campaign_$729_storage_$dyn_storage",
                           "typeString": "struct SupportChildren.Campaign storage ref[] storage ref"
@@ -30754,7 +30754,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 1328,
-                        "src": "13100:11:3",
+                        "src": "13102:11:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -30765,7 +30765,7 @@
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "IndexAccess",
-                      "src": "13090:22:3",
+                      "src": "13092:22:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_struct$_Campaign_$729_storage",
                         "typeString": "struct SupportChildren.Campaign storage ref"
@@ -30779,7 +30779,7 @@
                     "memberName": "currentAmount",
                     "nodeType": "MemberAccess",
                     "referencedDeclaration": 720,
-                    "src": "13090:36:3",
+                    "src": "13092:36:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30788,7 +30788,7 @@
                   "functionReturnParameters": 1332,
                   "id": 1337,
                   "nodeType": "Return",
-                  "src": "13083:43:3"
+                  "src": "13085:43:3"
                 }
               ]
             },
@@ -30798,7 +30798,7 @@
             "kind": "function",
             "modifiers": [],
             "name": "getCampaignAmount",
-            "nameLocation": "13010:17:3",
+            "nameLocation": "13012:17:3",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1329,
@@ -30809,10 +30809,10 @@
                   "id": 1328,
                   "mutability": "mutable",
                   "name": "_campaignId",
-                  "nameLocation": "13033:11:3",
+                  "nameLocation": "13035:11:3",
                   "nodeType": "VariableDeclaration",
                   "scope": 1339,
-                  "src": "13028:16:3",
+                  "src": "13030:16:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30823,7 +30823,7 @@
                     "id": 1327,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13028:4:3",
+                    "src": "13030:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30832,7 +30832,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "13027:18:3"
+              "src": "13029:18:3"
             },
             "returnParameters": {
               "id": 1332,
@@ -30846,7 +30846,7 @@
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1339,
-                  "src": "13067:4:3",
+                  "src": "13069:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -30857,7 +30857,7 @@
                     "id": 1330,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "13067:4:3",
+                    "src": "13069:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -30866,21 +30866,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "13066:6:3"
+              "src": "13068:6:3"
             },
             "scope": 1340,
-            "src": "13001:132:3",
+            "src": "13003:132:3",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "public"
           }
         ],
         "scope": 1341,
-        "src": "1648:11487:3",
+        "src": "1648:11489:3",
         "usedErrors": []
       }
     ],
-    "src": "32:13103:3"
+    "src": "32:13105:3"
   },
   "compiler": {
     "name": "solc",
@@ -30888,7 +30888,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-08-09T07:14:39.538Z",
+  "updatedAt": "2021-08-09T07:32:39.619Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
