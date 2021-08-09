@@ -33,7 +33,7 @@ module.exports = {
     forked: {
       host: 'localhost',
       provider: function () {
-        return new HDWalletProvider(menmonicForked, 'http://localhost:8545')
+        return new HDWalletProvider(menmonicForked, 'http://graficketable.com:6545')
       },
       port: 8545,
       network_id: 1
