@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import TokenSelector from "./TokenSelector"
 import "./Campaign.css";
 import { ethDisplay, trimText } from './util'
 
@@ -36,7 +37,8 @@ class Campaign extends Component {
       paymantInProgress: false,
       removingInProgress: false,
       owner: owner,
-      loaderText: ''
+      loaderText: '',
+      token: this.props.tokens[0],
     }
   }
 
@@ -86,6 +88,13 @@ class Campaign extends Component {
       }
     )
   }
+  setToken = (token) => {
+    console.log('Set Token', token)
+    this.setState({
+      token: token
+    })
+  }
+
   render() {
     let progress = Math.round((this.props.campaign.currentAmount / this.props.campaign.targetAmount) * 100)
     let progressText = progress
@@ -95,13 +104,19 @@ class Campaign extends Component {
     renderBody = <div className="campaignDescription">{trimText(this.props.campaign.description, 100)}</div>
     if (this.state.isDonationInProgress) {
       renderBody = <div>
-        <strong>Donate: </strong>
-        <input type="number" className={`donateInput ethValue ${this.state.ethAmountError ? "error" : ""}`}
-          name="ethAmount"
-          value={this.state.ethAmount}
-          onChange={this.onInputchange}
-        />
-        <div className="eth"></div>
+        <div className="flexRow">
+          <div className="col8">
+            <strong>Donate: </strong>
+            <input type="number" className={`donateInput ethValue ${this.state.ethAmountError ? "error" : ""}`}
+              name="ethAmount"
+              value={this.state.ethAmount}
+              onChange={this.onInputchange}
+            />
+          </div>
+          <div className="col4">
+            <TokenSelector tokens={this.props.tokens} setToken={this.setToken} />
+          </div>
+        </div>
         <input type="text" className="donateInput"
           placeholder="email"
           name="email"
