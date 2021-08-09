@@ -207,7 +207,10 @@ contract SupportChildren {
     // ETH to Token
     function donateEthToTokenCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) {
         require(msg.value > 0, "donation must be larger than 0");
+
         (uint256 tokensReceived) = convertExactEthToToken(campaigns[_campaignId].targetCurrency);
+        require((campaigns[_campaignId].currentAmount  + tokensReceived) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+        
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + tokensReceived;
@@ -223,6 +226,8 @@ contract SupportChildren {
     function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
         require(amountInMax > 0, "token donation must be larger than 0");
         require(amountOut > 0, "token donation must be larger than 0");
+        require((campaigns[_campaignId].currentAmount  + amountOut) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+        
         (uint256 tokensSpent) = convertTokenToExactEth(token, amountOut, amountInMax);
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
@@ -239,6 +244,7 @@ contract SupportChildren {
     function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
         require(amountInMax > 0, "token donation must be larger than 0");
         require(amountOut > 0, "token donation must be larger than 0");
+        require((campaigns[_campaignId].currentAmount  + amountOut) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
         (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, campaigns[_campaignId].targetCurrency, amountOut, amountInMax);
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
