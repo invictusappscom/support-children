@@ -37,135 +37,12 @@ interface IUniswap {
         returns (uint[] memory amounts);
     function WETH() external pure returns (address);
 }
-
-// interface IERC20 {
-//     function transferFrom(
-//         address sender, 
-//         address recipient, 
-//         uint256 amount) 
-//         external 
-//         returns (bool);
-//     function approve(address spender, uint tokens)  external returns (bool);
-// }
     
 contract SupportChildren {
-      IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
-  IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
-  address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-  address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-
-  function convertExactEthToToken(address token) internal {
-    require(msg.value > 0, "Must pass non 0 ETH amount");
-
-    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
-    address tokenIn = WETH9;
-    address tokenOut = token;
-    uint24 fee = 3000;
-    address recipient = address(this);
-    uint256 amountIn = msg.value;
-    uint256 amountOutMinimum = 1;
-    uint160 sqrtPriceLimitX96 = 0;
-    
-    ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(
-        tokenIn,
-        tokenOut,
-        fee,
-        recipient,
-        deadline,
-        amountIn,
-        amountOutMinimum,
-        sqrtPriceLimitX96
-    );
-    
-    uniswapRouter.exactInputSingle{ value: msg.value }(params);
-    uniswapRouter.refundETH();
-    
-    // refund leftover ETH to user
-    (bool success,) = msg.sender.call{ value: address(this).balance }("");
-    require(success, "refund failed");
-  }
-  
-  function convertTokenToExactEth(address token, uint amountOut, uint amountInMaximum) internal returns (uint256) {
-    uint256 allowance = IERC20(token).allowance(msg.sender, address(this));
-    require(allowance >= amountInMaximum, "Check the token allowance");
-    IERC20(token).transferFrom(msg.sender, address(this), amountInMaximum);
-    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
-    address tokenIn = token;
-    address tokenOut = WETH9;
-    uint24 fee = 3000;
-    address recipient = address(this);
-    uint160 sqrtPriceLimitX96 = 0;
-    IERC20(token).approve(address(uniswapRouter), amountInMaximum);
-    
-    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
-        tokenIn,
-        tokenOut,
-        fee,
-        recipient,
-        deadline,
-        amountOut,
-        amountInMaximum,
-        sqrtPriceLimitX96
-    );
-    
-    uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);
-    uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;
-    // refund leftover Tokens to user
-    (bool success) = IERC20(token).transfer(msg.sender, remainderOfTokens);
-    require(success, "refund failed");
-    
-    return amountOfTokenUsed;
-  }
-  
-  function convertTokenToExactToken(address tokenIn, address tokenOut, uint amountOut, uint amountInMaximum) internal returns (uint256) {
-    uint256 allowance = IERC20(tokenIn).allowance(msg.sender, address(this));
-    require(allowance >= amountInMaximum, "Check the token allowance");
-    IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMaximum);
-    uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
-    uint24 fee = 3000;
-    address recipient = address(this);
-    uint160 sqrtPriceLimitX96 = 0;
-    IERC20(tokenIn).approve(address(uniswapRouter), amountInMaximum);
-    
-    ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
-        tokenIn,
-        tokenOut,
-        fee,
-        recipient,
-        deadline,
-        amountOut,
-        amountInMaximum,
-        sqrtPriceLimitX96
-    );
-    
-    uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);
-    uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;
-    
-    // refund leftover Tokens to user
-    (bool success) = IERC20(tokenIn).transfer(msg.sender, remainderOfTokens);
-    require(success, "refund failed");
-    
-    return amountOfTokenUsed;
-  }
-  
-  // do not used on-chain, gas inefficient!
-  function getEstimatedETHforDAI(uint daiAmount) internal returns (uint256) {
-    address tokenIn = WETH9;
-    address tokenOut = multiDaiKovan;
-    uint24 fee = 3000;
-    uint160 sqrtPriceLimitX96 = 0;
-
-    return quoter.quoteExactOutputSingle(
-        tokenIn,
-        tokenOut,
-        fee,
-        daiAmount,
-        sqrtPriceLimitX96
-    );
-  }
-  
-  // important to receive ETH
-  receive() payable external {}
+    IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
+    IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
+    address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+    address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
   
     event DonationMade (
         uint campaignId,
@@ -183,6 +60,12 @@ contract SupportChildren {
         uint currentAmount,
         string[] notifyEmails
     );
+
+    event CreateNFT (
+        uint campaignId,
+        string campaignImage,
+        uint nftType
+    );
     
     uint campaignIndex;
     uint count;
@@ -193,9 +76,10 @@ contract SupportChildren {
         string description;
         string creatorEmail; 
         string image; 
-        uint targetCurrency; 
+        address targetCurrency; 
         uint targetAmount;
         uint currentAmount;
+        uint amountInWeth;
         address payable beneficiaryAddress;
         address creatorAddress;
         bool active;
@@ -218,7 +102,7 @@ contract SupportChildren {
     }
 
     modifier ethCampaign(uint _campaignId) {
-        require(campaigns[_campaignId].targetCurrency == 0, "This is not ETH campaign");
+        require(campaigns[_campaignId].targetCurrency == address(this), "This is not ETH campaign");
         _;
     }
 
@@ -229,14 +113,13 @@ contract SupportChildren {
 
     modifier campaignActive(uint _campaignId) {
         require(campaigns[_campaignId].active == true, "campaing has finished");
+        require(campaigns[_campaignId].endTimestamp > block.timestamp, "Campaign already finished");
         _;
     }
 
-    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _endTimestamp, uint _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
+    function createCampaign(string memory _name, string memory _description, string memory _creatorEmail, string memory _image, uint _endTimestamp, address _targetCurrency, uint _targetAmount, address payable _beneficiaryAddress) public {
         require(_targetAmount > 0, "campaign target amount must be larger than 0");
         require(_endTimestamp > block.timestamp, "Campaign must end in the future");
-        // TODO: save keccak256(bytes("ETH") as variable to reduce gas fee's
-        require(_targetCurrency == 1 || _targetCurrency == 0, "campaing target currency must be ETH or DAI");
         campaigns.push(Campaign({
             id: count,
             name: _name,
@@ -246,6 +129,7 @@ contract SupportChildren {
             targetAmount: _targetAmount,
             targetCurrency: _targetCurrency,
             currentAmount: 0,
+            amountInWeth: 0,
             beneficiaryAddress: _beneficiaryAddress,
             creatorAddress: tx.origin,
             active: true,
@@ -275,8 +159,20 @@ contract SupportChildren {
 
     function finishCampaign(uint _campaignId) private {
         emit CampaignFinished(_campaignId, campaigns[_campaignId].currentAmount, campaignDonationsEmails[_campaignId]);
-        // Send ETH to the address of the child
-        campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);
+        // Send collected value to the address of the child
+        if (campaigns[_campaignId].targetCurrency == address(this)) {
+            if (campaigns[_campaignId].amountInWeth > 0) {
+                campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount-campaigns[_campaignId].amountInWeth);
+                
+                (bool success) = IERC20(WETH9).transfer(msg.sender, campaigns[_campaignId].amountInWeth);
+                require(success, "transfer of Weth Token failed");
+            } else {
+                campaigns[_campaignId].beneficiaryAddress.transfer(campaigns[_campaignId].currentAmount);
+            }
+        } else {
+            (bool success) = IERC20(campaigns[_campaignId].targetCurrency).transfer(msg.sender, campaigns[_campaignId].currentAmount);
+            require(success, "transfer of Token failed");
+        }
         campaigns[_campaignId].active = false;
     }
 
@@ -284,13 +180,37 @@ contract SupportChildren {
     // ETH to ETH
     function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {
         require(msg.value > 0, "donation must be larger than 0");
-        require(campaigns[_campaignId].endTimestamp > block.timestamp, "Campaign already finished");
-
         // curentamount must be fetched from frontend
         require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+        uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + msg.value;
+
+        emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, address(this));
+
+        if (initialCampaingAmount == 0) {
+            if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
+                emit CreateNFT(_campaignId, campaigns[_campaignId].image, 2);
+            }
+            emit CreateNFT(_campaignId, campaigns[_campaignId].image, 0);
+        }
+
+        if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
+            finishCampaign(_campaignId);
+            if (initialCampaingAmount != 0) {
+                emit CreateNFT(_campaignId, campaigns[_campaignId].image, 1);
+            }
+        }
+    }
+
+    // ETH to Token
+    function donateEthToTokenCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) {
+        require(msg.value > 0, "donation must be larger than 0");
+        (uint256 tokensReceived) = convertExactEthToToken(campaigns[_campaignId].targetCurrency);
+        campaignDonationsEmails[_campaignId].push(_donorEmail);
+        campaignDonors[tx.origin].push(_campaignId);
+        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount  + tokensReceived;
 
         emit DonationMade(_campaignId, msg.value, campaigns[_campaignId].creatorEmail, address(this));
 
@@ -300,10 +220,13 @@ contract SupportChildren {
     }
 
     // Token to ETH
-    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public {
+    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
+        require(amountInMax > 0, "token donation must be larger than 0");
+        require(amountOut > 0, "token donation must be larger than 0");
         (uint256 tokensSpent) = convertTokenToExactEth(token, amountOut, amountInMax);
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
+        campaigns[_campaignId].amountInWeth = campaigns[_campaignId].amountInWeth + amountOut;
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;
         emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, token);
 
@@ -311,9 +234,12 @@ contract SupportChildren {
             finishCampaign(_campaignId);
         }
     }
+    
     // Token to Token
-    function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, address tokenOut, uint amountOut, uint amountInMax) public {
-        (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, tokenOut, amountOut, amountInMax);
+    function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
+        require(amountInMax > 0, "token donation must be larger than 0");
+        require(amountOut > 0, "token donation must be larger than 0");
+        (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, campaigns[_campaignId].targetCurrency, amountOut, amountInMax);
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;
@@ -339,4 +265,114 @@ contract SupportChildren {
     function getCampaignAmount(uint _campaignId) public view returns (uint) {
         return campaigns[_campaignId].currentAmount;
     }
+
+    function convertExactEthToToken(address token) internal returns (uint256) {
+        require(msg.value > 0, "Must pass non 0 ETH amount");
+
+        uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
+        address tokenIn = WETH9;
+        address tokenOut = token;
+        uint24 fee = 3000;
+        address recipient = address(this);
+        uint256 amountIn = msg.value;
+        uint256 amountOutMinimum = 1;
+        uint160 sqrtPriceLimitX96 = 0;
+        
+        ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams(
+            tokenIn,
+            tokenOut,
+            fee,
+            recipient,
+            deadline,
+            amountIn,
+            amountOutMinimum,
+            sqrtPriceLimitX96
+        );
+        
+        uint256 amountOfTokenReceived = uniswapRouter.exactInputSingle{ value: msg.value }(params);
+        require(amountOfTokenReceived > 0, "no tokens received");
+        return amountOfTokenReceived;
+    }
+    
+    function convertTokenToExactEth(address token, uint amountOut, uint amountInMaximum) internal returns (uint256) {
+        uint256 allowance = IERC20(token).allowance(msg.sender, address(this));
+        require(allowance >= amountInMaximum, "Check the token allowance");
+        IERC20(token).transferFrom(msg.sender, address(this), amountInMaximum);
+        uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
+        address tokenIn = token;
+        address tokenOut = WETH9;
+        uint24 fee = 3000;
+        address recipient = address(this);
+        uint160 sqrtPriceLimitX96 = 0;
+        IERC20(token).approve(address(uniswapRouter), amountInMaximum);
+        
+        ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
+            tokenIn,
+            tokenOut,
+            fee,
+            recipient,
+            deadline,
+            amountOut,
+            amountInMaximum,
+            sqrtPriceLimitX96
+        );
+        
+        uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);
+        uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;
+        // refund leftover Tokens to user
+        (bool success) = IERC20(token).transfer(msg.sender, remainderOfTokens);
+        require(success, "refund failed");
+        
+        return amountOfTokenUsed;
+    }
+    
+    function convertTokenToExactToken(address tokenIn, address tokenOut, uint amountOut, uint amountInMaximum) internal returns (uint256) {
+        uint256 allowance = IERC20(tokenIn).allowance(msg.sender, address(this));
+        require(allowance >= amountInMaximum, "Check the token allowance");
+        IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMaximum);
+        uint256 deadline = block.timestamp + 15; // using 'now' for convenience, for mainnet pass deadline from frontend!
+        uint24 fee = 3000;
+        address recipient = address(this);
+        uint160 sqrtPriceLimitX96 = 0;
+        IERC20(tokenIn).approve(address(uniswapRouter), amountInMaximum);
+        
+        ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter.ExactOutputSingleParams(
+            tokenIn,
+            tokenOut,
+            fee,
+            recipient,
+            deadline,
+            amountOut,
+            amountInMaximum,
+            sqrtPriceLimitX96
+        );
+        
+        uint256 amountOfTokenUsed = uniswapRouter.exactOutputSingle(params);
+        uint256 remainderOfTokens = amountInMaximum-amountOfTokenUsed;
+        
+        // refund leftover Tokens to user
+        (bool success) = IERC20(tokenIn).transfer(msg.sender, remainderOfTokens);
+        require(success, "refund failed");
+        
+        return amountOfTokenUsed;
+    }
+    
+    // do not used on-chain, gas inefficient!
+    function getEstimatedETHforDAI(uint daiAmount) internal returns (uint256) {
+        address tokenIn = WETH9;
+        address tokenOut = multiDaiKovan;
+        uint24 fee = 3000;
+        uint160 sqrtPriceLimitX96 = 0;
+
+        return quoter.quoteExactOutputSingle(
+            tokenIn,
+            tokenOut,
+            fee,
+            daiAmount,
+            sqrtPriceLimitX96
+        );
+    }
+
+    // important to receive ETH
+    receive() payable external {}
 }
