@@ -1,7 +1,7 @@
 pragma solidity >=0.7.6 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
     uint256 public tokenCounter;
@@ -22,10 +22,10 @@ contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
     uint256 internal owner;
 
 
-    modifier owner {
-        require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be campaign creator to do this");
-        _;
-    }
+    // modifier owner {
+    //     require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be campaign creator to do this");
+    //     _;
+    // }
     
     constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash, address owner)
     public 
@@ -43,7 +43,7 @@ contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
             bytes32 requestId = requestRandomness(keyHash, fee);
             requestIdToSender[requestId] = msg.sender;
             requestIdToTokenURI[requestId] = tokenURI;
-            requestIdToType[requestId] = Type(typeId);
+            // requestIdToType[requestId] = Type(typeId);
             emit requestedCollectible(requestId);
     }
 
@@ -52,7 +52,7 @@ contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
         string memory tokenURI = requestIdToTokenURI[requestId];
         uint256 newItemId = tokenCounter;
         _safeMint(owner, newItemId);
-        _setTokenURI(newItemId, tokenURI);
+        // _setTokenURI(newItemId, tokenURI);
         TestRandomness random = TestRandomness(randomNumber % 5); 
         tokenIdToTestRandomness[newItemId] = random;
         requestIdToTokenId[requestId] = newItemId;
