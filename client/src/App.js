@@ -7,6 +7,8 @@ import Campaign from "./Campaign";
 import Modal from "./Modal";
 import CreateCampaign from "./CreateCampaign";
 
+import { getCookie } from './util'
+
 import { ApolloProvider } from 'react-apollo'
 
 import ReactNotification from 'react-notifications-component'
@@ -20,6 +22,8 @@ import 'react-notifications-component/dist/theme.css'
 import Uniswap from './uniswap';
 import { client } from './uniswap'
 
+import axios from "axios"
+
 class App extends Component {
   state = {
     storageValue: 0,
@@ -32,25 +36,26 @@ class App extends Component {
     isLoginRegister: false,
     tokenIn: null,
     tokenOut: null,
+    isLogged: false,
     tokens: [
       {
         name: 'ETH',
-        address: '',
+        address: 'a1',
         cssClass: 'tokenEth'
       },
       {
         name: 'DAI',
-        address: '',
+        address: 'a2',
         cssClass: 'tokenDai'
       },
       {
         name: 'CEL',
-        address: '',
+        address: 'a3',
         cssClass: 'tokenCel'
       },
       {
         name: 'OMG',
-        address: '',
+        address: 'a4',
         cssClass: 'tokenOmg'
       },
     ]
@@ -128,10 +133,21 @@ class App extends Component {
   }
   handleCreateCampaign = async (data) => {
     const { accounts, contract } = this.state;
-    // console.log('Create campaign', data)
+    console.log('Create campaign', data)
+    console.info({
+      name: data.name,
+      desc: data.description,
+      email: data.email,
+      image: data.imageUrl,
+      endTime: Math.round(new Date(data.endDate).getTime() / 1000),
+      tokenIndex: 1,
+      amount: this.state.web3.utils.toWei(data.targetAmount, 'ether'),
+      address: data.beneficiaryAddress
+    })
+
     this.handleCloseModal()
     try {
-      await contract.methods.createCampaign(data.name, data.description, data.email, data.imageUrl, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
+      await contract.methods.createCampaign(data.name, data.description, data.email, data.imageUrl, Math.round(new Date(data.endDate).getTime() / 1000), 1, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
     } catch (e) {
       this.refreshList()
     }
@@ -172,33 +188,90 @@ class App extends Component {
     }
   }
 
-  loginRegister = () => {
-    this.setState({
-      tokenIn: 'DAI',
-      tokenOut: 'ETH',
-      isModal: true,
-      isLoginRegister: true
-    })
+  loginRegister = async () => {
+    let payload = '{"timestamp": ' + new Date().getTime() + '}'
+    let signature = await this.state.web3.eth.personal.sign(payload, this.state.accounts[0])
+    console.log(signature)
+    let check = {
+      signature,
+      payload: btoa(payload)
+    }
+    // console.log(check)
 
-    store.addNotification({
-      title: "Wonderful!",
-      message: "teodosii@react-notifications-component",
-      type: "success",
-      insert: "top",
-      container: "bottom-right",
-      animationIn: ["animate__animated animate__fadeIn"],
-      animationOut: ["animate__animated animate__fadeOut"],
-      dismiss: {
-        duration: 5000,
-        onScreen: true
-      }
-    })
+    // let url = process.env.NODE_HOST + ':' + process.env.NODE_PORT + '/api/v1/register'
+
+    let c = getCookie('challengetwotemplate.sid')
+    // console.log('c', c)
+    let url = 'http://localhost:3001/api/v1/register'
+    if (c) {
+      url = 'http://localhost:3001/api/v1/login'
+    }
+
+
+    if (document.cookie)
+      axios
+        .post(url, check
+        )
+        .then((response) => {
+          console.log('response', response)
+          if (response.status === 200) {
+            localStorage.setItem('logedIn', 'true')
+            this.setState({
+              isLogged: true
+            })
+          }
+        })
+
+
+    // this.setState({
+    //   tokenIn: 'DAI',
+    //   tokenOut: 'ETH',
+    //   isModal: true,
+    //   isLoginRegister: true
+    // })
+
+    // store.addNotification({
+    //   title: "Wonderful!",
+    //   message: "teodosii@react-notifications-component",
+    //   type: "success",
+    //   insert: "top",
+    //   container: "bottom-right",
+    //   animationIn: ["animate__animated animate__fadeIn"],
+    //   animationOut: ["animate__animated animate__fadeOut"],
+    //   dismiss: {
+    //     duration: 5000,
+    //     onScreen: true
+    //   }
+    // })
 
     try {
       // this.state.web3.eth.personal.sign('{"timestamp":  1627753792758}', this.state.accounts[0]).then(console.log)
     } catch (e) {
       console.log({ error: e })
     }
+  }
+
+  logout = async () => {
+    let url = 'http://localhost:3001/api/v1/logout'
+    let axiosConfig = {
+      headers: {
+        "Cookie": document.cookie,
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+      },
+      withCredentials: true
+    }
+    axios
+      .post(url, null, axiosConfig)
+      .then((response) => {
+        console.log('response', response)
+        if (response.status === 200) {
+          localStorage.setItem('logedIn', 'false')
+          this.setState({
+            isLogged: false
+          })
+        }
+      })
   }
 
   uniswapReturn = (data) => {
@@ -223,11 +296,11 @@ class App extends Component {
         <div className="App">
           {modal}
           {createCampaign}
-          <Header handlePress={this.handlePress} loginRegister={this.loginRegister} />
+          <Header handlePress={this.handlePress} loginRegister={this.loginRegister} logout={this.logout} isLogged={this.state.isLogged} />
           <div className="content">
             <div className="list">
               {this.state.list.map((campaign, i) => {
-                return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} accounts={this.state.accounts} ref={this._child} removeCampaign={this.removeCampaign} />;
+                return <Campaign campaign={campaign} index={i} key={i} donation={this.handleDonation} accounts={this.state.accounts} ref={this._child} removeCampaign={this.removeCampaign} tokens={this.state.tokens} />;
               })}
             </div>
           </div>

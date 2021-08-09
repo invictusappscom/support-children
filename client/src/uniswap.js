@@ -53,7 +53,7 @@ function Uniswap(props) {
 
     return (
         <>
-            <h2>
+            {/* <h2>
                 Dai price:{' '}
                 {ethLoading || daiLoading
                     ? 'Loading token data...'
@@ -67,8 +67,7 @@ function Uniswap(props) {
                     ? 'Loading token data...'
                     : // display the total amount of DAI spread across all pools
                     parseFloat(daiTotalLiquidity).toFixed(0)}
-            </h2>
-
+            </h2> */}
         </>
     );
 }

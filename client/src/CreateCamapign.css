@@ -18,4 +18,5 @@ h3 {font-size: 18px; text-transform: uppercase; margin: 0; padding: 0; color: #d
 .ethCell {padding-left: 10px;}
 .ethCell input {width: 80%; margin-right: 5px;}
 
-.selectField {padding: 10px 20px; border: solid 1px #cccccc; border-radius: 10px;;}
+.selectField {padding: 5px 10px; border: solid 1px #cccccc; border-radius: 10px;;}
+.selectField ul {top: 30px; z-index: 1000;}
