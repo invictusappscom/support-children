@@ -39,6 +39,17 @@ header {height: 70px; background-color: rgba(255, 255, 255, 0.95); position: fix
 .eth {display: inline-block; width: 20px; height: 20px; margin-bottom: -3px; background: url('asset/ethereum.svg') no-repeat center; background-size: contain;}
 
 .flexRow {display: flex; flex-wrap: wrap;}
+.col10 {width: 83.334%;}
 .col8 {width: 66%;}
 .col6 {width: 50%;}
+.col5 {width: 47%;}
 .col4 {width: 33%;}
+.col3 {width: 25%;}
+.col2 {width: 16.666%;}
+
+.tokenImg {width: 20px; height: 20px; display: block; margin-left: 10px; float: right;}
+.tokenEth {background: url('asset/token-eth.svg') no-repeat center; background-size: contain;}
+.tokenCel {background: url('asset/token-cel.png') no-repeat center; background-size: contain;}
+.tokenDai {background: url('asset/token-dai.png') no-repeat center; background-size: contain;}
+.tokenOmg {background: url('asset/token-omg.png') no-repeat center; background-size: contain;}
+.tokenWeth {background: url('asset/token-weth.png') no-repeat center; background-size: contain;}

@@ -1,17 +1,18 @@
 pragma solidity >=0.7.6 <0.9.0;
 
+<<<<<<< HEAD
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+=======
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+>>>>>>> a8cdeb530f6cbc21dd2233c62feda4faf286be9e
 
-contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
+contract SupportChildrenCollectable is ERC721URIStorage {
     uint256 public tokenCounter;
     enum Type{FirstDonation, LastDonation, FullCampaingDonation, CampaignSuccessfullyFinished}
-    enum TestRandomness{First, Second, Third, Fourth, Final}
-    // add other things
-    mapping(bytes32 => address) public requestIdToSender;
-    mapping(bytes32 => Type) public requestIdToType;
-    mapping(bytes32 => string) public requestIdToTokenURI;
+    
     mapping(uint256 => Type) public tokenIdToType;
+<<<<<<< HEAD
     mapping(uint256 => TestRandomness) public tokenIdToTestRandomness;
     mapping(bytes32 => uint256) public requestIdToTokenId;
     event requestedCollectible(bytes32 indexed requestId); 
@@ -26,18 +27,21 @@ contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
     //     require(campaigns[_campaignId].creatorAddress == tx.origin, "you must be campaign creator to do this");
     //     _;
     // }
+=======
+    mapping(address => uint[]) tokenListbyUser;
+>>>>>>> a8cdeb530f6cbc21dd2233c62feda4faf286be9e
     
-    constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash, address owner)
-    public 
-    VRFConsumerBase(_VRFCoordinator, _LinkToken)
-    ERC721("SupportChildrenCollectible", "SCC")
-    {
+    event NFTCreated (
+        uint id,
+        uint nftType,
+        string tokenUrl
+    );
+
+    constructor() ERC721("SupportChildrenCollectible", "SCC") {
         tokenCounter = 0;
-        keyHash = _keyhash;
-        fee = 0.1 * 10 ** 18;
-        owner = owner;
     }
 
+<<<<<<< HEAD
     function createCollectible(string memory tokenURI, string memory typeId) 
         public returns (bytes32){
             bytes32 requestId = requestRandomness(keyHash, fee);
@@ -57,6 +61,19 @@ contract SupportChildrenCollectible is ERC721, VRFConsumerBase {
         tokenIdToTestRandomness[newItemId] = random;
         requestIdToTokenId[requestId] = newItemId;
         tokenIdToType[newItemId] = requestIdToType[requestId];
+=======
+
+    function createCollectible(string memory tokenURI, uint tokenType) public {
+        _safeMint(tx.origin, tokenCounter);
+        _setTokenURI(tokenCounter, tokenURI);
+        tokenIdToType[tokenCounter] = Type(tokenType);
+        tokenListbyUser[tx.origin].push(tokenCounter);
+        emit NFTCreated(tokenCounter, tokenType, tokenURI);
+>>>>>>> a8cdeb530f6cbc21dd2233c62feda4faf286be9e
         tokenCounter = tokenCounter + 1;
+    }
+    
+    function getCollectibleList(address _donor) view public returns (uint[] memory) {
+        return tokenListbyUser[_donor];
     }
 }

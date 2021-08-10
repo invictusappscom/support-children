@@ -9,7 +9,7 @@ import CreateCampaign from "./CreateCampaign";
 
 import { getCookie } from './util'
 
-import { ApolloProvider } from 'react-apollo'
+// import { ApolloProvider } from 'react-apollo'
 
 import ReactNotification from 'react-notifications-component'
 import { store } from 'react-notifications-component';
@@ -19,8 +19,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css'
 import 'react-notifications-component/dist/theme.css'
 
-import Uniswap from './uniswap';
-import { client } from './uniswap'
+// import Uniswap from './uniswap';
+// import { client } from './uniswap'
 
 import axios from "axios"
 
@@ -40,22 +40,22 @@ class App extends Component {
     tokens: [
       {
         name: 'ETH',
-        address: 'a1',
+        address: 'EHT',
         cssClass: 'tokenEth'
       },
       {
         name: 'DAI',
-        address: 'a2',
+        address: '0x6b175474e89094c44da98b954eedeac495271d0f',
         cssClass: 'tokenDai'
       },
       {
-        name: 'CEL',
-        address: 'a3',
-        cssClass: 'tokenCel'
+        name: 'WETH',
+        address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        cssClass: 'tokenWeth'
       },
       {
         name: 'OMG',
-        address: 'a4',
+        address: '0xd26114cd6ee289accf82350c8d8487fedb8a0c07',
         cssClass: 'tokenOmg'
       },
     ]
@@ -71,11 +71,18 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SupportChildrenContract.networks[networkId];
+      const deployedNetwork = SupportChildrenContract.networks[networkId]
       const instance = new web3.eth.Contract(
         SupportChildrenContract.abi,
         deployedNetwork && deployedNetwork.address
       )
+
+      let tokens = this.state.tokens
+      tokens[0].address = deployedNetwork.address
+
+      this.setState({
+        tokens: tokens
+      })
 
       instance.events.DonationMade({}, async (error, data) => {
         // console.log('DonationMade')
@@ -134,20 +141,20 @@ class App extends Component {
   handleCreateCampaign = async (data) => {
     const { accounts, contract } = this.state;
     console.log('Create campaign', data)
-    console.info({
-      name: data.name,
-      desc: data.description,
-      email: data.email,
-      image: data.imageUrl,
-      endTime: Math.round(new Date(data.endDate).getTime() / 1000),
-      tokenIndex: 1,
-      amount: this.state.web3.utils.toWei(data.targetAmount, 'ether'),
-      address: data.beneficiaryAddress
-    })
+    // console.info({
+    //   name: data.name,
+    //   desc: data.description,
+    //   email: data.email,
+    //   image: data.imageUrl,
+    //   endTime: Math.round(new Date(data.endDate).getTime() / 1000),
+    //   tokenIndex: 1,
+    //   amount: this.state.web3.utils.toWei(data.targetAmount, 'ether'),
+    //   address: data.beneficiaryAddress
+    // })
 
     this.handleCloseModal()
     try {
-      await contract.methods.createCampaign(data.name, data.description, data.email, data.imageUrl, Math.round(new Date(data.endDate).getTime() / 1000), 1, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
+      await contract.methods.createCampaign(data.name, data.description, data.email, data.imageUrl, Math.round(new Date(data.endDate).getTime() / 1000), data.tokenAddress, this.state.web3.utils.toWei(data.targetAmount, 'ether'), data.beneficiaryAddress).send({ from: accounts[0] })
     } catch (e) {
       this.refreshList()
     }
@@ -168,8 +175,23 @@ class App extends Component {
   }
   handleDonation = async (data, userData) => {
     const { accounts, contract } = this.state;
-    // console.log('Donation', data, userData)
-    // data.beneficiaryAddress
+    console.log('Donation', data, userData, accounts[0])
+    if (data.targetCurrency === this.state.tokens[0].address && userData.token.address === this.state.tokens[0].address) {
+      console.log('ETH 2 ETH')
+      console.info(data.id, userData.email, accounts[0], this.state.web3.utils.toWei(userData.ethAmount, 'ether'))
+      await contract.methods.donateEthToEthCampaign(data.id, userData.email).send({ from: accounts[0], value: this.state.web3.utils.toWei(userData.ethAmount, 'ether') })
+    } else if (data.targetCurrency === this.state.tokens[0].address) {
+      console.log('TOKEN 2 ETH')
+    } else if (userData.token.address === this.state.tokens[0].address) {
+      console.log('ETH 2 TOKEN')
+    } else {
+      console.log('TOKEN 2 TOKEN')
+    }
+    return
+    // donateEthToEthCampaign
+    // donateEthToTokenCampaign
+    // donateTokenToETHCampaign
+    // donateTokenToTokenCampaign
     try {
       await contract.methods.donate(data.id, userData.email).send({ from: accounts[0], value: this.state.web3.utils.toWei(userData.ethAmount, 'ether') })
     } catch (e) {
@@ -274,9 +296,9 @@ class App extends Component {
       })
   }
 
-  uniswapReturn = (data) => {
-    console.log(data)
-  }
+  // uniswapReturn = (data) => {
+  //   console.log(data)
+  // }
 
   render() {
     if (!this.state.web3) {
@@ -289,10 +311,11 @@ class App extends Component {
     if (this.state.isCreateCampaign) {
       createCampaign = <CreateCampaign createCampaign={this.handleCreateCampaign} closeModal={this.handleCloseModal} tokens={this.state.tokens} />;
     }
+
     return (
       <>
         <ReactNotification />
-        <ApolloProvider client={client}><Uniswap tokenIn={this.state.tokenIn} tokenOut={this.state.tokenOut} uniswapReturn={this.uniswapReturn} /></ApolloProvider>
+        {/* <ApolloProvider client={client}><Uniswap tokenIn={this.state.tokenIn} tokenOut={this.state.tokenOut} uniswapReturn={this.uniswapReturn} /></ApolloProvider> */}
         <div className="App">
           {modal}
           {createCampaign}
