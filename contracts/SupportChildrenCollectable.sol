@@ -7,6 +7,7 @@ contract SupportChildrenCollectable is ERC721URIStorage {
     enum Type{FirstDonation, LastDonation, FullCampaingDonation, CampaignSuccessfullyFinished}
     
     mapping(uint256 => Type) public tokenIdToType;
+    mapping(uint256 => string) public tokenIdToImage;
     mapping(address => uint[]) tokenListbyUser;
     
     event NFTCreated (
@@ -25,6 +26,7 @@ contract SupportChildrenCollectable is ERC721URIStorage {
         _safeMint(owner, tokenCounter);
         _setTokenURI(tokenCounter, tokenURI);
         tokenIdToType[tokenCounter] = Type(tokenType);
+        tokenIdToImage[tokenCounter] = tokenURI;
         tokenListbyUser[owner].push(tokenCounter);
         emit NFTCreated(tokenCounter, tokenType, tokenURI);
         tokenCounter = tokenCounter + 1;
