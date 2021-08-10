@@ -18,7 +18,7 @@ class CreateCampaign extends Component {
         errorBeneficiaryAddress: false,
         imageUrl: '',
         token: this.props.tokens[0],
-        startDate: new Date(),
+        endDate: new Date(),
     }
     constructor(props) {
         super(props)
@@ -53,6 +53,8 @@ class CreateCampaign extends Component {
                 description: this.state.description,
                 targetAmount: this.state.targetAmount,
                 imageUrl: this.state.imageUrl,
+                endDate: this.state.endDate,
+                tokenAddress: this.state.token.address,
                 beneficiaryAddress: this.state.beneficiaryAddress,
             })
         }
@@ -66,9 +68,9 @@ class CreateCampaign extends Component {
             token: token
         })
     }
-    setStartDate = (date) => {
+    setEndDate = (date) => {
         this.setState({
-            startDate: date
+            endDate: date
         })
     }
     render() {
@@ -121,8 +123,8 @@ class CreateCampaign extends Component {
                         </div>
                         <div className="col6">
                             <span>Valid till: </span>
-                            <DatePicker selected={this.state.startDate}
-                                onChange={(date) => this.setStartDate(date)}
+                            <DatePicker selected={this.state.endDate}
+                                onChange={(date) => this.setEndDate(date)}
                             />
                         </div>
                     </div>

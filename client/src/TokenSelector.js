@@ -23,7 +23,7 @@ class TokenSelector extends Component {
                     <div>{this.state.activToken.name}<div className={`tokenImg ${this.state.activToken.cssClass}`}></div></div>
                     <ul>
                         {this.props.tokens.map((token, i) => {
-                            return <li onClick={() => { this.handleTokenClick(token) }}>{token.name}<div className={`tokenImg ${token.cssClass}`}></div></li>
+                            return <li onClick={() => { this.handleTokenClick(token) }} key={i}>{token.name}<div className={`tokenImg ${token.cssClass}`}></div></li>
                         })}
                     </ul>
                 </div>

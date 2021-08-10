@@ -1,5 +1,5 @@
 .campaignWrapper {width: 33%; max-width: 400px; min-width: 300px;  padding: 15px;}
-.campaign {height: 550px; border: 1px solid #f1f1f1; position: relative; background-color: #ffffff;}
+.campaign {height: 650px; border: 1px solid #f1f1f1; position: relative; background-color: #ffffff;}
 .campaign.inactive .campaignPhoto {-webkit-filter: grayscale(1); filter: grayscale(1); opacity: 0.6;}
 .campaign.inactive .campaignBody {-webkit-filter: grayscale(.5); filter: grayscale(.5);}
 .campaign.inactive:hover .campaignPhoto {-webkit-filter: grayscale(0); filter: grayscale(0); opacity: 1;}
@@ -26,16 +26,19 @@
 .campaignRaised {position: absolute; bottom: 20px; left: 3%;}
 .campaignGoal {position: absolute; bottom: 20px; right: 3%;}
 
-.donateBtn {position: absolute; left: 20%; right: 20%; top: 120px; z-index: 20; cursor: pointer; padding: 8px 20px; background-color: #efc94c; text-align: center; color: #ffffff; font-weight: bold; border-radius: 20px; text-transform: uppercase; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);}
+.donateBtn {position: absolute; left: 20%; right: 20%; top: 220px; z-index: 20; cursor: pointer; padding: 8px 20px; background-color: #efc94c; text-align: center; color: #ffffff; font-weight: bold; border-radius: 20px; text-transform: uppercase; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);}
 
-.donateFinish {position: absolute; left: 3%; width: 55%; top: 120px; z-index: 20; cursor: pointer; padding: 8px 20px; background-color: #d55342; text-align: center; border: solid 1px #d55342; color: #ffffff; font-weight: bold; border-radius: 20px; text-transform: uppercase; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);}
-.donateCancel {position: absolute; right: 3%; width: 35%; top: 120px; z-index: 20; cursor: pointer; padding: 8px 20px; background-color: #ffffff; text-align: center; border: solid 1px #d55342; color: #d55342; font-weight: bold; border-radius: 20px; text-transform: uppercase; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);}
+.donateFinish {position: absolute; left: 3%; width: 55%; top: 220px; z-index: 20; cursor: pointer; padding: 8px 5px; background-color: #d55342; text-align: center; border: solid 1px #d55342; color: #ffffff; font-weight: bold; border-radius: 20px; text-transform: uppercase; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);}
+.donateCancel {position: absolute; right: 3%; width: 35%; top: 220px; z-index: 20; cursor: pointer; padding: 8px 5px; background-color: #ffffff; text-align: center; border: solid 1px #d55342; color: #d55342; font-weight: bold; border-radius: 20px; text-transform: uppercase; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);}
 
 textarea:focus, input:focus{outline: none;}
 
 .donateInput {transition: all .5s linear; width: 100%; border-style: none; padding: 5px 10px; margin-bottom: 10px; border: solid 1px #cccccc; border-radius: 15px;}
-.donateInput.ethValue {width: 50%;}
+.donateInput.ethValue {width: 90%;}
 .ethValue.error {border-color: #ff0000;}
+.calculateValue {margin-left: 25px;}
 
 .removeCampaing {position: absolute; width: 30px; height: 30px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.7); right: -15px; top: -15px; z-index: 8; cursor: pointer; background-image: url('asset/close-icon.svg'); background-position: center; background-size: contain; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4); cursor: pointer;}
 .inactive .removeCampaing {display: none;}
+
+.col2 .tokenImg {width: 30px; height: 30px; margin: 3px 3px 0 0;}
