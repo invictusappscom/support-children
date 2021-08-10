@@ -20,11 +20,12 @@ contract SupportChildrenCollectable is ERC721URIStorage {
     }
 
 
-    function createCollectible(string memory tokenURI, uint tokenType) public {
-        _safeMint(tx.origin, tokenCounter);
+    function createCollectible(string memory tokenURI, uint tokenType, address owner) public {
+        require(tokenType < 3, "invalid typeid");
+        _safeMint(owner, tokenCounter);
         _setTokenURI(tokenCounter, tokenURI);
         tokenIdToType[tokenCounter] = Type(tokenType);
-        tokenListbyUser[tx.origin].push(tokenCounter);
+        tokenListbyUser[owner].push(tokenCounter);
         emit NFTCreated(tokenCounter, tokenType, tokenURI);
         tokenCounter = tokenCounter + 1;
     }
