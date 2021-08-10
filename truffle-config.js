@@ -38,5 +38,16 @@ module.exports = {
       port: 8545,
       network_id: 1
     }
+  },
+  environments: {
+    forked: {
+      ipfs: {
+        address: 'http://localhost:5001'
+      },
+      LinkToken: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
+      VRFCoordinator: '0xf0d54349aDdcf704F77AE15b96510dEA15cb7952',
+      KeyHash: '0xAA77729D3466CA35AE8D28B3BBAC7CC36A5031EFDC430821C02BC31A238AF445',
+      Fee: 2
+    },
   }
 }
