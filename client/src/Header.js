@@ -14,7 +14,7 @@ class Header extends Component {
     if (this.props.isLogged || window.localStorage.getItem('logedIn') == 'true') {
       button = <><div id="loginRegister" onClick={this.props.logout}>Logout</div><div id="addCampaign" onClick={this.props.handlePress}>Add Campaign</div></>
     } else {
-      button = <><div id="loginRegister" onClick={this.props.loginRegister}>Login / Register</div><div id="addCampaign" onClick={this.props.handlePress}>Add Campaign</div></>
+      button = <><div id="loginRegister" onClick={this.props.loginRegister}>Login / Register</div></>
     }
     return (
       <header>

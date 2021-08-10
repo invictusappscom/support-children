@@ -1,6 +1,6 @@
 const path = require('path')
 const HDWalletProvider = require('truffle-hdwallet-provider')
-const mnemonic = 'glue check pupil prefer lounge brother hawk wage plate bomb luxury gas'
+const mnemonic = 'until gaze carry chicken spoon curious toward spread price they easily fall'
 const infuraProjectId = '92a23becb91d48d5b7ca23b757cd79a2'
 const menmonicForked = 'until gaze carry chicken spoon curious toward spread price they easily fall'
 

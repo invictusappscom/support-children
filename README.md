@@ -11,14 +11,7 @@ Also make sure that you have postgres db server and you created db with `created
 # Install dependencies
 yarn
 
-# on develop network
-truffle migrate
-
-# On Rinkeby
-truffle migrate --network rinkeby
-
-# On forked mainnet by instruction from https://github.com/invictusappscom/truffle-playground#readme
-truffle migrate --network forked
+truffle migrate --network forkedp
 ```
 
 ### Build
