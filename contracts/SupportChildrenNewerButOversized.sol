@@ -3,9 +3,7 @@ pragma solidity >=0.7.6 <0.9.0;
 pragma abicoder v2;
 
 // import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/ISwapRouter.sol";
-// import "https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/interfaces/IQuoter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol";
 import "./SupportChildrenCollectable.sol";
 
 interface IUniswapRouter is ISwapRouter {
@@ -40,9 +38,8 @@ interface IUniswap {
 }
     
 contract SupportChildren {
-    SupportChildrenCollectable public constant nft = SupportChildrenCollectable(0xE52d15506f921819665D5304d95D86A6C51F895D);
+    SupportChildrenCollectable public constant nft = SupportChildrenCollectable(0x2E48d65dD6933E8146A7D2b891d173BFa438b244);
     IUniswapRouter public constant uniswapRouter = IUniswapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
-    IQuoter public constant quoter = IQuoter(0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6);
     address private constant multiDaiKovan = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
     address private constant WETH9 = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
   
@@ -103,8 +100,21 @@ contract SupportChildren {
         _;
     }
 
+    modifier mustNotExceedTarget(uint _campaignId, uint amount) {
+        require((campaigns[_campaignId].currentAmount  + amount) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+        _;
+    }
+
+    modifier donationNonZero(uint amount) {
+        require(amount > 0, "donation must be larger than 0");
+        _;
+    }
     modifier ethCampaign(uint _campaignId) {
         require(campaigns[_campaignId].targetCurrency == address(this), "This is not ETH campaign");
+        _;
+    }
+    modifier tokenCampaign(uint _campaignId) {
+        require(campaigns[_campaignId].targetCurrency != address(this), "This is not Token campaign");
         _;
     }
 
@@ -180,10 +190,8 @@ contract SupportChildren {
 
 
     // ETH to ETH
-    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {
-        require(msg.value > 0, "donation must be larger than 0");
+    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) mustNotExceedTarget(_campaignId, msg.value) donationNonZero(msg.value) {
         // curentamount must be fetched from frontend
-        require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
         uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
@@ -195,9 +203,7 @@ contract SupportChildren {
     }
 
     // ETH to Token
-    function donateEthToTokenCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) {
-        require(msg.value > 0, "donation must be larger than 0");
-
+    function donateEthToTokenCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) tokenCampaign(_campaignId) donationNonZero(msg.value) {
         (uint256 tokensReceived) = convertExactEthToToken(campaigns[_campaignId].targetCurrency);
         require((campaigns[_campaignId].currentAmount  + tokensReceived) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
         uint initialCampaingAmount = campaigns[_campaignId].currentAmount;        
@@ -211,33 +217,41 @@ contract SupportChildren {
     }
 
     // Token to ETH
-    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
-        require(amountInMax > 0, "token donation must be larger than 0");
-        require(amountOut > 0, "token donation must be larger than 0");
-        require((campaigns[_campaignId].currentAmount  + amountOut) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
-        
+    function donateTokenToETHCampaign(uint _campaignId, string memory _donorEmail, address token, uint amountOut, uint amountInMax) public campaignActive(_campaignId) ethCampaign(_campaignId) mustNotExceedTarget(_campaignId, amountOut) donationNonZero(amountOut) {
         (uint256 tokensSpent) = convertTokenToExactEth(token, amountOut, amountInMax);
         uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].amountInWeth = campaigns[_campaignId].amountInWeth + amountOut;
-        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;
+        campaigns[_campaignId].currentAmount = initialCampaingAmount + amountOut;
         emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, token);
 
         checkForSpecialEvents(_campaignId, initialCampaingAmount);  
     }
     
-    // Token to Token
-    function donateTokenToTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, uint amountOut, uint amountInMax) public campaignActive(_campaignId) {
-        require(amountInMax > 0, "token donation must be larger than 0");
-        require(amountOut > 0, "token donation must be larger than 0");
-        require((campaigns[_campaignId].currentAmount  + amountOut) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
+    // Token to Different Token
+    function donateTokenToDifferentTokenCampaign(uint _campaignId, string memory _donorEmail, address tokenIn, uint amountOut, uint amountInMax) public campaignActive(_campaignId) tokenCampaign(_campaignId) mustNotExceedTarget(_campaignId, amountOut) donationNonZero(amountOut) {
         (uint256 tokensSpent) = convertTokenToExactToken(tokenIn, campaigns[_campaignId].targetCurrency, amountOut, amountInMax);
         uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
         campaignDonationsEmails[_campaignId].push(_donorEmail);
         campaignDonors[tx.origin].push(_campaignId);
         campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amountOut;
         emit DonationMade(_campaignId, tokensSpent, campaigns[_campaignId].creatorEmail, tokenIn);
+
+        checkForSpecialEvents(_campaignId, initialCampaingAmount);       
+    }
+    
+    // Token to Same Token
+    function donateTokenToSameTokenCampaign(uint _campaignId, string memory _donorEmail, uint amount) public campaignActive(_campaignId) tokenCampaign(_campaignId) mustNotExceedTarget(_campaignId, amount) donationNonZero(amount) {
+        address token = campaigns[_campaignId].targetCurrency;
+        uint256 allowance = IERC20(token).allowance(tx.origin, address(this));
+        require(allowance >= amount, "Check the token allowance");
+        IERC20(token).transferFrom(tx.origin, address(this), amount);
+        uint initialCampaingAmount = campaigns[_campaignId].currentAmount;
+        campaignDonationsEmails[_campaignId].push(_donorEmail);
+        campaignDonors[tx.origin].push(_campaignId);
+        campaigns[_campaignId].currentAmount = campaigns[_campaignId].currentAmount + amount;
+        emit DonationMade(_campaignId, amount, campaigns[_campaignId].creatorEmail, token);
 
         checkForSpecialEvents(_campaignId, initialCampaingAmount);       
     }
@@ -370,22 +384,6 @@ contract SupportChildren {
         require(success, "refund failed");
         
         return amountOfTokenUsed;
-    }
-    
-    // do not used on-chain, gas inefficient!
-    function getEstimatedETHforDAI(uint daiAmount) internal returns (uint256) {
-        address tokenIn = WETH9;
-        address tokenOut = multiDaiKovan;
-        uint24 fee = 3000;
-        uint160 sqrtPriceLimitX96 = 0;
-
-        return quoter.quoteExactOutputSingle(
-            tokenIn,
-            tokenOut,
-            fee,
-            daiAmount,
-            sqrtPriceLimitX96
-        );
     }
 
     // important to receive ETH
