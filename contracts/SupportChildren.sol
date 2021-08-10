@@ -180,7 +180,7 @@ contract SupportChildren {
 
 
     // ETH to ETH
-    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignCreator(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {
+    function donateEthToEthCampaign(uint _campaignId, string memory _donorEmail) payable public campaignActive(_campaignId) notCampaignBenefactor(_campaignId) ethCampaign(_campaignId) {
         require(msg.value > 0, "donation must be larger than 0");
         // curentamount must be fetched from frontend
         require((campaigns[_campaignId].currentAmount  + msg.value) * 10 < 11 * campaigns[_campaignId].targetAmount, "Target amount exceded");
