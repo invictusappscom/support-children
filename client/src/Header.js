@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { getCookie } from './util'
 import "./Header.css";
 import { ethDisplay, trimText } from './util'
 
@@ -11,6 +12,7 @@ class Header extends Component {
 
   render() {
     let button
+    // if (getCookie('challengetwotemplate.sid')) {
     if (this.props.isLogged || window.localStorage.getItem('logedIn') == 'true') {
       button = <><div id="loginRegister" onClick={this.props.logout}>Logout</div><div id="addCampaign" onClick={this.props.handlePress}>Add Campaign</div></>
     } else {

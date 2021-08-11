@@ -225,7 +225,7 @@ class App extends Component {
     let c = getCookie('challengetwotemplate.sid')
     // console.log('c', c)
     let url = 'http://localhost:3001/api/v1/register'
-    if (c) {
+    if (c && localStorage.getItem('registered')) {
       url = 'http://localhost:3001/api/v1/login'
     }
 
@@ -238,6 +238,7 @@ class App extends Component {
           console.log('response', response)
           if (response.status === 200) {
             localStorage.setItem('logedIn', 'true')
+            localStorage.setItem('registered', 'true')
             this.setState({
               isLogged: true
             })

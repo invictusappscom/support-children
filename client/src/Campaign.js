@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ChainId, Fetcher, WETH, Route, Trade, TokenAmount, TradeType, Percent } from "@uniswap/sdk";
+// import { ChainId, Fetcher, WETH, Route, Trade, TokenAmount, TradeType, Percent } from "@uniswap/sdk";
 
 import TokenSelector from "./TokenSelector"
 import "./Campaign.css";
@@ -167,25 +167,25 @@ class Campaign extends Component {
 
   }
 
-  prepareUniswap(token0Address, token1Address, token1Amount) {
-    // https://github.com/jklepatch/eattheblocks/blob/master/screencast/217-uniswap-v2/javascript/index.js
-    const chainId = ChainId.MAINNET;
-    const token0 = await Fetcher.fetchTokenData(chainId, token0Address);
-    const token1 = await Fetcher.fetchTokenData(chainId, token1Address);
+  // prepareUniswap(token0Address, token1Address, token1Amount) {
+  //   // https://github.com/jklepatch/eattheblocks/blob/master/screencast/217-uniswap-v2/javascript/index.js
+  //   const chainId = ChainId.MAINNET;
+  //   const token0 = await Fetcher.fetchTokenData(chainId, token0Address);
+  //   const token1 = await Fetcher.fetchTokenData(chainId, token1Address);
 
-    const pair = await Fetcher.fetchPairData(token0, token1);
-    const route = new Route([pair], token1);
+  //   const pair = await Fetcher.fetchPairData(token0, token1);
+  //   const route = new Route([pair], token1);
 
-    const trade = new Trade(route, new TokenAmount(token1, token1Amount), TradeType.EXACT_INPUT);
+  //   const trade = new Trade(route, new TokenAmount(token1, token1Amount), TradeType.EXACT_INPUT);
 
-    const slippageTolerance = new Percent('50', '10000');
-    const amountOutMin = trade.minimumAmountOut(slippageTolerance).raw;
-    const path = [token0Address, token1Address];
-    const to = '';
-    const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
-    const value = trade.inputAmount.raw;
+  //   const slippageTolerance = new Percent('50', '10000');
+  //   const amountOutMin = trade.minimumAmountOut(slippageTolerance).raw;
+  //   const path = [token0Address, token1Address];
+  //   const to = '';
+  //   const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
+  //   const value = trade.inputAmount.raw;
 
-  }
+  // }
 
   render() {
     let renderDonate, renderBody, uniswapElement
