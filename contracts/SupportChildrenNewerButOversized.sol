@@ -259,6 +259,7 @@ contract SupportChildren {
     function checkForSpecialEvents(uint _campaignId, uint initialCampaingAmount) internal {
         if (campaigns[_campaignId].currentAmount >= campaigns[_campaignId].targetAmount) {
             finishCampaign(_campaignId);
+            nft.createCollectible(campaigns[_campaignId].image, 3, campaigns[_campaignId].creatorAddress);
             if (initialCampaingAmount != 0) {
                 // Closed a campaing NFT
                 nft.createCollectible(campaigns[_campaignId].image, 1, tx.origin);
